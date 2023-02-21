@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "F8DB427A-5F4C-4FD1-A88F-33E5672CD2BD"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3599C691-9784-42EC-BFF8-0017F4EC75A8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarMap/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "currentLocationTapped(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F917576D-79A6-4CCC-B153-E482D7E6BD44"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarMap/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "mapView(_:didTapMap:point:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "F917576D-79A6-4CCC-B153-E482D7E6BD44 - 5b1cd91cd6b417f4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CalendarMap.ViewController.mapView(_: __C.NMFMapView, didTapMap: __C.NMGLatLng, point: __C.CGPoint) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "604">
+               </Location>
+               <Location
+                  uuid = "F917576D-79A6-4CCC-B153-E482D7E6BD44 - 7b9e5a716a9eaf51"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; () in CalendarMap.ViewController.mapView(_: __C.NMFMapView, didTapMap: __C.NMGLatLng, point: __C.CGPoint) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/ViewController.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "48">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "38A66BC7-FE3A-44B0-B69F-43F2356904CB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarMap/ViewModel/MapViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "fetchCoords(coords:completion:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "38A66BC7-FE3A-44B0-B69F-43F2356904CB - 55a27512dbdcaebf"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CalendarMap.MapViewModel.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/ViewModel/MapViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "76">
+               </Location>
+               <Location
+                  uuid = "38A66BC7-FE3A-44B0-B69F-43F2356904CB - f017f79a1992c91b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; () in CalendarMap.MapViewModel.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/ViewModel/MapViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "60">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3B8312AC-2E26-4DEC-A89A-D8A075AF2DC3"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarMap/Service/APIService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "fetchCoords(coords:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "3B8312AC-2E26-4DEC-A89A-D8A075AF2DC3 - ff7c10b477e5c565"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in CalendarMap.APIService.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/Service/APIService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "956">
+               </Location>
+               <Location
+                  uuid = "3B8312AC-2E26-4DEC-A89A-D8A075AF2DC3 - ff7c10b477e5c565"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in CalendarMap.APIService.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/Service/APIService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "45"
+                  endingLineNumber = "45"
+                  offsetFromSymbolStart = "1004">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "85BDDFE2-2263-4BF8-820A-429F378627EC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarMap/Service/APIService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "fetchCoords(coords:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "85BDDFE2-2263-4BF8-820A-429F378627EC - ff7c10b477e5c5ab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in CalendarMap.APIService.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/Service/APIService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "600">
+               </Location>
+               <Location
+                  uuid = "85BDDFE2-2263-4BF8-820A-429F378627EC - ff7c10b477e5c5ab"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in CalendarMap.APIService.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/Service/APIService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "39"
+                  endingLineNumber = "39"
+                  offsetFromSymbolStart = "768">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "364BC596-45E5-4C74-A5DF-92DEA2FB0247"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CalendarMap/Service/APIService.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "fetchCoords(coords:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "364BC596-45E5-4C74-A5DF-92DEA2FB0247 - 2931e86963781ba"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "CalendarMap.APIService.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/Service/APIService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "2172">
+               </Location>
+               <Location
+                  uuid = "364BC596-45E5-4C74-A5DF-92DEA2FB0247 - ff7c10b477e5c7f8"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in CalendarMap.APIService.fetchCoords(coords: Swift.String, completion: (Swift.Optional&lt;Swift.Array&lt;CalendarMap.Map&gt;&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "CalendarMap"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/jeonghwanseok/CalendarMap/CalendarMap/CalendarMap/Service/APIService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "248">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
