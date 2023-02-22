@@ -10,8 +10,8 @@ import Foundation
 class MapViewModel: NSObject {
     var apiService = APIService()
 
-    func fetchCoords(coords: String, completion: @escaping([Map]?) -> Void) {
-        apiService.fetchCoords(coords: coords) { data in
+    func fetchAddress(coords: String, completion: @escaping([Map]?) -> Void) {
+        apiService.fetchAddress(coords: coords) { data in
             completion(data)
         }
     }

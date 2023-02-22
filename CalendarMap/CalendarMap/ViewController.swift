@@ -66,9 +66,18 @@ extension ViewController: NMFMapViewTouchDelegate {
         print(coords)
         
         
-        mapViewModel.fetchCoords(coords: coords) { data in
+        mapViewModel.fetchAddress(coords: coords) { data in
             dump(data)
         }
         
+    }
+    
+    func mapView(_ mapView: NMFMapView, didTap symbol: NMFSymbol) -> Bool {
+        dump(mapView)
+        dump(symbol)
+//        <NMFSymbol:position=<NMGLatLng: 37.67111706221642,126.7377662658691>, caption=대화동 레포츠공원>
+        
+        
+        return true
     }
 }
