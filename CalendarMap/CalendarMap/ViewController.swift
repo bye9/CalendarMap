@@ -8,8 +8,11 @@
 import UIKit
 import NMapsMap
 import CoreLocation
+import FloatingPanel
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
+    
+    var fpc: FloatingPanelController!
     
     @IBOutlet var mainMapView: NMFMapView!
     @IBOutlet var searchLocalTextField: UITextField!
@@ -23,6 +26,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         searchLocalTextField.delegate = self
         initMapSetting()
+        
+        setupView()
+    }
+    
+    private func setupView() {
+        fpc = FloatingPanelController()
+        fpc.delegate = self
+        let contentVC = SearchViewController()
+        fpc.set(contentViewController: contentVC)
+//        fpc.track(scrollView: contentVC)
+        fpc.addPanel(toParent: self)
+        fpc.layout = MyFloatingPanelLayout()
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -133,3 +149,29 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
+extension ViewController: FloatingPanelControllerDelegate {
+    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
+        if fpc.state == .full {
+            
+        } else {
+            
+        }
+    }
+}
+
+class MyFloatingPanelLayout: FloatingPanelLayout {
+    var position: FloatingPanelPosition {
+        return .bottom
+    }
+
+    var initialState: FloatingPanelState {
+        return .half
+    }
+
+    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] { // 가능한 floating panel: 현재 full, half만 가능하게 설정
+        return [
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea),
+            .half: FloatingPanelLayoutAnchor(absoluteInset: 292, edge: .bottom, referenceGuide: .safeArea),
+        ]
+    }
+}
