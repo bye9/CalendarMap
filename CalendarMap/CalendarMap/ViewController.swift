@@ -33,12 +33,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     private func setupView() {
         fpc = FloatingPanelController()
         fpc.delegate = self
-        let contentVC = SearchViewController()
+        let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
         fpc.set(contentViewController: contentVC)
 //        fpc.track(scrollView: contentVC)
-        fpc.addPanel(toParent: self)
+        fpc.isRemovalInteractionEnabled = true
         fpc.layout = MyFloatingPanelLayout()
-
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -97,8 +97,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
 extension ViewController: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
+        // 심볼 닫기
         infoWindow.close()
         
+        // bottom panel 닫기
+        fpc.removePanelFromParent(animated: true)
         
         let coords = "\(latlng.lng),\(latlng.lat)"
         print(coords)
@@ -145,6 +148,8 @@ extension ViewController: UITextFieldDelegate {
         
         self.searchLocalTextField.resignFirstResponder()
         
+        fpc.addPanel(toParent: self)
+        
         return true
     }
 }
@@ -168,10 +173,10 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
         return .half
     }
 
-    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] { // 가능한 floating panel: 현재 full, half만 가능하게 설정
+    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: 16.0, edge: .top, referenceGuide: .safeArea),
-            .half: FloatingPanelLayoutAnchor(absoluteInset: 292, edge: .bottom, referenceGuide: .safeArea),
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 40.0, edge: .top, referenceGuide: .safeArea),
+            .half: FloatingPanelLayoutAnchor(absoluteInset: 200, edge: .bottom, referenceGuide: .safeArea),
         ]
     }
 }

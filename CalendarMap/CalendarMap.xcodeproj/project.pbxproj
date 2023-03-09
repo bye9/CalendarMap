@@ -18,9 +18,11 @@
 		24B57F7D29A49077006121CE /* ScheduleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B57F7C29A49077006121CE /* ScheduleModel.swift */; };
 		24B57F7F29A49789006121CE /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B57F7E29A49789006121CE /* MapViewModel.swift */; };
 		24F62CD729B86612006A76E8 /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 24F62CD629B86612006A76E8 /* Search.storyboard */; };
-		24F62CDB29B8695E006A76E8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F62CDA29B8695E006A76E8 /* SearchViewController.swift */; };
+		24F62CDB29B8695E006A76E8 /* SearchTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F62CDA29B8695E006A76E8 /* SearchTableViewController.swift */; };
 		A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118238F29B6256200CE0CF5 /* SearchModel.swift */; };
 		A118239229B62BDE00CE0CF5 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118239129B62BDE00CE0CF5 /* SearchViewModel.swift */; };
+		A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118239329BA35F900CE0CF5 /* SearchTableViewCell.swift */; };
+		A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */; };
 		F4B334AC1AE2E53E0316A566 /* Pods_CalendarMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,11 +40,13 @@
 		24B57F7C29A49077006121CE /* ScheduleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleModel.swift; sourceTree = "<group>"; };
 		24B57F7E29A49789006121CE /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		24F62CD629B86612006A76E8 /* Search.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
-		24F62CDA29B8695E006A76E8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		24F62CDA29B8695E006A76E8 /* SearchTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewController.swift; sourceTree = "<group>"; };
 		494DE532F80783D8BD58339C /* Pods-CalendarMap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarMap.debug.xcconfig"; path = "Target Support Files/Pods-CalendarMap/Pods-CalendarMap.debug.xcconfig"; sourceTree = "<group>"; };
 		7737D72D77BB047BD9CCE057 /* Pods-CalendarMap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarMap.release.xcconfig"; path = "Target Support Files/Pods-CalendarMap/Pods-CalendarMap.release.xcconfig"; sourceTree = "<group>"; };
 		A118238F29B6256200CE0CF5 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		A118239129B62BDE00CE0CF5 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		A118239329BA35F900CE0CF5 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalendarMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -149,7 +153,9 @@
 			isa = PBXGroup;
 			children = (
 				24F62CD629B86612006A76E8 /* Search.storyboard */,
-				24F62CDA29B8695E006A76E8 /* SearchViewController.swift */,
+				24F62CDA29B8695E006A76E8 /* SearchTableViewController.swift */,
+				A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */,
+				A118239329BA35F900CE0CF5 /* SearchTableViewCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -243,6 +249,7 @@
 				24B57F6829A488EA006121CE /* Assets.xcassets in Resources */,
 				24F62CD729B86612006A76E8 /* Search.storyboard in Resources */,
 				24B57F6629A488E8006121CE /* Main.storyboard in Resources */,
+				A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -295,10 +302,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				24F62CDB29B8695E006A76E8 /* SearchViewController.swift in Sources */,
+				24F62CDB29B8695E006A76E8 /* SearchTableViewController.swift in Sources */,
 				24B57F7D29A49077006121CE /* ScheduleModel.swift in Sources */,
 				24B57F6329A488E8006121CE /* ViewController.swift in Sources */,
 				24B57F7B29A49065006121CE /* MapModel.swift in Sources */,
+				A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */,
 				A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */,
 				24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */,
 				24B57F7F29A49789006121CE /* MapViewModel.swift in Sources */,
