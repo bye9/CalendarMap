@@ -7,10 +7,10 @@
 
 import Foundation
 
-class SaerchViewModel: NSObject {
+class SearchViewModel: NSObject {
     var apiService = APIService()
     
-    func fetchSearchLocal(searchWord: String, completion: @escaping ([SearchLocal]?) -> Void) {
+    func fetchSearchLocal(searchWord: String, completion: @escaping (SearchLocation?) -> Void) {
         apiService.fetchSearchLocal(searchWord: searchWord) { data in
             completion(data)
         }

@@ -55,7 +55,7 @@ class APIService: NSObject {
     /// - Parameters:
     ///   - searchWord: 검색어
     ///   - completion: escaping 클로저 () -> Void
-    func fetchSearchLocal(searchWord: String, completion: @escaping ([SearchLocal]?) -> Void) {
+    func fetchSearchLocal(searchWord: String, completion: @escaping (SearchLocation?) -> Void) {
         let searchLocalURL = "https://openapi.naver.com/v1/search/local.json"
         let word = searchWord.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let urlString = URL(string: "\(searchLocalURL)?query=\(word)&display=5&start=1&sort=random")!
@@ -91,8 +91,8 @@ class APIService: NSObject {
             if let data = data {
                 let jsonDecoder = JSONDecoder()
 
-                let searchLocal = try! jsonDecoder.decode(SearchLocal.self, from: data)
-                completion([searchLocal])
+                let searchLocal = try! jsonDecoder.decode(SearchLocation.self, from: data)
+                completion(searchLocal)
             }
         }.resume()
     }

@@ -18,7 +18,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var searchLocalTextField: UITextField!
     
     var mapViewModel = MapViewModel()
-    var searchViewModel = SaerchViewModel()
+    var searchViewModel = SearchViewModel()
     let infoWindow = NMFInfoWindow()
     
     override func viewDidLoad() {
@@ -26,19 +26,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         searchLocalTextField.delegate = self
         initMapSetting()
-        
-        setupView()
+        initFloatingPanel()
     }
     
-    private func setupView() {
+    private func initFloatingPanel() {
         fpc = FloatingPanelController()
         fpc.delegate = self
-        let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
-        fpc.set(contentViewController: contentVC)
-//        fpc.track(scrollView: contentVC)
         fpc.isRemovalInteractionEnabled = true
         fpc.layout = MyFloatingPanelLayout()
-        
+    }
+    
+    private func reloadFloatingPanel(_ items: SearchLocation) {
+        DispatchQueue.main.async {
+            let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
+            self.fpc.set(contentViewController: contentVC)
+            let vc = contentVC as! SearchTableViewController
+            vc.locations = items
+            self.fpc.track(scrollView: vc.tb)
+            self.fpc.addPanel(toParent: self)
+        }
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -139,16 +146,20 @@ extension ViewController: NMFMapViewTouchDelegate {
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.searchLocalTextField.resignFirstResponder()
+        
         guard let word = textField.text else { return false }
+
+
         
         searchViewModel.fetchSearchLocal(searchWord: word) { data in
             dump(data)
             
+            guard let items = data else { return }
+            self.reloadFloatingPanel(items)
+            
+            
         }
-        
-        self.searchLocalTextField.resignFirstResponder()
-        
-        fpc.addPanel(toParent: self)
         
         return true
     }

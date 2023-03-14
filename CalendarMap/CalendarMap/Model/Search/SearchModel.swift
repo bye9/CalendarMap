@@ -7,17 +7,25 @@
 
 import Foundation
 
-// MARK: - SearchLocal
+// MARK: - SearchLocation
 /**
  - lastBuildDate: 검색 결과를 생성한 시간 ("Mon, 06 Mar 2023 22:57:38 +0900")
  - total: 총 검색 결과 개수 (5)
  - start: 검색 시작 위치 (1)
  - display: 한 번에 표시할 검색 결과 개수 (5)
  */
-struct SearchLocal: Codable {
+struct SearchLocation: Codable {
     let lastBuildDate: String
     let total, start, display: Int
     let items: [Item]
+    
+    init(lastBuildDate: String, total: Int, start: Int, display: Int, items: [Item]) {
+        self.lastBuildDate = lastBuildDate
+        self.total = total
+        self.start = start
+        self.display = display
+        self.items = items
+    }
 }
 
 // MARK: - Item
@@ -36,5 +44,17 @@ struct Item: Codable {
     let title, link, category, description: String
     let telephone, address, roadAddress: String
     let mapx, mapy: String
+    
+    init(title: String, link: String, category: String, description: String, telephone: String, address: String, roadAddress: String, mapx: String, mapy: String) {
+        self.title = title
+        self.link = link
+        self.category = category
+        self.description = description
+        self.telephone = telephone
+        self.address = address
+        self.roadAddress = roadAddress
+        self.mapx = mapx
+        self.mapy = mapy
+    }
 }
 
