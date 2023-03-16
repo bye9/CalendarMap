@@ -14,7 +14,6 @@ class SearchTableViewController: UIViewController {
 //    let items = ["1","2","3"]
 //    let searchViewModel = SearchViewModel()
     let cellReuseIdentifier = "SearchTableViewCell"
-    let total = 0
     var locations = SearchLocation(lastBuildDate: "", total: 0, start: 0, display: 0, items: [Item(title: "", link: "", category: "", description: "", telephone: "", address: "", roadAddress: "", mapx: "", mapy: "")])
     
     override func viewDidLoad() {
@@ -48,12 +47,38 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         print("정환 \(locations)")
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! SearchTableViewCell
-        cell.locationName.text = locations.items[indexPath.row].title
-//        //        cell.locationName.text = items[indexPath.row]
-//        cell.locationAddress.text = items[indexPath.row]
+        cell.locationName.text = locations.items[indexPath.row].title.htmlEscaped
+        cell.locationAddress.text = locations.items[indexPath.row].address
         
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
     
+}
+
+
+extension String {
+    // html 태그 제거 + html entity들 디코딩.
+    var htmlEscaped: String {
+        guard let encodedData = self.data(using: .utf8) else {
+            return self
+        }
+        
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        
+        do {
+            let attributed = try NSAttributedString(data: encodedData,
+                                                    options: options,
+                                                    documentAttributes: nil)
+            return attributed.string
+        } catch {
+            return self
+        }
+    }
 }

@@ -20,6 +20,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var mapViewModel = MapViewModel()
     var searchViewModel = SearchViewModel()
     let infoWindow = NMFInfoWindow()
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     private func initFloatingPanel() {
         fpc = FloatingPanelController()
+        fpc.changePanelStyle()
         fpc.delegate = self
         fpc.isRemovalInteractionEnabled = true
         fpc.layout = MyFloatingPanelLayout()
@@ -54,7 +56,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     
     func initMapSetting() {
-        let locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -68,6 +69,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
             marker.mapView = mainMapView
             
+            
+            
         } else {
             print("위치 서비스 Off 상태")
         }
@@ -78,13 +81,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func moveToCurrentLocation() {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
-        
+//        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.578325, lng: 126.8946875))
         cameraUpdate.animation = .easeIn
         mainMapView.moveCamera(cameraUpdate)
         mainMapView.positionMode = .direction
@@ -103,6 +101,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     
 extension ViewController: NMFMapViewTouchDelegate {
+    
+    /// 지도가 탭되면 호출되는 콜백 메서드.
+    /// - Parameters:
+    ///   - mapView: 지도객체
+    ///   - latlng: 탭된 지점의 지도 좌표
+    ///   - point: 탭된 지점의 화면 좌표
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         // 심볼 닫기
         infoWindow.close()
@@ -114,7 +118,7 @@ extension ViewController: NMFMapViewTouchDelegate {
         print(coords)
 
         mapViewModel.fetchAddress(coords: coords) { data in
-            dump(data)
+//            dump(data)
         }
         
     }
@@ -172,6 +176,25 @@ extension ViewController: FloatingPanelControllerDelegate {
         } else {
             
         }
+    }
+}
+
+extension FloatingPanelController {
+    func changePanelStyle() {
+        let appearance = SurfaceAppearance()
+        let shadow = SurfaceAppearance.Shadow()
+        shadow.color = UIColor.black
+        shadow.offset = CGSize(width: 0, height: -10)
+        shadow.radius = 2
+        shadow.opacity = 0.15
+        appearance.shadows = [shadow]
+        appearance.cornerRadius = 15.0
+        appearance.backgroundColor = .clear
+        appearance.borderColor = .clear
+        appearance.borderWidth = 0
+        
+        surfaceView.grabberHandle.isHidden = true
+        surfaceView.appearance = appearance
     }
 }
 
