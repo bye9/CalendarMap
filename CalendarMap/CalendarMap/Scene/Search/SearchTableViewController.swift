@@ -15,6 +15,8 @@ class SearchTableViewController: UIViewController {
 //    let searchViewModel = SearchViewModel()
     let cellReuseIdentifier = "SearchTableViewCell"
     var locations = SearchLocation(lastBuildDate: "", total: 0, start: 0, display: 0, items: [Item(title: "", link: "", category: "", description: "", telephone: "", address: "", roadAddress: "", mapx: "", mapy: "")])
+//    var coordinate = SearchCoordinate(status: "", meta: Meta(totalCount: 0, page: 0, count: 0), addresses: [Address(roadAddress: "", jibunAddress: "", englishAddress: "", addressElements: [AddressElement(types: [""], longName: "", shortName: "", code: "")], x: "", y: "", distance: 0)], errorMessage: "")
+    var searchViewModel = SearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +56,9 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        searchViewModel.fetchCoordinate(searchAddress: locations.items[indexPath.row].address) { data in
+            print("정환 %@, %@", data?.addresses[0].y, data?.addresses[0].x)
+        }
         
     }
     

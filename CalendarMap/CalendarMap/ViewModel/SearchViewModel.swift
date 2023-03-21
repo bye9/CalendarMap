@@ -15,4 +15,10 @@ class SearchViewModel: NSObject {
             completion(data)
         }
     }
+    
+    func fetchCoordinate(searchAddress: String, completion: @escaping (SearchCoordinate?) -> Void) {
+        apiService.fetchCoordinate(searchAddress: searchAddress) { data in
+            completion(data)
+        }
+    }
 }

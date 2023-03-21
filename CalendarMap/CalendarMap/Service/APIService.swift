@@ -56,9 +56,9 @@ class APIService: NSObject {
     ///   - searchWord: 검색어
     ///   - completion: escaping 클로저 () -> Void
     func fetchSearchLocal(searchWord: String, completion: @escaping (SearchLocation?) -> Void) {
-        let searchLocalURL = "https://openapi.naver.com/v1/search/local.json"
+        let url = "https://openapi.naver.com/v1/search/local.json"
         let word = searchWord.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        let urlString = URL(string: "\(searchLocalURL)?query=\(word)&display=5&start=1&sort=random")!
+        let urlString = URL(string: "\(url)?query=\(word)&display=5&start=1&sort=random")!
 
         let clientId = Bundle.main.object(forInfoDictionaryKey: "X-Naver-Client-Id") as! String
         let clientSecret = Bundle.main.object(forInfoDictionaryKey: "X-Naver-Client-Secret") as! String
@@ -97,5 +97,50 @@ class APIService: NSObject {
         }.resume()
     }
 
+    /// 주소 검색 API는 지번, 도로명를 질의어로 사용해서 주소 정보를 검색합니다. 검색 결과로 주소 목록과 세부 정보를 JSON 형태로 반환합니다.
+    /// - Parameters:
+    ///   - address: 주소
+    ///   - completion: escaping 클로저 () -> Void
+    func fetchCoordinate(searchAddress: String, completion: @escaping (SearchCoordinate?) -> Void) {
+        let url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
+        let address = searchAddress.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let urlString = URL(string: "\(url)?query=\(address)")!
+
+        let clientId = Bundle.main.object(forInfoDictionaryKey: "NMFClientId") as! String
+        let clientSecret = Bundle.main.object(forInfoDictionaryKey: "NMFClientSecret") as! String
+
+        var request = URLRequest(url: urlString)
+        request.httpMethod = "GET"
+        request.setValue(clientId, forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
+        request.setValue(clientSecret, forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
+
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                print("Error: error calling GET")
+                print(error!)
+                completion(nil)
+                return
+            }
+            // 옵셔널 바인딩
+            guard let safeData = data else {
+                print("Error: Did not receive data")
+                completion(nil)
+                return
+            }
+            // HTTP 200번대 정상코드인 경우만 다음 코드로 넘어감
+            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
+                print("Error: HTTP request failed")
+                completion(nil)
+                return
+            }
+
+            if let data = data {
+                let jsonDecoder = JSONDecoder()
+
+                let searchCoordinate = try! jsonDecoder.decode(SearchCoordinate.self, from: data)
+                completion(searchCoordinate)
+            }
+        }.resume()
+    }
     
 }

@@ -58,3 +58,50 @@ struct Item: Codable {
     }
 }
 
+// MARK: - SearchCoordinate
+/**
+ - status: 검색 결과 상태 코드 ("OK")
+ - meta: 검색 메타 데이터
+ - addresses: 주소 검색 결과 목록
+ - errorMessage: 예외 발생 시 메시지
+ */
+struct SearchCoordinate: Codable {
+    let status: String
+    let meta: Meta
+    let addresses: [Address]
+    let errorMessage: String
+    
+    init(status: String, meta: Meta, addresses: [Address], errorMessage: String) {
+        self.status = status
+        self.meta = meta
+        self.addresses = addresses
+        self.errorMessage = errorMessage
+    }
+}
+
+// MARK: - Address
+/**
+ - roadAddress: 도로명 주소 ("서울특별시 마포구 상암산로1길 26 상암중학교")
+ - jibunAddress: 지번 주소 ("서울특별시 마포구 상암동 1657 상암중학교")
+ - englishAddress: 영어 주소 ("26, Sangamsan-ro 1-gil, Mapo-gu, Seoul, Republic of Korea")
+ - addressElements: 주소를 이루는 요소들
+ - x, y: 경도 및 위도 ("x": "126.8878807", "y": "37.5788596")
+ - distance: 검색 중심 좌표로부터의 거리
+ */
+struct Address: Codable {
+    let roadAddress, jibunAddress, englishAddress: String
+    let addressElements: [AddressElement]
+    let x, y: String
+    let distance: Int
+}
+
+// MARK: - AddressElement
+struct AddressElement: Codable {
+    let types: [String]
+    let longName, shortName, code: String
+}
+
+// MARK: - Meta
+struct Meta: Codable {
+    let totalCount, page, count: Int
+}

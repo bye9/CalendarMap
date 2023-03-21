@@ -21,6 +21,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var searchViewModel = SearchViewModel()
     let infoWindow = NMFInfoWindow()
     let locationManager = CLLocationManager()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +57,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     
     func initMapSetting() {
+        moveToCurrentLocation()
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -77,16 +80,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         mainMapView.touchDelegate = self
 
-        moveToCurrentLocation()
+
     }
     
     func moveToCurrentLocation() {
 //        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.578325, lng: 126.8946875))
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5788596, lng: 126.8878807))
         cameraUpdate.animation = .easeIn
-        mainMapView.moveCamera(cameraUpdate)
-        mainMapView.positionMode = .direction
+        mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
+            if isCancelled {
+                print("카메라 이동 취소")
+            } else {
+                print("카메라 이동 완료")
+            }
+        }
+//        mainMapView.positionMode = .direction
     }
+    
+    // TODO: delegate로 좌표받아서 카메라 이동 함수 구현
+    
     
     
     
