@@ -44,6 +44,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
             self.fpc.set(contentViewController: contentVC)
             let vc = contentVC as! SearchTableViewController
+            vc.delegate = self
             vc.locations = items
             self.fpc.track(scrollView: vc.tb)
             self.fpc.addPanel(toParent: self)
@@ -189,6 +190,30 @@ extension ViewController: FloatingPanelControllerDelegate {
             
         }
     }
+}
+
+extension ViewController: SendCoordinateDelegate {
+    func sendCoordinate(x: String, y: String) {
+//        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearchTableViewController") as? SearchTableViewController else { return }
+//        vc.delegate = self
+        
+        DispatchQueue.main.async {
+            // bottom panel 닫기
+//            self.fpc.removePanelFromParent(animated: true)
+            
+            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: Double(y)!, lng: Double(x)!))
+            cameraUpdate.animation = .easeIn
+            self.mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
+                if isCancelled {
+                    print("카메라 이동 취소")
+                } else {
+                    print("카메라 이동 완료")
+                }
+            }
+        }
+    }
+    
+    
 }
 
 extension FloatingPanelController {
