@@ -9,6 +9,7 @@ import UIKit
 
 protocol SendCoordinateDelegate {
     func sendCoordinate(x: String, y: String)
+    func registerSchedule() // TODO: 여기서 장소 좌표 및 주소 값 등 ViewController로 전달 필요...
 }
 
 class SearchTableViewController: UIViewController {
@@ -53,9 +54,10 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print("정환 \(locations)")
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! SearchTableViewCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
         cell.locationName.text = locations.items[indexPath.row].title.htmlEscaped
         cell.locationAddress.text = locations.items[indexPath.row].address
+        cell.delegate = self
         
         return cell
     }
@@ -70,6 +72,15 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     
 }
 
+extension SearchTableViewController: ButtonTappedDelegate {
+    // TODO: 셀에서 여기로 장소 좌표 및 주소 값 전달 필요...
+    func cellButtonTapped() {
+        print("일정등록하기버튼 클릭")
+        
+        self.delegate?.registerSchedule()
+
+    }
+}
 
 extension String {
     // html 태그 제거 + html entity들 디코딩.

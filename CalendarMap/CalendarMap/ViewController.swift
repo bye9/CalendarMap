@@ -213,6 +213,14 @@ extension ViewController: SendCoordinateDelegate {
         }
     }
     
+    // TODO:
+    func registerSchedule() {
+        self.fpc.removePanelFromParent(animated: true)
+        
+        let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController")
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
 }
 

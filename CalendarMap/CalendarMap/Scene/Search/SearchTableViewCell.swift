@@ -7,10 +7,16 @@
 
 import UIKit
 
+protocol ButtonTappedDelegate: AnyObject {
+    func cellButtonTapped()
+}
+
 class SearchTableViewCell: UITableViewCell {
     
     @IBOutlet var locationName: UILabel!
     @IBOutlet var locationAddress: UILabel!
+    
+    weak var delegate: ButtonTappedDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,6 +27,10 @@ class SearchTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func registerScheduleTapped(_ sender: UIButton) {
+        delegate?.cellButtonTapped()
     }
     
 }
