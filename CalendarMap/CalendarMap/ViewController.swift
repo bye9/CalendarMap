@@ -85,8 +85,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func moveToCurrentLocation() {
-//        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5788596, lng: 126.8878807))
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+//        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5788596, lng: 126.8878807))
         cameraUpdate.animation = .easeIn
         mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
             if isCancelled {
@@ -216,6 +216,8 @@ extension ViewController: SendCoordinateDelegate {
     // TODO:
     func registerSchedule() {
         self.fpc.removePanelFromParent(animated: true)
+        
+
         
         let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController")
         self.navigationController?.pushViewController(vc, animated: true)

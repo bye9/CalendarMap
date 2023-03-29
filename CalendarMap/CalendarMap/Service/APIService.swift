@@ -9,6 +9,7 @@ import Foundation
 
 class APIService: NSObject {
 
+    // TODO: 삭제예정
     // 좌표 -> 주소
     func fetchAddress(coords: String, completion: @escaping ([Map]?) -> Void) {
         let reverseGeocodingURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc"

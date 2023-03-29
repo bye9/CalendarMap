@@ -23,6 +23,8 @@
 		A118239229B62BDE00CE0CF5 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118239129B62BDE00CE0CF5 /* SearchViewModel.swift */; };
 		A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118239329BA35F900CE0CF5 /* SearchTableViewCell.swift */; };
 		A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */; };
+		A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */; };
+		A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */; };
 		F4B334AC1AE2E53E0316A566 /* Pods_CalendarMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,6 +49,8 @@
 		A118239129B62BDE00CE0CF5 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		A118239329BA35F900CE0CF5 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
+		A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
+		A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScheduleViewController.swift; sourceTree = "<group>"; };
 		C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalendarMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -128,6 +132,7 @@
 		24B57F7529A4902A006121CE /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				A118239729CB3D5F00CE0CF5 /* Schedule */,
 				24F62CD529B86605006A76E8 /* Search */,
 			);
 			path = Scene;
@@ -175,6 +180,15 @@
 				A118238F29B6256200CE0CF5 /* SearchModel.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		A118239729CB3D5F00CE0CF5 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */,
+				A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */,
+			);
+			path = Schedule;
 			sourceTree = "<group>";
 		};
 		E2D8AB760C6A924804313156 /* Frameworks */ = {
@@ -250,6 +264,7 @@
 				24F62CD729B86612006A76E8 /* Search.storyboard in Resources */,
 				24B57F6629A488E8006121CE /* Main.storyboard in Resources */,
 				A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */,
+				A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +321,7 @@
 				24B57F7D29A49077006121CE /* ScheduleModel.swift in Sources */,
 				24B57F6329A488E8006121CE /* ViewController.swift in Sources */,
 				24B57F7B29A49065006121CE /* MapModel.swift in Sources */,
+				A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */,
 				A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */,
 				A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */,
 				24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */,

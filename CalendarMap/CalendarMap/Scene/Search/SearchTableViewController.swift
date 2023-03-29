@@ -64,7 +64,7 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         searchViewModel.fetchCoordinate(searchAddress: locations.items[indexPath.row].address) { data in
-            print("정환 %@, %@", data?.addresses[0].y, data?.addresses[0].x)
+            print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
             self.delegate?.sendCoordinate(x: data?.addresses[0].x ?? "0", y: data?.addresses[0].y ?? "0")
         }
         
@@ -77,7 +77,11 @@ extension SearchTableViewController: ButtonTappedDelegate {
     func cellButtonTapped() {
         print("일정등록하기버튼 클릭")
         
-        self.delegate?.registerSchedule()
+        let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController")
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+        // TODO: 테이블뷰 검색결과 남겨두고 일정등록화면 갔다올 것인가, 아닌가
+//        self.delegate?.registerSchedule()
 
     }
 }
