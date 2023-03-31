@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		240BA97F29D5568700A023FF /* ScheduleCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240BA97E29D5568700A023FF /* ScheduleCollectionViewController.swift */; };
+		240BA98229D5659900A023FF /* ScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240BA98029D5659900A023FF /* ScheduleCollectionViewCell.swift */; };
+		240BA98329D5659900A023FF /* ScheduleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 240BA98129D5659900A023FF /* ScheduleCollectionViewCell.xib */; };
 		24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B57F5E29A488E8006121CE /* AppDelegate.swift */; };
 		24B57F6129A488E8006121CE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B57F6029A488E8006121CE /* SceneDelegate.swift */; };
 		24B57F6329A488E8006121CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B57F6229A488E8006121CE /* ViewController.swift */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		240BA97E29D5568700A023FF /* ScheduleCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewController.swift; sourceTree = "<group>"; };
+		240BA98029D5659900A023FF /* ScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
+		240BA98129D5659900A023FF /* ScheduleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleCollectionViewCell.xib; sourceTree = "<group>"; };
 		24B57F5B29A488E8006121CE /* CalendarMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CalendarMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24B57F5E29A488E8006121CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		24B57F6029A488E8006121CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -187,6 +193,9 @@
 			children = (
 				A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */,
 				A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */,
+				240BA97E29D5568700A023FF /* ScheduleCollectionViewController.swift */,
+				240BA98129D5659900A023FF /* ScheduleCollectionViewCell.xib */,
+				240BA98029D5659900A023FF /* ScheduleCollectionViewCell.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -265,6 +274,7 @@
 				24B57F6629A488E8006121CE /* Main.storyboard in Resources */,
 				A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */,
 				A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */,
+				240BA98329D5659900A023FF /* ScheduleCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,8 +327,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				240BA98229D5659900A023FF /* ScheduleCollectionViewCell.swift in Sources */,
 				24F62CDB29B8695E006A76E8 /* SearchTableViewController.swift in Sources */,
 				24B57F7D29A49077006121CE /* ScheduleModel.swift in Sources */,
+				240BA97F29D5568700A023FF /* ScheduleCollectionViewController.swift in Sources */,
 				24B57F6329A488E8006121CE /* ViewController.swift in Sources */,
 				24B57F7B29A49065006121CE /* MapModel.swift in Sources */,
 				A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */,
@@ -479,8 +491,10 @@
 				DEVELOPMENT_TEAM = XZM3XQ6ZMC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarMap/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -509,8 +523,10 @@
 				DEVELOPMENT_TEAM = XZM3XQ6ZMC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarMap/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "사용자의 위치를 받습니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = "";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
