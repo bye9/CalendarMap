@@ -17,11 +17,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet var mainMapView: NMFMapView!
     @IBOutlet var searchLocalTextField: UITextField!
     
+    @IBOutlet var mainCollectionView: UICollectionView!
+    
+    
+    
     var mapViewModel = MapViewModel()
     var searchViewModel = SearchViewModel()
     let infoWindow = NMFInfoWindow()
     let locationManager = CLLocationManager()
-
+    var currentIdx: CGFloat = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +34,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         searchLocalTextField.delegate = self
         initMapSetting()
         initFloatingPanel()
+        initMainCollectionView()
+        
+        
+    
     }
     
     private func initFloatingPanel() {
@@ -57,7 +66,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
 
     
-    func initMapSetting() {
+    private func initMapSetting() {
         moveToCurrentLocation()
         
         locationManager.delegate = self
@@ -84,7 +93,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
 
     }
     
-    func moveToCurrentLocation() {
+    private func moveToCurrentLocation() {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
 //        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5788596, lng: 126.8878807))
         cameraUpdate.animation = .easeIn
@@ -109,6 +118,16 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
     }
     
+    private func initMainCollectionView() {
+        let layout = mainCollectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: 308, height: 88)
+        layout.minimumLineSpacing = 16
+        mainCollectionView.delegate = self
+        mainCollectionView.dataSource = self
+        mainCollectionView.decelerationRate = .fast
+        mainCollectionView.isPagingEnabled = false
+        
+    }
     
 }
     
@@ -244,6 +263,49 @@ extension FloatingPanelController {
         surfaceView.appearance = appearance
     }
 }
+
+extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScheduleCollectionViewCell", for: indexPath) as? ScheduleCollectionViewCell else { return UICollectionViewCell() }
+//        cell.contentMode = .scaleAspectFit
+        return cell
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return CGSize(width: 310, height: 100)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return 16
+//    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        
+        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+        
+        var offset = targetContentOffset.pointee
+        let idx = round((offset.x + mainCollectionView.contentInset.left) / cellWidth)
+        
+        if idx > currentIdx {
+            currentIdx += 1
+        } else if idx < currentIdx {
+            if currentIdx != 0 {
+                currentIdx -= 1
+            }
+        }
+        
+        offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
+        
+        targetContentOffset.pointee = offset
+    }
+}
+
 
 class MyFloatingPanelLayout: FloatingPanelLayout {
     var position: FloatingPanelPosition {

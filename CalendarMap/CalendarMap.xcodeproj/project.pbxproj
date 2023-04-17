@@ -25,6 +25,7 @@
 		A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */; };
 		A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */; };
 		A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */; };
+		A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */; };
 		F4B334AC1AE2E53E0316A566 /* Pods_CalendarMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
 		A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScheduleViewController.swift; sourceTree = "<group>"; };
+		A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
 		C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalendarMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -187,6 +189,7 @@
 			children = (
 				A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */,
 				A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */,
+				A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 				A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */,
 				A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */,
 				A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */,
+				A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */,
 				24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */,
 				24B57F7F29A49789006121CE /* MapViewModel.swift in Sources */,
 				A118239229B62BDE00CE0CF5 /* SearchViewModel.swift in Sources */,
