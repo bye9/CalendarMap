@@ -105,3 +105,32 @@ struct AddressElement: Codable {
 struct Meta: Codable {
     let totalCount, page, count: Int
 }
+
+
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
+//
+//   let searchKakaoLocation = try? JSONDecoder().decode(KakaoSearchLocation.self, from: jsonData)
+// MARK: - KakaoSearchLocation
+struct KakaoSearchLocation: Codable {
+    let documents: [Document]
+}
+
+// MARK: - Document
+struct Document: Codable {
+    let addressName, categoryGroupCode, categoryGroupName, categoryName: String
+    let distance, id, phone, placeName: String
+    let placeURL, roadAddressName, x, y: String
+
+    enum CodingKeys: String, CodingKey {
+        case addressName = "address_name"
+        case categoryGroupCode = "category_group_code"
+        case categoryGroupName = "category_group_name"
+        case categoryName = "category_name"
+        case distance, id, phone
+        case placeName = "place_name"
+        case placeURL = "place_url"
+        case roadAddressName = "road_address_name"
+        case x, y
+    }
+}

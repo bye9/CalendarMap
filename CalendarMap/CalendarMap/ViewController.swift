@@ -48,7 +48,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         fpc.layout = MyFloatingPanelLayout()
     }
     
-    private func reloadFloatingPanel(_ items: SearchLocation) {
+    private func reloadFloatingPanel(_ items: KakaoSearchLocation) {
         DispatchQueue.main.async {
             let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
             self.fpc.set(contentViewController: contentVC)
@@ -188,13 +188,11 @@ extension ViewController: UITextFieldDelegate {
 
 
         
-        searchViewModel.fetchSearchLocal(searchWord: word) { data in
+        searchViewModel.fetchKakaoSearchLocation(searchWord: word) { data in
             dump(data)
             
             guard let items = data else { return }
             self.reloadFloatingPanel(items)
-            
-            
         }
         
         return true
@@ -229,6 +227,10 @@ extension ViewController: SendCoordinateDelegate {
                     print("카메라 이동 완료")
                 }
             }
+            
+            let marker = NMFMarker()
+            marker.position = NMGLatLng(lat: Double(y) ?? 0, lng: Double(x) ?? 0)
+            marker.mapView = self.mainMapView
         }
     }
     

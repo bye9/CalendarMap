@@ -101,7 +101,7 @@ class APIService: NSObject {
     /// 주소 검색 API는 지번, 도로명를 질의어로 사용해서 주소 정보를 검색합니다. 검색 결과로 주소 목록과 세부 정보를 JSON 형태로 반환합니다.
     /// - Parameters:
     ///   - address: 주소
-    ///   - completion: escaping 클로저 () -> Void
+    ///   - completion: 경도 및 위도
     func fetchCoordinate(searchAddress: String, completion: @escaping (SearchCoordinate?) -> Void) {
         let url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
         let address = searchAddress.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -144,4 +144,45 @@ class APIService: NSObject {
         }.resume()
     }
     
+    
+    // 카카오 키워드로 주소 검색하기
+    func fetchKakaoSearchLocation(searchWord: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
+        let url = "https://dapi.kakao.com/v2/local/search/keyword"
+        let word = searchWord.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        let urlString = URL(string: "\(url)?query=\(word)")!
+
+        let kakaoKey = Bundle.main.object(forInfoDictionaryKey: "KakaoAK") as! String
+
+        var request = URLRequest(url: urlString)
+        request.httpMethod = "GET"
+        request.setValue(kakaoKey, forHTTPHeaderField: "Authorization")
+
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                print("Error: error calling GET")
+                print(error!)
+                completion(nil)
+                return
+            }
+            // 옵셔널 바인딩
+            guard let safeData = data else {
+                print("Error: Did not receive data")
+                completion(nil)
+                return
+            }
+            // HTTP 200번대 정상코드인 경우만 다음 코드로 넘어감
+            guard let response = response as? HTTPURLResponse, (200 ..< 299) ~= response.statusCode else {
+                print("Error: HTTP request failed")
+                completion(nil)
+                return
+            }
+
+            if let data = data {
+                let jsonDecoder = JSONDecoder()
+
+                let kakaoSearchLocation = try! jsonDecoder.decode(KakaoSearchLocation.self, from: data)
+                completion(kakaoSearchLocation)
+            }
+        }.resume()
+    }
 }

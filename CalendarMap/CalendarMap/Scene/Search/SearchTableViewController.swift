@@ -19,8 +19,8 @@ class SearchTableViewController: UIViewController {
 //    let items = ["1","2","3"]
 //    let searchViewModel = SearchViewModel()
     let cellReuseIdentifier = "SearchTableViewCell"
-//    var locations: SearchLocation?
-    var locations = SearchLocation(lastBuildDate: "", total: 0, start: 0, display: 0, items: [Item(title: "", link: "", category: "", description: "", telephone: "", address: "", roadAddress: "", mapx: "", mapy: "")])
+    var locations: KakaoSearchLocation?
+//    var locations = SearchLocation(lastBuildDate: "", total: 0, start: 0, display: 0, items: [Item(title: "", link: "", category: "", description: "", telephone: "", address: "", roadAddress: "", mapx: "", mapy: "")])
 //    var coordinate = SearchCoordinate(status: "", meta: Meta(totalCount: 0, page: 0, count: 0), addresses: [Address(roadAddress: "", jibunAddress: "", englishAddress: "", addressElements: [AddressElement(types: [""], longName: "", shortName: "", code: "")], x: "", y: "", distance: 0)], errorMessage: "")
     var searchViewModel = SearchViewModel()
     var delegate: SendCoordinateDelegate?
@@ -45,7 +45,7 @@ class SearchTableViewController: UIViewController {
 
 extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.total
+        return locations?.documents.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -56,18 +56,27 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         print("정환 \(locations)")
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
-        cell.locationName.text = locations.items[indexPath.row].title.htmlEscaped
-        cell.locationAddress.text = locations.items[indexPath.row].address
+        
+        cell.locationName.text = locations?.documents[indexPath.row].placeName.htmlEscaped
+        
+        let roadAddressName = locations?.documents[indexPath.row].roadAddressName ?? ""
+        let addressName = locations?.documents[indexPath.row].addressName ?? ""
+        cell.locationAddress.text = roadAddressName.count == 0 ? addressName : roadAddressName
         cell.delegate = self
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        searchViewModel.fetchCoordinate(searchAddress: locations.items[indexPath.row].address) { data in
+        guard let roadAddressName = locations?.documents[indexPath.row].roadAddressName else { return }
+        guard let addressName = locations?.documents[indexPath.row].addressName else { return }
+        
+        searchViewModel.fetchCoordinate(searchAddress: roadAddressName.count == 0 ? addressName : roadAddressName) { data in
             print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
             self.delegate?.sendCoordinate(x: data?.addresses[0].x ?? "0", y: data?.addresses[0].y ?? "0")
         }
+        
+        
         
     }
     

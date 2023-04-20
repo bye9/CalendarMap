@@ -21,4 +21,10 @@ class SearchViewModel: NSObject {
             completion(data)
         }
     }
+    
+    func fetchKakaoSearchLocation(searchWord: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
+        apiService.fetchKakaoSearchLocation(searchWord: searchWord) { data in
+            completion(data)
+        }
+    }
 }
