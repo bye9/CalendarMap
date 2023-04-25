@@ -3,22 +3,32 @@ PODS:
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.16.2):
     - NMapsGeometry
+  - Realm (10.38.0):
+    - Realm/Headers (= 10.38.0)
+  - Realm/Headers (10.38.0)
+  - RealmSwift (10.38.0):
+    - Realm (= 10.38.0)
 
 DEPENDENCIES:
   - FloatingPanel
   - NMapsMap
+  - RealmSwift
 
 SPEC REPOS:
   trunk:
     - FloatingPanel
     - NMapsGeometry
     - NMapsMap
+    - Realm
+    - RealmSwift
 
 SPEC CHECKSUMS:
   FloatingPanel: de6bb891912ede28da7b1140f7b583c474fec28a
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
+  Realm: 5902885dd1d5e71b0b020830caab937ecdf5bf07
+  RealmSwift: 0fc037d6c32c7c4fc9362892380f380114ecdcf0
 
-PODFILE CHECKSUM: 5ddd8003444e6d1969a45db91fd635dae1f1ca10
+PODFILE CHECKSUM: eda3972557eddbb77475c370e2cee2ec978df0e9
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
