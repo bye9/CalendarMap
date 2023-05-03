@@ -14,10 +14,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     var fpc: FloatingPanelController!
     
-    @IBOutlet var mainMapView: NMFMapView!
-    @IBOutlet var searchLocalTextField: UITextField!
-    
-    @IBOutlet var mainCollectionView: UICollectionView!
+    @IBOutlet weak var searchImageView: UIImageView!
+    @IBOutlet weak var mainMapView: NMFMapView!
+    @IBOutlet weak var searchLocalTextField: UITextField!
+    @IBOutlet weak var mainCollectionView: UICollectionView!
     
     
     
@@ -32,10 +32,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         
         searchLocalTextField.delegate = self
+        searchLocalTextField.attributedPlaceholder = NSAttributedString(string: "어디서 만나세요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+        
         initMapSetting()
         initFloatingPanel()
         initMainCollectionView()
         
+        searchImageView.image = UIImage(named: "SearchIcon")
         
     
     }
@@ -55,6 +58,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let vc = contentVC as! SearchTableViewController
             vc.delegate = self
             vc.locations = items
+            vc.tb.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
             self.fpc.track(scrollView: vc.tb)
             self.fpc.addPanel(toParent: self)
         }
@@ -120,7 +124,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     private func initMainCollectionView() {
         let layout = mainCollectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: 308, height: 88)
+        layout.itemSize = CGSize(width: 308, height: 92)
         layout.minimumLineSpacing = 16
         mainCollectionView.delegate = self
         mainCollectionView.dataSource = self
@@ -320,8 +324,8 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: 40.0, edge: .top, referenceGuide: .safeArea),
-            .half: FloatingPanelLayoutAnchor(absoluteInset: 200, edge: .bottom, referenceGuide: .safeArea),
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 127, edge: .top, referenceGuide: .superview),
+            .half: FloatingPanelLayoutAnchor(absoluteInset: 312, edge: .bottom, referenceGuide: .superview),
         ]
     }
 }

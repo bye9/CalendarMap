@@ -93,6 +93,7 @@
 		24B57F5D29A488E8006121CE /* CalendarMap */ = {
 			isa = PBXGroup;
 			children = (
+				A1C535442A02843600BF7344 /* Resources */,
 				24B57F7529A4902A006121CE /* Scene */,
 				24B57F7429A49019006121CE /* Service */,
 				24B57F7329A49015006121CE /* Model */,
@@ -102,7 +103,6 @@
 				24B57F6229A488E8006121CE /* ViewController.swift */,
 				A1CA63B929F17D8B00C6CDD2 /* RealmManager.swift */,
 				24B57F6429A488E8006121CE /* Main.storyboard */,
-				24B57F6729A488EA006121CE /* Assets.xcassets */,
 				24B57F6929A488EA006121CE /* LaunchScreen.storyboard */,
 				24B57F6C29A488EA006121CE /* Info.plist */,
 			);
@@ -198,6 +198,30 @@
 				A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */,
 			);
 			path = Schedule;
+			sourceTree = "<group>";
+		};
+		A1C535442A02843600BF7344 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A1C535462A02845700BF7344 /* Images */,
+				A1C535452A02845100BF7344 /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A1C535452A02845100BF7344 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		A1C535462A02845700BF7344 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				24B57F6729A488EA006121CE /* Assets.xcassets */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		E2D8AB760C6A924804313156 /* Frameworks */ = {
