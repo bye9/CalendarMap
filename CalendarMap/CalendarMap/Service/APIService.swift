@@ -155,7 +155,7 @@ class APIService: NSObject {
 
         var request = URLRequest(url: urlString)
         request.httpMethod = "GET"
-        request.setValue(kakaoKey, forHTTPHeaderField: "Authorization")
+        request.setValue("KakaoAK " + kakaoKey, forHTTPHeaderField: "Authorization")
 
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard error == nil else {

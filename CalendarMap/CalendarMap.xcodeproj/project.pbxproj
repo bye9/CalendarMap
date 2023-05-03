@@ -27,6 +27,7 @@
 		A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */; };
 		A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */; };
 		A1CA63BA29F17D8B00C6CDD2 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1CA63B929F17D8B00C6CDD2 /* RealmManager.swift */; };
+		A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E704D229F8031600D4FFDD /* ScheduleRealmModel.swift */; };
 		F4B334AC1AE2E53E0316A566 /* Pods_CalendarMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScheduleViewController.swift; sourceTree = "<group>"; };
 		A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
 		A1CA63B929F17D8B00C6CDD2 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
+		A1E704D229F8031600D4FFDD /* ScheduleRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRealmModel.swift; sourceTree = "<group>"; };
 		C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalendarMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				24B57F7C29A49077006121CE /* ScheduleModel.swift */,
+				A1E704D229F8031600D4FFDD /* ScheduleRealmModel.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 				A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */,
 				A1CA63BA29F17D8B00C6CDD2 /* RealmManager.swift in Sources */,
 				A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */,
+				A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */,
 				A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */,
 				A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */,
 				24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */,
