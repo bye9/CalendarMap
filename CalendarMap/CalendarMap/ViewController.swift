@@ -27,6 +27,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentIdx: CGFloat = 0.0
     
+    // TODO: 대화역, 상암중학교, 부산역 좌표 이동 테스트
+    var coordinates: [(Double, Double)] = [(126.747500970967, 37.676157377075), (126.888144865456, 37.5790897397893), (129.04141918283216, 35.11510918247538)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -270,7 +272,7 @@ extension FloatingPanelController {
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+        return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -292,21 +294,28 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
         
         let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
-        
         var offset = targetContentOffset.pointee
-        let idx = round((offset.x + mainCollectionView.contentInset.left) / cellWidth)
+        let index = round((offset.x + mainCollectionView.contentInset.left) / cellWidth)
         
-        if idx > currentIdx {
+        if index > currentIdx {
             currentIdx += 1
-        } else if idx < currentIdx {
+        } else if index < currentIdx {
             if currentIdx != 0 {
                 currentIdx -= 1
             }
         }
-        
         offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
-        
         targetContentOffset.pointee = offset
+        
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinates[Int(currentIdx)].1, lng: coordinates[Int(currentIdx)].0))
+        cameraUpdate.animation = .none
+        mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
+            if isCancelled {
+                print("카메라 이동 취소")
+            } else {
+                print("카메라 이동 완료")
+            }
+        }
     }
 }
 

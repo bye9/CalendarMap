@@ -32,7 +32,7 @@
                                         </constraints>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="S41-tj-ud3">
-                                        <rect key="frame" x="46" y="12" width="251" height="20"/>
+                                        <rect key="frame" x="46" y="12" width="297" height="20"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="JD8-Ua-yXb"/>
@@ -44,7 +44,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="S41-tj-ud3" secondAttribute="trailing" constant="46" id="0Jb-UL-MA0"/>
+                                    <constraint firstAttribute="trailing" secondItem="S41-tj-ud3" secondAttribute="trailing" id="0Jb-UL-MA0"/>
                                     <constraint firstAttribute="bottom" secondItem="LkJ-Jf-ARQ" secondAttribute="bottom" constant="10" id="CKW-Ck-gUC"/>
                                     <constraint firstAttribute="height" constant="44" id="UtR-8q-cnM"/>
                                     <constraint firstItem="LkJ-Jf-ARQ" firstAttribute="centerY" secondItem="Z3y-eH-FGS" secondAttribute="centerY" id="Y5a-UZ-jjW"/>
@@ -95,7 +95,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScheduleCollectionViewCell" id="cM1-o4-hGZ" customClass="ScheduleCollectionViewCell" customModule="CalendarMap" customModuleProvider="target">
-                                        <rect key="frame" x="34" y="2" width="308" height="88"/>
+                                        <rect key="frame" x="33" y="2" width="308" height="88"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="cZh-0F-Do9">
                                             <rect key="frame" x="0.0" y="0.0" width="308" height="88"/>
