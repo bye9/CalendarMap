@@ -52,6 +52,8 @@ class APIService: NSObject {
         }.resume()
     }
     
+    // TODO: 삭제예정
+    
     /// 검색 API를 사용해 네이버 지역 서비스에 등록된 업체 및 기관을 검색한 결과를 XML 형식 또는 JSON 형식으로 반환합니다.
     /// - Parameters:
     ///   - searchWord: 검색어
@@ -98,10 +100,12 @@ class APIService: NSObject {
         }.resume()
     }
 
+    /// 카카오 주소 -> 네이버 좌표
+    ///
     /// 주소 검색 API는 지번, 도로명를 질의어로 사용해서 주소 정보를 검색합니다. 검색 결과로 주소 목록과 세부 정보를 JSON 형태로 반환합니다.
     /// - Parameters:
     ///   - address: 주소
-    ///   - completion: 경도 및 위도
+    ///   - completion: 주소 검색 결과 목록
     func fetchCoordinate(searchAddress: String, completion: @escaping (SearchCoordinate?) -> Void) {
         let url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode"
         let address = searchAddress.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
@@ -144,12 +148,18 @@ class APIService: NSObject {
         }.resume()
     }
     
-    
-    // 카카오 키워드로 주소 검색하기
-    func fetchKakaoSearchLocation(searchWord: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
+    /// 장소 검색어 -> 장소 이름, 카테고리, 주소
+    ///
+    /// 카카오 키워드로 장소 검색하기
+    /// - Parameters:
+    ///   - searchWord: 검색을 원하는 질의어
+    ///   - x: 중심 좌표의 X 혹은 경도(longitude) 값
+    ///   - y: 중심 좌표의 Y 혹은 위도(latitude) 값
+    ///   - completion:
+    func fetchKakaoSearchLocation(searchWord: String, longitude: String, latitude: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
         let url = "https://dapi.kakao.com/v2/local/search/keyword"
         let word = searchWord.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
-        let urlString = URL(string: "\(url)?query=\(word)")!
+        let urlString = URL(string: "\(url)?query=\(word)&x=\(longitude)&y=\(latitude)")!
 
         let kakaoKey = Bundle.main.object(forInfoDictionaryKey: "KakaoAK") as! String
 

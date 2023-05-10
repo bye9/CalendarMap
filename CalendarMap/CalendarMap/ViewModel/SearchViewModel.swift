@@ -22,8 +22,8 @@ class SearchViewModel: NSObject {
         }
     }
     
-    func fetchKakaoSearchLocation(searchWord: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
-        apiService.fetchKakaoSearchLocation(searchWord: searchWord) { data in
+    func fetchKakaoSearchLocation(searchWord: String, lon: String, lat: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
+        apiService.fetchKakaoSearchLocation(searchWord: searchWord, longitude: lon, latitude: lat) { data in
             completion(data)
         }
     }

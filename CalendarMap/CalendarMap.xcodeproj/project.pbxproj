@@ -93,11 +93,12 @@
 		24B57F5D29A488E8006121CE /* CalendarMap */ = {
 			isa = PBXGroup;
 			children = (
+				A1C535482A0A9C0F00BF7344 /* Extensions */,
 				A1C535442A02843600BF7344 /* Resources */,
-				24B57F7529A4902A006121CE /* Scene */,
 				24B57F7429A49019006121CE /* Service */,
 				24B57F7329A49015006121CE /* Model */,
 				24B57F7229A49014006121CE /* ViewModel */,
+				24B57F7529A4902A006121CE /* Scene */,
 				24B57F5E29A488E8006121CE /* AppDelegate.swift */,
 				24B57F6029A488E8006121CE /* SceneDelegate.swift */,
 				24B57F6229A488E8006121CE /* ViewController.swift */,
@@ -222,6 +223,13 @@
 				24B57F6729A488EA006121CE /* Assets.xcassets */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		A1C535482A0A9C0F00BF7344 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E2D8AB760C6A924804313156 /* Frameworks */ = {

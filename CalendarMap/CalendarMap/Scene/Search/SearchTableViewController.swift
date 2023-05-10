@@ -36,10 +36,6 @@ class SearchTableViewController: UIViewController {
         tb.delegate = self
         
         
-
-
-        
-        
     }
 }
 
@@ -53,11 +49,21 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("정환 \(locations)")
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
+        cell.locationName.text = locations?.documents[indexPath.row].placeName
+        let categoryName = locations?.documents[indexPath.row].categoryName.components(separatedBy: "> ").last ?? ""
+        cell.locationCategory.text = categoryName
         
-        cell.locationName.text = locations?.documents[indexPath.row].placeName.htmlEscaped
+        let distanceMeter = Double(locations?.documents[indexPath.row].distance ?? "")
+        if distanceMeter! >= 1000 {
+            var distanceKiloMeter = String(format: "%.1f", distanceMeter! / 1_000.0)
+            if distanceKiloMeter.last == "0" {
+                distanceKiloMeter = String(Int(Double(distanceKiloMeter)!))
+            }
+            cell.locationDistance.text = distanceKiloMeter + "km"
+        } else {
+            cell.locationDistance.text = String(Int(distanceMeter!)) + "m"
+        }
         
         let roadAddressName = locations?.documents[indexPath.row].roadAddressName ?? ""
         let addressName = locations?.documents[indexPath.row].addressName ?? ""

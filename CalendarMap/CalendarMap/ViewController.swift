@@ -190,11 +190,9 @@ extension ViewController: UITextFieldDelegate {
         
         guard let word = textField.text else { return false }
 
-
-        
-        searchViewModel.fetchKakaoSearchLocation(searchWord: word) { data in
+        searchViewModel.fetchKakaoSearchLocation(searchWord: word, lon: String(locationManager.location?.coordinate.longitude ?? 0), lat: String(locationManager.location?.coordinate.latitude ?? 0) ) { data in
             dump(data)
-            
+
             guard let items = data else { return }
             self.reloadFloatingPanel(items)
         }
