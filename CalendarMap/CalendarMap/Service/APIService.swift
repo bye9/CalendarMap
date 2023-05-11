@@ -100,7 +100,7 @@ class APIService: NSObject {
         }.resume()
     }
 
-    /// 카카오 주소 -> 네이버 좌표
+    /// 검색된 장소 테이블 뷰 셀 클릭 시, 지도 카메라 이동하기 위해 카카오 주소로 네이버 지도의 좌표 구하기
     ///
     /// 주소 검색 API는 지번, 도로명를 질의어로 사용해서 주소 정보를 검색합니다. 검색 결과로 주소 목록과 세부 정보를 JSON 형태로 반환합니다.
     /// - Parameters:
@@ -142,7 +142,7 @@ class APIService: NSObject {
             if let data = data {
                 let jsonDecoder = JSONDecoder()
 
-                let searchCoordinate = try! jsonDecoder.decode(SearchCoordinate.self, from: data)
+                let searchCoordinate = try? jsonDecoder.decode(SearchCoordinate.self, from: data)
                 completion(searchCoordinate)
             }
         }.resume()

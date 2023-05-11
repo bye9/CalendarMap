@@ -77,8 +77,8 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         guard let roadAddressName = locations?.documents[indexPath.row].roadAddressName else { return }
         guard let addressName = locations?.documents[indexPath.row].addressName else { return }
         
-        searchViewModel.fetchCoordinate(searchAddress: roadAddressName.count == 0 ? addressName : roadAddressName) { data in
-            print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
+        searchViewModel.fetchCoordinate(searchAddress: addressName) { data in
+            print("정환 \(data?.addresses[0].x), \(data?.addresses[0].y)")
             self.delegate?.sendCoordinate(x: data?.addresses[0].x ?? "0", y: data?.addresses[0].y ?? "0")
         }
         

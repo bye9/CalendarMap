@@ -22,8 +22,14 @@ class SearchViewModel: NSObject {
         }
     }
     
-    func fetchKakaoSearchLocation(searchWord: String, lon: String, lat: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
-        apiService.fetchKakaoSearchLocation(searchWord: searchWord, longitude: lon, latitude: lat) { data in
+    /// 장소 검색 시, 현재 위치의 좌표와 함께 카카오 장소 검색하기 API
+    /// - Parameters:
+    ///   - searchWord: 장소 검색어
+    ///   - lng: 경도(ex: 126.7474436759949)
+    ///   - lat: 위도(ex: 37.67615277418487)
+    ///   - completion: 카카오 장소
+    func fetchKakaoSearchLocation(searchWord: String, lng: String, lat: String, completion: @escaping (KakaoSearchLocation?) -> Void) {
+        apiService.fetchKakaoSearchLocation(searchWord: searchWord, longitude: lng, latitude: lat) { data in
             completion(data)
         }
     }

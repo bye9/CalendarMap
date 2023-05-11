@@ -12,15 +12,12 @@ import FloatingPanel
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
-    var fpc: FloatingPanelController!
-    
     @IBOutlet weak var searchImageView: UIImageView!
     @IBOutlet weak var mainMapView: NMFMapView!
     @IBOutlet weak var searchLocalTextField: UITextField!
     @IBOutlet weak var mainCollectionView: UICollectionView!
     
-    
-    
+    var floatingPanel: FloatingPanelController!
     var mapViewModel = MapViewModel()
     var searchViewModel = SearchViewModel()
     let infoWindow = NMFInfoWindow()
@@ -33,46 +30,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
+    }
+    
+    func setupViews() {
+        searchImageView.image = UIImage(named: "SearchIcon")
         searchLocalTextField.delegate = self
         searchLocalTextField.attributedPlaceholder = NSAttributedString(string: "어디서 만나세요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
-        
         initMapSetting()
         initFloatingPanel()
         initMainCollectionView()
-        
-        searchImageView.image = UIImage(named: "SearchIcon")
-        
-    
     }
     
-    private func initFloatingPanel() {
-        fpc = FloatingPanelController()
-        fpc.changePanelStyle()
-        fpc.delegate = self
-        fpc.isRemovalInteractionEnabled = true
-        fpc.layout = MyFloatingPanelLayout()
-    }
-    
-    private func reloadFloatingPanel(_ items: KakaoSearchLocation) {
-        DispatchQueue.main.async {
-            let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
-            self.fpc.set(contentViewController: contentVC)
-            let vc = contentVC as! SearchTableViewController
-            vc.delegate = self
-            vc.locations = items
-            vc.tb.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
-            self.fpc.track(scrollView: vc.tb)
-            self.fpc.addPanel(toParent: self)
-        }
-
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-
-    
-    private func initMapSetting() {
+    /// 네이버 지도를 사용하기 위한 초기 설정
+    func initMapSetting() {
         moveToCurrentLocation()
         
         locationManager.delegate = self
@@ -82,26 +53,64 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             print("위치 서비스 On 상태")
             locationManager.startUpdatingLocation()
-            print(locationManager.location?.coordinate)
             
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
             marker.mapView = mainMapView
-            
-            
-            
         } else {
             print("위치 서비스 Off 상태")
         }
-        
         mainMapView.touchDelegate = self
-
-
     }
     
-    private func moveToCurrentLocation() {
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0))
+    /// FloatingPanelController(bottom sheet) 화면 설정
+    func initFloatingPanel() {
+        floatingPanel = FloatingPanelController()
+        floatingPanel.changePanelStyle()
+        floatingPanel.delegate = self
+        floatingPanel.isRemovalInteractionEnabled = true
+        floatingPanel.layout = MyFloatingPanelLayout()
+    }
+    
+    /// 하단 Carousel view 초기 설정
+    func initMainCollectionView() {
+        let layout = mainCollectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: 308, height: 92)
+        layout.minimumLineSpacing = 16
+        mainCollectionView.delegate = self
+        mainCollectionView.dataSource = self
+        mainCollectionView.decelerationRate = .fast
+        mainCollectionView.isPagingEnabled = false
+    }
+    
+    /// 장소 검색 시, 올라오는 하단 Carousel view에 검색 결과 테이블 뷰 표시
+    /// - Parameter items: 카카오 장소
+    func reloadFloatingPanel(_ items: KakaoSearchLocation) {
+        DispatchQueue.main.async {
+            let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
+            self.floatingPanel.set(contentViewController: contentVC)
+            let vc = contentVC as! SearchTableViewController
+            vc.delegate = self
+            vc.locations = items
+            vc.tb.backgroundColor = .white
+            self.floatingPanel.track(scrollView: vc.tb)
+            self.floatingPanel.addPanel(toParent: self)
+        }
+    }
+    
+    /// 지도 카메라 현재 위치로 이동
+    func moveToCurrentLocation() {
+        moveMapViewCamera(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
+        mainMapView.positionMode = .normal
+    }
+    
+    /// 지도 카메라 좌표로 이동
+    /// - Parameters:
+    ///   - lat: 위도(ex: 37.67615277418487)
+    ///   - lng: 경도(ex: 126.7474436759949)
+    func moveMapViewCamera(_ lat: Double, _ lng: Double) {
 //        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5788596, lng: 126.8878807))
+        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
         cameraUpdate.animation = .easeIn
         mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
             if isCancelled {
@@ -110,47 +119,34 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 print("카메라 이동 완료")
             }
         }
-//        mainMapView.positionMode = .direction
     }
     
     // TODO: delegate로 좌표받아서 카메라 이동 함수 구현
     
     
     
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+
     @IBAction func currentLocationTapped(_ sender: UIButton) {
         moveToCurrentLocation()
         
-        
     }
-    
-    private func initMainCollectionView() {
-        let layout = mainCollectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: 308, height: 92)
-        layout.minimumLineSpacing = 16
-        mainCollectionView.delegate = self
-        mainCollectionView.dataSource = self
-        mainCollectionView.decelerationRate = .fast
-        mainCollectionView.isPagingEnabled = false
-        
-    }
-    
 }
     
-    
 extension ViewController: NMFMapViewTouchDelegate {
-    
     /// 지도가 탭되면 호출되는 콜백 메서드.
     /// - Parameters:
     ///   - mapView: 지도객체
     ///   - latlng: 탭된 지점의 지도 좌표
     ///   - point: 탭된 지점의 화면 좌표
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        // 심볼 닫기
+        // 오버레이 닫기
         infoWindow.close()
         
-        // bottom panel 닫기
-        fpc.removePanelFromParent(animated: true)
+        // FloatingPanelController(bottom sheet) 화면 닫기
+        floatingPanel.removePanelFromParent(animated: true)
         
         let coords = "\(latlng.lng),\(latlng.lat)"
         print(coords)
@@ -158,9 +154,7 @@ extension ViewController: NMFMapViewTouchDelegate {
         mapViewModel.fetchAddress(coords: coords) { data in
 //            dump(data)
         }
-        
     }
-    
     
     /// 지도 심벌이 탭되면 호출되는 콜백 메서드.
     /// - Parameters:
@@ -172,15 +166,11 @@ extension ViewController: NMFMapViewTouchDelegate {
         dump(symbol)
         //        <NMFSymbol:position=<NMGLatLng: 37.67111706221642,126.7377662658691>, caption=대화동 레포츠공원>
         
-
         let dataSource = NMFInfoWindowDefaultTextSource.data()
         dataSource.title = symbol.caption
         infoWindow.dataSource = dataSource
         infoWindow.position = NMGLatLng(lat: symbol.position.lat, lng: symbol.position.lng)
         infoWindow.open(with: mainMapView)
-        
-        
-        
         
         return true
     }
@@ -192,7 +182,7 @@ extension ViewController: UITextFieldDelegate {
         
         guard let word = textField.text else { return false }
 
-        searchViewModel.fetchKakaoSearchLocation(searchWord: word, lon: String(locationManager.location?.coordinate.longitude ?? 0), lat: String(locationManager.location?.coordinate.latitude ?? 0) ) { data in
+        searchViewModel.fetchKakaoSearchLocation(searchWord: word, lng: String(locationManager.location?.coordinate.longitude ?? 0), lat: String(locationManager.location?.coordinate.latitude ?? 0) ) { data in
             dump(data)
 
             guard let items = data else { return }
@@ -214,23 +204,16 @@ extension ViewController: FloatingPanelControllerDelegate {
 }
 
 extension ViewController: SendCoordinateDelegate {
+    
     func sendCoordinate(x: String, y: String) {
 //        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearchTableViewController") as? SearchTableViewController else { return }
 //        vc.delegate = self
         
         DispatchQueue.main.async {
             // bottom panel 닫기
-//            self.fpc.removePanelFromParent(animated: true)
+//            self.floatingPanel.removePanelFromParent(animated: true)
             
-            let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: Double(y)!, lng: Double(x)!))
-            cameraUpdate.animation = .easeIn
-            self.mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
-                if isCancelled {
-                    print("카메라 이동 취소")
-                } else {
-                    print("카메라 이동 완료")
-                }
-            }
+            self.moveMapViewCamera(Double(y) ?? 0, Double(x) ?? 0)
             
             let marker = NMFMarker()
             marker.position = NMGLatLng(lat: Double(y) ?? 0, lng: Double(x) ?? 0)
@@ -238,9 +221,9 @@ extension ViewController: SendCoordinateDelegate {
         }
     }
     
-    // TODO:
+    // TODO: 일정 등록하기 화면으로 이동
     func registerSchedule() {
-        self.fpc.removePanelFromParent(animated: true)
+        self.floatingPanel.removePanelFromParent(animated: true)
         
 
         
@@ -256,7 +239,7 @@ extension FloatingPanelController {
         let appearance = SurfaceAppearance()
         let shadow = SurfaceAppearance.Shadow()
         shadow.color = UIColor.black
-        shadow.offset = CGSize(width: 0, height: -10)
+        shadow.offset = CGSize(width: 0, height: -4)
         shadow.radius = 2
         shadow.opacity = 0.15
         appearance.shadows = [shadow]
@@ -276,7 +259,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScheduleCollectionViewCell", for: indexPath) as? ScheduleCollectionViewCell else { return UICollectionViewCell() }
 //        cell.contentMode = .scaleAspectFit
         return cell
@@ -307,18 +289,9 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
         targetContentOffset.pointee = offset
         
-        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: coordinates[Int(currentIdx)].1, lng: coordinates[Int(currentIdx)].0))
-        cameraUpdate.animation = .none
-        mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
-            if isCancelled {
-                print("카메라 이동 취소")
-            } else {
-                print("카메라 이동 완료")
-            }
-        }
+        moveMapViewCamera(coordinates[Int(currentIdx)].1, coordinates[Int(currentIdx)].0)
     }
 }
-
 
 class MyFloatingPanelLayout: FloatingPanelLayout {
     var position: FloatingPanelPosition {
