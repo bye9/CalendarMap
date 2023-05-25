@@ -26,6 +26,15 @@
 		A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */; };
 		A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */; };
 		A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */; };
+		A1C5354C2A12528000BF7344 /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C5354B2A12528000BF7344 /* CustomInfoWindowDataSource.swift */; };
+		A1C5355A2A12542800BF7344 /* CustomInfoWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C535582A12542800BF7344 /* CustomInfoWindowView.swift */; };
+		A1C535632A1260EC00BF7344 /* NotoSansKR-Black-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1C535612A125F1300BF7344 /* NotoSansKR-Black-900.otf */; };
+		A1C535642A1260EF00BF7344 /* NotoSansKR-Bold-700.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1C535602A125F1300BF7344 /* NotoSansKR-Bold-700.otf */; };
+		A1C535652A1260F100BF7344 /* NotoSansKR-Light-300.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1C5355D2A125F1200BF7344 /* NotoSansKR-Light-300.otf */; };
+		A1C535662A1260F300BF7344 /* NotoSansKR-Medium-500.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1C5355E2A125F1300BF7344 /* NotoSansKR-Medium-500.otf */; };
+		A1C535672A1260F600BF7344 /* NotoSansKR-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1C535622A125F1400BF7344 /* NotoSansKR-Regular-400.otf */; };
+		A1C535682A1260F800BF7344 /* NotoSansKR-Thin-100.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1C5355F2A125F1300BF7344 /* NotoSansKR-Thin-100.otf */; };
+		A1C535692A1265EF00BF7344 /* CustomInfoWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1C535592A12542800BF7344 /* CustomInfoWindowView.xib */; };
 		A1CA63BA29F17D8B00C6CDD2 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1CA63B929F17D8B00C6CDD2 /* RealmManager.swift */; };
 		A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E704D229F8031600D4FFDD /* ScheduleRealmModel.swift */; };
 		F4B334AC1AE2E53E0316A566 /* Pods_CalendarMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */; };
@@ -55,6 +64,15 @@
 		A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
 		A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScheduleViewController.swift; sourceTree = "<group>"; };
 		A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
+		A1C5354B2A12528000BF7344 /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
+		A1C535582A12542800BF7344 /* CustomInfoWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowView.swift; sourceTree = "<group>"; };
+		A1C535592A12542800BF7344 /* CustomInfoWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInfoWindowView.xib; sourceTree = "<group>"; };
+		A1C5355D2A125F1200BF7344 /* NotoSansKR-Light-300.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Light-300.otf"; sourceTree = "<group>"; };
+		A1C5355E2A125F1300BF7344 /* NotoSansKR-Medium-500.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Medium-500.otf"; sourceTree = "<group>"; };
+		A1C5355F2A125F1300BF7344 /* NotoSansKR-Thin-100.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Thin-100.otf"; sourceTree = "<group>"; };
+		A1C535602A125F1300BF7344 /* NotoSansKR-Bold-700.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Bold-700.otf"; sourceTree = "<group>"; };
+		A1C535612A125F1300BF7344 /* NotoSansKR-Black-900.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Black-900.otf"; sourceTree = "<group>"; };
+		A1C535622A125F1400BF7344 /* NotoSansKR-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NotoSansKR-Regular-400.otf"; sourceTree = "<group>"; };
 		A1CA63B929F17D8B00C6CDD2 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		A1E704D229F8031600D4FFDD /* ScheduleRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRealmModel.swift; sourceTree = "<group>"; };
 		C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalendarMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +158,7 @@
 		24B57F7529A4902A006121CE /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				A1C5354D2A12529200BF7344 /* Map */,
 				A118239729CB3D5F00CE0CF5 /* Schedule */,
 				24F62CD529B86605006A76E8 /* Search */,
 			);
@@ -150,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				24B57F7A29A49065006121CE /* MapModel.swift */,
+				A1C5354B2A12528000BF7344 /* CustomInfoWindowDataSource.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -213,6 +233,7 @@
 		A1C535452A02845100BF7344 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A1C5355C2A125EF900BF7344 /* Noto Sans KR */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -230,6 +251,28 @@
 			children = (
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A1C5354D2A12529200BF7344 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				A1C535592A12542800BF7344 /* CustomInfoWindowView.xib */,
+				A1C535582A12542800BF7344 /* CustomInfoWindowView.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		A1C5355C2A125EF900BF7344 /* Noto Sans KR */ = {
+			isa = PBXGroup;
+			children = (
+				A1C535612A125F1300BF7344 /* NotoSansKR-Black-900.otf */,
+				A1C535602A125F1300BF7344 /* NotoSansKR-Bold-700.otf */,
+				A1C5355D2A125F1200BF7344 /* NotoSansKR-Light-300.otf */,
+				A1C5355E2A125F1300BF7344 /* NotoSansKR-Medium-500.otf */,
+				A1C535622A125F1400BF7344 /* NotoSansKR-Regular-400.otf */,
+				A1C5355F2A125F1300BF7344 /* NotoSansKR-Thin-100.otf */,
+			);
+			path = "Noto Sans KR";
 			sourceTree = "<group>";
 		};
 		E2D8AB760C6A924804313156 /* Frameworks */ = {
@@ -301,10 +344,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				24B57F6B29A488EA006121CE /* LaunchScreen.storyboard in Resources */,
+				A1C535632A1260EC00BF7344 /* NotoSansKR-Black-900.otf in Resources */,
+				A1C535692A1265EF00BF7344 /* CustomInfoWindowView.xib in Resources */,
+				A1C535662A1260F300BF7344 /* NotoSansKR-Medium-500.otf in Resources */,
 				24B57F6829A488EA006121CE /* Assets.xcassets in Resources */,
 				24F62CD729B86612006A76E8 /* Search.storyboard in Resources */,
 				24B57F6629A488E8006121CE /* Main.storyboard in Resources */,
+				A1C535672A1260F600BF7344 /* NotoSansKR-Regular-400.otf in Resources */,
+				A1C535652A1260F100BF7344 /* NotoSansKR-Light-300.otf in Resources */,
 				A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */,
+				A1C535682A1260F800BF7344 /* NotoSansKR-Thin-100.otf in Resources */,
+				A1C535642A1260EF00BF7344 /* NotoSansKR-Bold-700.otf in Resources */,
 				A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,8 +418,10 @@
 				A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */,
 				A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */,
 				A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */,
+				A1C5354C2A12528000BF7344 /* CustomInfoWindowDataSource.swift in Sources */,
 				24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */,
 				24B57F7F29A49789006121CE /* MapViewModel.swift in Sources */,
+				A1C5355A2A12542800BF7344 /* CustomInfoWindowView.swift in Sources */,
 				A118239229B62BDE00CE0CF5 /* SearchViewModel.swift in Sources */,
 				24B57F7729A49049006121CE /* APIService.swift in Sources */,
 				24B57F6129A488E8006121CE /* SceneDelegate.swift in Sources */,
@@ -523,6 +575,8 @@
 				DEVELOPMENT_TEAM = XZM3XQ6ZMC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarMap/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치정보를 받아오려고 합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받아오려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -553,6 +607,8 @@
 				DEVELOPMENT_TEAM = XZM3XQ6ZMC;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarMap/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자의 위치정보를 받아오려고 합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자의 위치를 받아오려고 합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

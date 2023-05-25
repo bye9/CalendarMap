@@ -289,6 +289,19 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
         targetContentOffset.pointee = offset
         
+        let marker = NMFMarker()
+//        marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
+        marker.position = NMGLatLng(lat: coordinates[Int(currentIdx)].1, lng: coordinates[Int(currentIdx)].0)
+        marker.mapView = self.mainMapView
+        marker.iconImage = NMFOverlayImage(name: "scheduleCircleIconRed")
+        marker.captionAligns = [NMFAlignType.center]
+        
+        let infoWindow = NMFInfoWindow()
+        let dataSource = CustomInfoWindowDataSource()
+        infoWindow.dataSource = dataSource
+        infoWindow.open(with: marker, alignType: .center)
+        infoWindow.offsetY = 6
+        
         moveMapViewCamera(coordinates[Int(currentIdx)].1, coordinates[Int(currentIdx)].0)
     }
 }
@@ -309,3 +322,4 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
         ]
     }
 }
+
