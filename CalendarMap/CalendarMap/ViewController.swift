@@ -34,7 +34,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func setupViews() {
-        searchImageView.image = UIImage(named: "SearchIcon")
         searchLocalTextField.delegate = self
         searchLocalTextField.attributedPlaceholder = NSAttributedString(string: "어디서 만나세요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
         initMapSetting()

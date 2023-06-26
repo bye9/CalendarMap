@@ -13,6 +13,8 @@ class ScheduleDetailInfo: Object {
     @objc dynamic var title = ""
     @objc dynamic var address = ""
     @objc dynamic var roadAddress = ""
+    @objc dynamic var lat = ""
+    @objc dynamic var lng = ""
     @objc dynamic var isAllDay = false
     @objc dynamic var startDate = ""
     @objc dynamic var endDate = ""
