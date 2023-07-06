@@ -11,15 +11,18 @@ import RealmSwift
 class RegisterScheduleViewController: UIViewController {
 
     let realm = try! Realm()
-    
+    var name: String?
+    var lat: String?
+    var lng: String?
     
     @IBOutlet var lblTest: UILabel!
-    
+    @IBOutlet weak var tfLocationName: UITextField!
+    var completionHandler: ((String, String) -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        tfLocationName.text = name
         
     }
     
@@ -29,16 +32,20 @@ class RegisterScheduleViewController: UIViewController {
 
     
     @IBAction func registerButtonTapped(_ sender: UIButton) {
+        completionHandler?(lat ?? "0", lng ?? "0")
+        
+        
         self.navigationController?.popViewController(animated: true)
         
         
-        let test = self.registerScheduleDetailInfo("blue", "동아리 모임", "서울 마포구 상암동 1657", "서울 마포구 상암산로1길 26", "37.5790897397893", "126.888144865456", true, "2023-05-16", "2023-05-17", "테스트 메모")
         
-        try! realm.write {
-            realm.add(test)
-        }
-        
-        getScheduleDetailInfo()
+//        let test = self.registerScheduleDetailInfo("blue", "동아리 모임", "서울 마포구 상암동 1657", "서울 마포구 상암산로1길 26", "37.5790897397893", "126.888144865456", true, "2023-05-16", "2023-05-17", "테스트 메모")
+//
+//        try! realm.write {
+//            realm.add(test)
+//        }
+//
+//        getScheduleDetailInfo()
     }
     
     func registerScheduleDetailInfo(_ color: String, _ title: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String,

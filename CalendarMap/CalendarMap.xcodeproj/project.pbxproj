@@ -26,6 +26,8 @@
 		A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */; };
 		A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */; };
 		A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */; };
+		A19DC0172A4C4E64005A2848 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19DC0162A4C4E64005A2848 /* UIColor+Extensions.swift */; };
+		A19DC01A2A4C57C8005A2848 /* AppStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19DC0192A4C57C8005A2848 /* AppStyles.swift */; };
 		A1C5354C2A12528000BF7344 /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C5354B2A12528000BF7344 /* CustomInfoWindowDataSource.swift */; };
 		A1C5355A2A12542800BF7344 /* CustomInfoWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C535582A12542800BF7344 /* CustomInfoWindowView.swift */; };
 		A1C535632A1260EC00BF7344 /* NotoSansKR-Black-900.otf in Resources */ = {isa = PBXBuildFile; fileRef = A1C535612A125F1300BF7344 /* NotoSansKR-Black-900.otf */; };
@@ -64,6 +66,8 @@
 		A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
 		A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScheduleViewController.swift; sourceTree = "<group>"; };
 		A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
+		A19DC0162A4C4E64005A2848 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		A19DC0192A4C57C8005A2848 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
 		A1C5354B2A12528000BF7344 /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
 		A1C535582A12542800BF7344 /* CustomInfoWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowView.swift; sourceTree = "<group>"; };
 		A1C535592A12542800BF7344 /* CustomInfoWindowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomInfoWindowView.xib; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 		24B57F5D29A488E8006121CE /* CalendarMap */ = {
 			isa = PBXGroup;
 			children = (
+				A19DC0182A4C57A0005A2848 /* Common */,
 				A1C535482A0A9C0F00BF7344 /* Extensions */,
 				A1C535442A02843600BF7344 /* Resources */,
 				24B57F7429A49019006121CE /* Service */,
@@ -221,6 +226,14 @@
 			path = Schedule;
 			sourceTree = "<group>";
 		};
+		A19DC0182A4C57A0005A2848 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				A19DC0192A4C57C8005A2848 /* AppStyles.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		A1C535442A02843600BF7344 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +262,7 @@
 		A1C535482A0A9C0F00BF7344 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A19DC0162A4C4E64005A2848 /* UIColor+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -411,10 +425,12 @@
 				24F62CDB29B8695E006A76E8 /* SearchTableViewController.swift in Sources */,
 				24B57F7D29A49077006121CE /* ScheduleModel.swift in Sources */,
 				24B57F6329A488E8006121CE /* ViewController.swift in Sources */,
+				A19DC01A2A4C57C8005A2848 /* AppStyles.swift in Sources */,
 				24B57F7B29A49065006121CE /* MapModel.swift in Sources */,
 				A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */,
 				A1CA63BA29F17D8B00C6CDD2 /* RealmManager.swift in Sources */,
 				A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */,
+				A19DC0172A4C4E64005A2848 /* UIColor+Extensions.swift in Sources */,
 				A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */,
 				A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */,
 				A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */,

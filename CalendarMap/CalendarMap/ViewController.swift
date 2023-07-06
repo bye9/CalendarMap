@@ -12,10 +12,22 @@ import FloatingPanel
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
+    @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchImageView: UIImageView!
     @IBOutlet weak var mainMapView: NMFMapView!
     @IBOutlet weak var searchLocalTextField: UITextField!
     @IBOutlet weak var mainCollectionView: UICollectionView!
+    
+    @IBOutlet weak var periodShadowView: UIView!
+    @IBOutlet weak var periodButton: UIButton!
+    
+    @IBOutlet weak var calendarImageView: UIImageView!
+    @IBOutlet weak var calendarShadowView: UIView!
+    @IBOutlet weak var calendarButton: UIButton!
+    
+
+    @IBOutlet weak var currentLocationShadowView: UIView!
+    @IBOutlet weak var currentLocationButton: UIButton!
     
     var floatingPanel: FloatingPanelController!
     var mapViewModel = MapViewModel()
@@ -34,11 +46,71 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func setupViews() {
-        searchLocalTextField.delegate = self
-        searchLocalTextField.attributedPlaceholder = NSAttributedString(string: "어디서 만나세요?", attributes: [NSAttributedString.Key.foregroundColor : UIColor.gray])
+        initView()
         initMapSetting()
         initFloatingPanel()
         initMainCollectionView()
+    }
+    
+    /// 나머지 뷰 그림자 및 테두리 설정
+    func initView() {
+        searchView.layer.cornerRadius = 2
+        searchView.layer.shadowColor = AppStyles.Color.Shadow.cgColor
+        searchView.layer.shadowOpacity = 0.3
+        searchView.layer.shadowOffset = CGSize.zero
+        searchView.layer.shadowRadius = 14
+        searchView.translatesAutoresizingMaskIntoConstraints = false
+        
+        searchLocalTextField.delegate = self
+        searchLocalTextField.attributedPlaceholder = NSAttributedString(string: "어디서 만나세요?", attributes: [
+            .font: AppStyles.Fonts.Body1!,
+            .foregroundColor : AppStyles.Color.Gray6])
+        
+        periodShadowView.addSubview(periodButton)
+        periodButton.layer.cornerRadius = 16
+        periodButton.layer.masksToBounds = true
+        periodShadowView.layer.shadowColor = AppStyles.Color.Shadow.cgColor
+        periodShadowView.layer.shadowOpacity = 0.3
+        periodShadowView.layer.shadowOffset = CGSize.zero
+        periodShadowView.layer.shadowRadius = 14
+        periodShadowView.layer.masksToBounds = false
+        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
+        let periodEffect = UIVisualEffectView(effect: blurEffect)
+        periodEffect.frame = self.periodButton.bounds
+        self.periodButton.addSubview(periodEffect)
+
+        calendarButton.layer.cornerRadius = calendarButton.frame.width / 2
+        calendarButton.layer.masksToBounds = true
+        calendarButton.layer.borderWidth = 1
+        calendarButton.layer.borderColor = AppStyles.Color.Gray3.cgColor
+        calendarShadowView.layer.shadowColor = AppStyles.Color.Shadow.cgColor
+        calendarShadowView.layer.shadowOpacity = 0.3
+        calendarShadowView.layer.shadowOffset = CGSize.zero
+        calendarShadowView.layer.shadowRadius = 14
+        calendarShadowView.layer.masksToBounds = false
+        let calendarEffect = UIVisualEffectView(effect: blurEffect)
+        calendarEffect.frame = self.calendarButton.bounds
+        self.calendarButton.addSubview(calendarEffect)
+        self.calendarButton.addSubview(calendarImageView)
+        
+        
+        
+        currentLocationButton.backgroundColor = UIColor.white
+        currentLocationButton.layer.cornerRadius = currentLocationButton.frame.width / 2
+        currentLocationButton.layer.masksToBounds = true
+        currentLocationButton.layer.borderWidth = 1
+        currentLocationButton.layer.borderColor = AppStyles.Color.Gray3.cgColor
+        currentLocationShadowView.backgroundColor = UIColor.clear
+        currentLocationShadowView.layer.shadowColor = AppStyles.Color.Shadow.cgColor
+        currentLocationShadowView.layer.shadowOpacity = 0.3
+        currentLocationShadowView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        currentLocationShadowView.layer.shadowRadius = 14
+        currentLocationShadowView.layer.masksToBounds = false
+        currentLocationShadowView.addSubview(currentLocationButton)
+        
+
+        
+        
     }
     
     /// 네이버 지도를 사용하기 위한 초기 설정
@@ -48,17 +120,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+//        locationManagerDidChangeAuthorization?(locationManager)
         
-        if CLLocationManager.locationServicesEnabled() {
-            print("위치 서비스 On 상태")
-            locationManager.startUpdatingLocation()
-            
-            let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
-            marker.mapView = mainMapView
-        } else {
-            print("위치 서비스 Off 상태")
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                print("위치 서비스 On 상태")
+                self.locationManager.startUpdatingLocation()
+                
+                let marker = NMFMarker()
+                marker.position = NMGLatLng(lat: self.locationManager.location?.coordinate.latitude ?? 0, lng: self.locationManager.location?.coordinate.longitude ?? 0)
+//                marker.mapView = self.mainMapView
+            } else {
+                print("위치 서비스 Off 상태")
+            }
         }
+
         mainMapView.touchDelegate = self
     }
     
@@ -222,12 +298,14 @@ extension ViewController: SendCoordinateDelegate {
     
     // TODO: 일정 등록하기 화면으로 이동
     func registerSchedule() {
-        self.floatingPanel.removePanelFromParent(animated: true)
+//        self.floatingPanel.removePanelFromParent(animated: true)
+//
+//
+//        guard let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
+//
+//        self.navigationController?.pushViewController(vc, animated: true)
         
 
-        
-        let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController")
-        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     
@@ -259,17 +337,17 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScheduleCollectionViewCell", for: indexPath) as? ScheduleCollectionViewCell else { return UICollectionViewCell() }
-//        cell.contentMode = .scaleAspectFit
+        
+    
+        cell.layer.cornerRadius = 5
+        cell.layer.shadowColor = AppStyles.Color.Shadow.cgColor
+        cell.layer.shadowOpacity = 0.3
+        cell.layer.shadowOffset = CGSize.zero
+        cell.layer.shadowRadius = 14
+        cell.translatesAutoresizingMaskIntoConstraints = false
+        
         return cell
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: 310, height: 100)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return 16
-//    }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
@@ -316,7 +394,7 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: 127, edge: .top, referenceGuide: .superview),
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 126, edge: .top, referenceGuide: .superview),
             .half: FloatingPanelLayoutAnchor(absoluteInset: 312, edge: .bottom, referenceGuide: .superview),
         ]
     }

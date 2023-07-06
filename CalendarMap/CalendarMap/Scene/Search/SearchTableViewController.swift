@@ -68,6 +68,8 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         let roadAddressName = locations?.documents[indexPath.row].roadAddressName ?? ""
         let addressName = locations?.documents[indexPath.row].addressName ?? ""
         cell.locationAddress.text = roadAddressName.count == 0 ? addressName : roadAddressName
+        cell.locationLat = locations?.documents[indexPath.row].x
+        cell.locationLng = locations?.documents[indexPath.row].y
         cell.delegate = self
         
         return cell
@@ -89,12 +91,24 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
 }
 
 extension SearchTableViewController: ButtonTappedDelegate {
+    
     // TODO: 셀에서 여기로 장소 좌표 및 주소 값 전달 필요...
-    func cellButtonTapped() {
+    func cellButtonTapped(name: String, lat: String, lng: String) {
         print("일정등록하기버튼 클릭")
+        print(name, lat, lng)
         
-        let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController")
+        guard let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
+        vc.name = name
+        vc.lat = lat
+        vc.lng = lng
+        
+        vc.completionHandler = {
+            print($0, $1)
+        }
+        
         self.navigationController?.pushViewController(vc, animated: true)
+        
+        
         
         // TODO: 테이블뷰 검색결과 남겨두고 일정등록화면 갔다올 것인가, 아닌가
 //        self.delegate?.registerSchedule()

@@ -8,21 +8,32 @@
 import UIKit
 
 protocol ButtonTappedDelegate: AnyObject {
-    func cellButtonTapped()
+    func cellButtonTapped(name: String, lat: String, lng: String)
 }
 
 class SearchTableViewCell: UITableViewCell {
+    
+    var locationLat: String?
+    var locationLng: String?
     
     @IBOutlet weak var locationName: UILabel!
     @IBOutlet weak var locationCategory: UILabel!
     @IBOutlet weak var locationDistance: UILabel!
     @IBOutlet weak var locationAddress: UILabel!
     
+    @IBOutlet weak var registerScheduleView: UIStackView!
+
     weak var delegate: ButtonTappedDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(registerScheduleTapped))
+        registerScheduleView.addGestureRecognizer(tapGesture)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,8 +42,8 @@ class SearchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    @IBAction func registerScheduleTapped(_ sender: UIButton) {
-        delegate?.cellButtonTapped()
+    @objc func registerScheduleTapped(_ sender: UITapGestureRecognizer) {
+        delegate?.cellButtonTapped(name: locationName.text ?? "장소 이름", lat: locationLat ?? "0", lng: locationLng ?? "0")
     }
     
 }
