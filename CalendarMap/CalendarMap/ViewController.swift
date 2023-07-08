@@ -16,18 +16,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var searchImageView: UIImageView!
     @IBOutlet weak var mainMapView: NMFMapView!
     @IBOutlet weak var searchLocalTextField: UITextField!
-    @IBOutlet weak var mainCollectionView: UICollectionView!
-    
     @IBOutlet weak var periodShadowView: UIView!
     @IBOutlet weak var periodButton: UIButton!
     
-    @IBOutlet weak var calendarImageView: UIImageView!
+
     @IBOutlet weak var calendarShadowView: UIView!
     @IBOutlet weak var calendarButton: UIButton!
     
 
     @IBOutlet weak var currentLocationShadowView: UIView!
     @IBOutlet weak var currentLocationButton: UIButton!
+    
+    @IBOutlet weak var noScheduleView: UIView!
+    @IBOutlet weak var mainCollectionView: UICollectionView!
     
     var floatingPanel: FloatingPanelController!
     var mapViewModel = MapViewModel()
@@ -66,50 +67,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             .font: AppStyles.Fonts.Body1!,
             .foregroundColor : AppStyles.Color.Gray6])
         
-        periodShadowView.addSubview(periodButton)
+        periodButton.backgroundColor = .white
         periodButton.layer.cornerRadius = 16
         periodButton.layer.masksToBounds = true
+        periodButton.layer.borderWidth = 1
+        periodButton.layer.borderColor = AppStyles.Color.Gray3.cgColor
         periodShadowView.layer.shadowColor = AppStyles.Color.Shadow.cgColor
         periodShadowView.layer.shadowOpacity = 0.3
-        periodShadowView.layer.shadowOffset = CGSize.zero
+        periodShadowView.layer.shadowOffset = CGSize(width: 0, height: 1)
         periodShadowView.layer.shadowRadius = 14
         periodShadowView.layer.masksToBounds = false
-        let blurEffect = UIBlurEffect(style: .systemUltraThinMaterialLight)
-        let periodEffect = UIVisualEffectView(effect: blurEffect)
-        periodEffect.frame = self.periodButton.bounds
-        self.periodButton.addSubview(periodEffect)
-
+        periodShadowView.addSubview(periodButton)
+        
+        calendarButton.backgroundColor = .white
         calendarButton.layer.cornerRadius = calendarButton.frame.width / 2
         calendarButton.layer.masksToBounds = true
         calendarButton.layer.borderWidth = 1
         calendarButton.layer.borderColor = AppStyles.Color.Gray3.cgColor
         calendarShadowView.layer.shadowColor = AppStyles.Color.Shadow.cgColor
         calendarShadowView.layer.shadowOpacity = 0.3
-        calendarShadowView.layer.shadowOffset = CGSize.zero
+        calendarShadowView.layer.shadowOffset = CGSize(width: 0, height: 1)
         calendarShadowView.layer.shadowRadius = 14
         calendarShadowView.layer.masksToBounds = false
-        let calendarEffect = UIVisualEffectView(effect: blurEffect)
-        calendarEffect.frame = self.calendarButton.bounds
-        self.calendarButton.addSubview(calendarEffect)
-        self.calendarButton.addSubview(calendarImageView)
+        calendarShadowView.addSubview(calendarButton)
         
-        
-        
-        currentLocationButton.backgroundColor = UIColor.white
+        currentLocationButton.backgroundColor = .white
         currentLocationButton.layer.cornerRadius = currentLocationButton.frame.width / 2
         currentLocationButton.layer.masksToBounds = true
         currentLocationButton.layer.borderWidth = 1
         currentLocationButton.layer.borderColor = AppStyles.Color.Gray3.cgColor
-        currentLocationShadowView.backgroundColor = UIColor.clear
         currentLocationShadowView.layer.shadowColor = AppStyles.Color.Shadow.cgColor
         currentLocationShadowView.layer.shadowOpacity = 0.3
         currentLocationShadowView.layer.shadowOffset = CGSize(width: 0, height: 1)
         currentLocationShadowView.layer.shadowRadius = 14
         currentLocationShadowView.layer.masksToBounds = false
         currentLocationShadowView.addSubview(currentLocationButton)
-        
-
-        
         
     }
     
@@ -144,18 +136,22 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         floatingPanel.changePanelStyle()
         floatingPanel.delegate = self
         floatingPanel.isRemovalInteractionEnabled = true
-        floatingPanel.layout = MyFloatingPanelLayout()
+        floatingPanel.layout = MyFloatingPanelLayout(full: 126, half: 312)
+        
     }
     
     /// 하단 Carousel view 초기 설정
     func initMainCollectionView() {
-        let layout = mainCollectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSize(width: 308, height: 92)
-        layout.minimumLineSpacing = 16
         mainCollectionView.delegate = self
         mainCollectionView.dataSource = self
         mainCollectionView.decelerationRate = .fast
         mainCollectionView.isPagingEnabled = false
+        mainCollectionView.register(UINib(nibName: "ScheduleCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ScheduleCollectionViewCell")
+
+        let layout = mainCollectionView!.collectionViewLayout as! UICollectionViewFlowLayout
+//        layout.itemSize = CGSize(width: 308, height: 96)
+        layout.minimumLineSpacing = 16
+        mainCollectionView.collectionViewLayout = layout
     }
     
     /// 장소 검색 시, 올라오는 하단 Carousel view에 검색 결과 테이블 뷰 표시
@@ -184,7 +180,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     ///   - lat: 위도(ex: 37.67615277418487)
     ///   - lng: 경도(ex: 126.7474436759949)
     func moveMapViewCamera(_ lat: Double, _ lng: Double) {
-//        let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: 37.5788596, lng: 126.8878807))
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
         cameraUpdate.animation = .easeIn
         mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
@@ -281,12 +276,9 @@ extension ViewController: FloatingPanelControllerDelegate {
 extension ViewController: SendCoordinateDelegate {
     
     func sendCoordinate(x: String, y: String) {
-//        guard let vc = self.storyboard?.instantiateViewController(withIdentifier: "SearchTableViewController") as? SearchTableViewController else { return }
-//        vc.delegate = self
-        
         DispatchQueue.main.async {
             // bottom panel 닫기
-//            self.floatingPanel.removePanelFromParent(animated: true)
+            self.floatingPanel.removePanelFromParent(animated: true)
             
             self.moveMapViewCamera(Double(y) ?? 0, Double(x) ?? 0)
             
@@ -316,11 +308,11 @@ extension FloatingPanelController {
         let appearance = SurfaceAppearance()
         let shadow = SurfaceAppearance.Shadow()
         shadow.color = UIColor.black
-        shadow.offset = CGSize(width: 0, height: -4)
-        shadow.radius = 2
-        shadow.opacity = 0.15
+        shadow.offset = CGSize(width: 0, height: -2)
+        shadow.radius = 10
+        shadow.opacity = 0.08
         appearance.shadows = [shadow]
-        appearance.cornerRadius = 15.0
+        appearance.cornerRadius = 10
         appearance.backgroundColor = .clear
         appearance.borderColor = .clear
         appearance.borderWidth = 0
@@ -332,19 +324,27 @@ extension FloatingPanelController {
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        noScheduleView.isHidden = true
+        mainCollectionView.isHidden = false
+        
         return 3
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScheduleCollectionViewCell", for: indexPath) as? ScheduleCollectionViewCell else { return UICollectionViewCell() }
+                
         
-    
+        cell.backgroundColor = .white
         cell.layer.cornerRadius = 5
         cell.layer.shadowColor = AppStyles.Color.Shadow.cgColor
         cell.layer.shadowOpacity = 0.3
         cell.layer.shadowOffset = CGSize.zero
         cell.layer.shadowRadius = 14
-        cell.translatesAutoresizingMaskIntoConstraints = false
+        
+//        cell.colorCircle.backgroundColor = AppStyles.Color.Green
+//        cell.scheduleName.text = "test"
+        
         
         return cell
     }
@@ -384,6 +384,14 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
 }
 
 class MyFloatingPanelLayout: FloatingPanelLayout {
+    var fullInset: Int?
+    var halfInset: Int?
+    
+    init(full: Int, half: Int) {
+        self.fullInset = full
+        self.halfInset = half
+    }
+    
     var position: FloatingPanelPosition {
         return .bottom
     }
@@ -394,8 +402,8 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: 126, edge: .top, referenceGuide: .superview),
-            .half: FloatingPanelLayoutAnchor(absoluteInset: 312, edge: .bottom, referenceGuide: .superview),
+            .full: FloatingPanelLayoutAnchor(absoluteInset: CGFloat(fullInset ?? 126), edge: .top, referenceGuide: .superview),
+            .half: FloatingPanelLayoutAnchor(absoluteInset: CGFloat(halfInset ?? 312), edge: .bottom, referenceGuide: .superview),
         ]
     }
 }

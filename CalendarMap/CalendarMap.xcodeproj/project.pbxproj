@@ -24,8 +24,12 @@
 		A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A118239329BA35F900CE0CF5 /* SearchTableViewCell.swift */; };
 		A118239629BA35F900CE0CF5 /* SearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */; };
 		A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */; };
+		A13864292A593AF100CD9B99 /* ScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13864272A593AF100CD9B99 /* ScheduleCollectionViewCell.swift */; };
+		A138642A2A593AF100CD9B99 /* ScheduleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A13864282A593AF100CD9B99 /* ScheduleCollectionViewCell.xib */; };
+		A138642D2A59966300CD9B99 /* ColorCircleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A138642B2A59966300CD9B99 /* ColorCircleCollectionViewCell.swift */; };
+		A138642E2A59966300CD9B99 /* ColorCircleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A138642C2A59966300CD9B99 /* ColorCircleCollectionViewCell.xib */; };
+		A13864302A59978000CD9B99 /* ColorCircleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A138642F2A59978000CD9B99 /* ColorCircleViewController.swift */; };
 		A159D38729D466FB003D3252 /* RegisterScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */; };
-		A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */; };
 		A19DC0172A4C4E64005A2848 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19DC0162A4C4E64005A2848 /* UIColor+Extensions.swift */; };
 		A19DC01A2A4C57C8005A2848 /* AppStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = A19DC0192A4C57C8005A2848 /* AppStyles.swift */; };
 		A1C5354C2A12528000BF7344 /* CustomInfoWindowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C5354B2A12528000BF7344 /* CustomInfoWindowDataSource.swift */; };
@@ -64,8 +68,12 @@
 		A118239329BA35F900CE0CF5 /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		A118239429BA35F900CE0CF5 /* SearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTableViewCell.xib; sourceTree = "<group>"; };
 		A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
+		A13864272A593AF100CD9B99 /* ScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
+		A13864282A593AF100CD9B99 /* ScheduleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleCollectionViewCell.xib; sourceTree = "<group>"; };
+		A138642B2A59966300CD9B99 /* ColorCircleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleCollectionViewCell.swift; sourceTree = "<group>"; };
+		A138642C2A59966300CD9B99 /* ColorCircleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorCircleCollectionViewCell.xib; sourceTree = "<group>"; };
+		A138642F2A59978000CD9B99 /* ColorCircleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleViewController.swift; sourceTree = "<group>"; };
 		A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterScheduleViewController.swift; sourceTree = "<group>"; };
-		A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleCollectionViewCell.swift; sourceTree = "<group>"; };
 		A19DC0162A4C4E64005A2848 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		A19DC0192A4C57C8005A2848 /* AppStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyles.swift; sourceTree = "<group>"; };
 		A1C5354B2A12528000BF7344 /* CustomInfoWindowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInfoWindowDataSource.swift; sourceTree = "<group>"; };
@@ -221,7 +229,11 @@
 			children = (
 				A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */,
 				A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */,
-				A159D38829E4314D003D3252 /* ScheduleCollectionViewCell.swift */,
+				A13864282A593AF100CD9B99 /* ScheduleCollectionViewCell.xib */,
+				A13864272A593AF100CD9B99 /* ScheduleCollectionViewCell.swift */,
+				A138642F2A59978000CD9B99 /* ColorCircleViewController.swift */,
+				A138642C2A59966300CD9B99 /* ColorCircleCollectionViewCell.xib */,
+				A138642B2A59966300CD9B99 /* ColorCircleCollectionViewCell.swift */,
 			);
 			path = Schedule;
 			sourceTree = "<group>";
@@ -370,6 +382,8 @@
 				A1C535682A1260F800BF7344 /* NotoSansKR-Thin-100.otf in Resources */,
 				A1C535642A1260EF00BF7344 /* NotoSansKR-Bold-700.otf in Resources */,
 				A118239B29CB3DB100CE0CF5 /* Schedule.storyboard in Resources */,
+				A138642A2A593AF100CD9B99 /* ScheduleCollectionViewCell.xib in Resources */,
+				A138642E2A59966300CD9B99 /* ColorCircleCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,14 +446,16 @@
 				A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */,
 				A19DC0172A4C4E64005A2848 /* UIColor+Extensions.swift in Sources */,
 				A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */,
+				A138642D2A59966300CD9B99 /* ColorCircleCollectionViewCell.swift in Sources */,
 				A118239029B6256200CE0CF5 /* SearchModel.swift in Sources */,
-				A159D38A29E4314D003D3252 /* ScheduleCollectionViewCell.swift in Sources */,
+				A13864292A593AF100CD9B99 /* ScheduleCollectionViewCell.swift in Sources */,
 				A1C5354C2A12528000BF7344 /* CustomInfoWindowDataSource.swift in Sources */,
 				24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */,
 				24B57F7F29A49789006121CE /* MapViewModel.swift in Sources */,
 				A1C5355A2A12542800BF7344 /* CustomInfoWindowView.swift in Sources */,
 				A118239229B62BDE00CE0CF5 /* SearchViewModel.swift in Sources */,
 				24B57F7729A49049006121CE /* APIService.swift in Sources */,
+				A13864302A59978000CD9B99 /* ColorCircleViewController.swift in Sources */,
 				24B57F6129A488E8006121CE /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

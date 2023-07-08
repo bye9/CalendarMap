@@ -7,23 +7,33 @@
 
 import UIKit
 import RealmSwift
+import FloatingPanel
 
-class RegisterScheduleViewController: UIViewController {
+class RegisterScheduleViewController: UIViewController, FloatingPanelControllerDelegate {
 
+    
+    @IBOutlet weak var colorCircleButton: UIButton!
+    @IBOutlet weak var testLabel: UILabel!
+
+    @IBOutlet weak var locationNameButton: UIButton!
+    
     let realm = try! Realm()
+    var floatingPanel: FloatingPanelController!
     var name: String?
     var lat: String?
     var lng: String?
-    
-    @IBOutlet var lblTest: UILabel!
-    @IBOutlet weak var tfLocationName: UITextField!
     var completionHandler: ((String, String) -> ())?
+    var color: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tfLocationName.text = name
+        initFloatingPanel()
         
+        locationNameButton.titleLabel?.text = name
+        
+        colorCircleButton.layer.cornerRadius = colorCircleButton.frame.width / 2
+        colorCircleButton.layer.masksToBounds = true
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -48,6 +58,10 @@ class RegisterScheduleViewController: UIViewController {
 //        getScheduleDetailInfo()
     }
     
+    @IBAction func colorCircleButtonTapped(_ sender: UIButton) {
+        reloadFloatingPanel()
+    }
+    
     func registerScheduleDetailInfo(_ color: String, _ title: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String,
                                     _ isAllDay: Bool, _ startDate: String, _ endDate: String, _ memo: String) -> ScheduleDetailInfo {
         let scheduleDetailInfo = ScheduleDetailInfo()
@@ -67,9 +81,32 @@ class RegisterScheduleViewController: UIViewController {
     
     func getScheduleDetailInfo() {
         let scheduleDetailInfo = realm.objects(ScheduleDetailInfo.self)
-        self.lblTest.text = String(scheduleDetailInfo[0].title)
+        self.testLabel.text = String(scheduleDetailInfo[0].title)
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
+    }
+    
+    /// FloatingPanelController(bottom sheet) 화면 설정
+    func initFloatingPanel() {
+        floatingPanel = FloatingPanelController()
+        floatingPanel.changePanelStyle()
+        floatingPanel.delegate = self
+        floatingPanel.isRemovalInteractionEnabled = true
+        floatingPanel.layout = MyFloatingPanelLayout(full: 126, half: 439)
+    }
+    
+    /// 색상 선택 시, 올라오는 하단 Carousel view에 색상 목록 컬렉션 뷰 표시
+    func reloadFloatingPanel() {
+        DispatchQueue.main.async {
+            let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
+            self.floatingPanel.set(contentViewController: contentVC)
+            let vc = contentVC as! SearchTableViewController
+            vc.delegate = self
+            vc.locations = items
+            vc.tb.backgroundColor = .white
+            self.floatingPanel.track(scrollView: vc.tb)
+            self.floatingPanel.addPanel(toParent: self)
+        }
     }
     
 }

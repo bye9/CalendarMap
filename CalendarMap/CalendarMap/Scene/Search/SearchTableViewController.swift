@@ -104,6 +104,7 @@ extension SearchTableViewController: ButtonTappedDelegate {
         
         vc.completionHandler = {
             print($0, $1)
+            self.delegate?.sendCoordinate(x: $0, y: $1)
         }
         
         self.navigationController?.pushViewController(vc, animated: true)
