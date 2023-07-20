@@ -33,7 +33,7 @@ enum AppStyles {
         static let Purple = UIColor(hex: "7562EE")
         static let Pink = UIColor(hex: "FF73F1")
         static let Red = UIColor(hex: "FF5964")
-        static let Orange = UIColor(hex: "EFEFEF")
+        static let Orange = UIColor(hex: "FF9900")
         static let Yellow = UIColor(hex: "F9E05F")
         static let Green = UIColor(hex: "59CD90")
         
