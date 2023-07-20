@@ -9,14 +9,7 @@ import UIKit
 import RealmSwift
 import FloatingPanel
 
-class RegisterScheduleViewController: UIViewController, FloatingPanelControllerDelegate {
-
-    
-    @IBOutlet weak var colorCircleButton: UIButton!
-    @IBOutlet weak var testLabel: UILabel!
-
-    @IBOutlet weak var locationNameButton: UIButton!
-    
+class RegisterScheduleViewController: UIViewController {
     let realm = try! Realm()
     var floatingPanel: FloatingPanelController!
     var name: String?
@@ -24,13 +17,26 @@ class RegisterScheduleViewController: UIViewController, FloatingPanelControllerD
     var lng: String?
     var completionHandler: ((String, String) -> ())?
     var color: String?
+    var index: Int = 0
+    
+    @IBOutlet weak var colorCircleButton: UIButton!
+    @IBOutlet weak var scheduleTitleTextField: UITextField!
+    @IBOutlet weak var locationNameButton: UIButton!
+    @IBOutlet weak var deleteLocationNameButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupViews()
         initFloatingPanel()
-        
-        locationNameButton.titleLabel?.text = name
+    }
+    
+    func setupViews() {
+        scheduleTitleTextField.attributedPlaceholder = NSAttributedString(string: "일정 제목 입력", attributes: [NSAttributedString.Key.foregroundColor: AppStyles.Color.Gray6])
+
+        locationNameButton.setTitle(name, for: .normal)
+        locationNameButton.setTitleColor(UIColor.black, for: .normal)
+        locationNameButton.contentHorizontalAlignment = .left
         
         colorCircleButton.layer.cornerRadius = colorCircleButton.frame.width / 2
         colorCircleButton.layer.masksToBounds = true
@@ -43,8 +49,7 @@ class RegisterScheduleViewController: UIViewController, FloatingPanelControllerD
     
     @IBAction func registerButtonTapped(_ sender: UIButton) {
         completionHandler?(lat ?? "0", lng ?? "0")
-        
-        
+    
         self.navigationController?.popViewController(animated: true)
         
         
@@ -81,7 +86,7 @@ class RegisterScheduleViewController: UIViewController, FloatingPanelControllerD
     
     func getScheduleDetailInfo() {
         let scheduleDetailInfo = realm.objects(ScheduleDetailInfo.self)
-        self.testLabel.text = String(scheduleDetailInfo[0].title)
+//        self.testLabel.text = String(scheduleDetailInfo[0].title)
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
     }
@@ -92,22 +97,66 @@ class RegisterScheduleViewController: UIViewController, FloatingPanelControllerD
         floatingPanel.changePanelStyle()
         floatingPanel.delegate = self
         floatingPanel.isRemovalInteractionEnabled = true
-        floatingPanel.layout = MyFloatingPanelLayout(full: 126, half: 439)
+        floatingPanel.layout = ColorFloatingPanelLayout()
     }
     
     /// 색상 선택 시, 올라오는 하단 Carousel view에 색상 목록 컬렉션 뷰 표시
     func reloadFloatingPanel() {
         DispatchQueue.main.async {
-            let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
+            let contentVC = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "ColorCircleCollectionViewController")
             self.floatingPanel.set(contentViewController: contentVC)
-            let vc = contentVC as! SearchTableViewController
-            vc.delegate = self
-            vc.locations = items
-            vc.tb.backgroundColor = .white
-            self.floatingPanel.track(scrollView: vc.tb)
-            self.floatingPanel.addPanel(toParent: self)
+            let vc = contentVC as! ColorCircleCollectionViewController
+//            vc.locations = items
+            vc.colorIndex = self.index
+            vc.colorSelectCollectionView.backgroundColor = .white
+            self.floatingPanel.track(scrollView: vc.colorSelectCollectionView)
+            self.floatingPanel.addPanel(toParent: self, animated: true)
+            self.floatingPanel.backdropView.dismissalTapGestureRecognizer.isEnabled = true
+            
+            vc.completionHandler = { colorIndex in
+                print(colorIndex)
+                self.index = colorIndex
+                self.colorCircleButton.backgroundColor = vc.colorBackground[colorIndex]
+                self.floatingPanel.removePanelFromParent(animated: true)
+            }
+            
         }
     }
     
+}
+
+extension RegisterScheduleViewController: FloatingPanelControllerDelegate {
+    func floatingPanelDidMove(_ fpc: FloatingPanelController) {
+        if floatingPanel.isAttracting == false {
+            let loc = floatingPanel.surfaceLocation
+            let minY = floatingPanel.surfaceLocation(for: .half).y
+            let maxY = floatingPanel.surfaceLocation(for: .half).y
+            floatingPanel.surfaceLocation = CGPoint(x: loc.x, y: min(max(loc.y, minY), maxY))
+        }
+    }
+}
+
+
+class ColorFloatingPanelLayout: FloatingPanelLayout {
+    var position: FloatingPanelPosition {
+        return .bottom
+    }
+
+    var initialState: FloatingPanelState {
+        return .half
+    }
+
+    var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
+        return [
+            .half: FloatingPanelLayoutAnchor(absoluteInset: 228, edge: .bottom, referenceGuide: .superview),
+        ]
+    }
+    
+    func backdropAlpha(for state: FloatingPanelState) -> CGFloat {
+        switch state {
+        case .half: return 0.4
+        default: return 0.0
+        }
+    }
 }
 

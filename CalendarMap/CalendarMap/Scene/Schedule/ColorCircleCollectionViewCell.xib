@@ -10,21 +10,35 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ColorCircleCollectionViewCell" customModule="CalendarMap" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ColorCircleCollectionViewCell" id="gTV-IL-0wX" customClass="ColorCircleCollectionViewCell" customModule="CalendarMap" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOh-6P-Rye">
+                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOh-6P-Rye">
                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" red="0.14509803921568626" green="0.5607843137254902" blue="0.98431372549019602" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="7gH-FC-HI5"/>
+                            <constraint firstAttribute="width" constant="24" id="pGm-oM-cm0"/>
+                        </constraints>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                     </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="GOh-6P-Rye" secondAttribute="bottom" id="b8w-xQ-AeJ"/>
+                <constraint firstAttribute="trailing" secondItem="GOh-6P-Rye" secondAttribute="trailing" id="eVe-bg-OpI"/>
+                <constraint firstItem="GOh-6P-Rye" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="iR5-ZP-Iwi"/>
+                <constraint firstItem="GOh-6P-Rye" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="sNA-z6-kI5"/>
+            </constraints>
+            <connections>
+                <outlet property="colorCircleButton" destination="GOh-6P-Rye" id="n6f-pb-yKq"/>
+            </connections>
             <point key="canvasLocation" x="59" y="21"/>
         </collectionViewCell>
     </objects>

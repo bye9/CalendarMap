@@ -136,7 +136,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         floatingPanel.changePanelStyle()
         floatingPanel.delegate = self
         floatingPanel.isRemovalInteractionEnabled = true
-        floatingPanel.layout = MyFloatingPanelLayout(full: 126, half: 312)
+        floatingPanel.layout = SearchFloatingPanelLayout()
         
     }
     
@@ -165,7 +165,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             vc.locations = items
             vc.tb.backgroundColor = .white
             self.floatingPanel.track(scrollView: vc.tb)
-            self.floatingPanel.addPanel(toParent: self)
+            self.floatingPanel.addPanel(toParent: self, animated: true)
         }
     }
     
@@ -265,10 +265,11 @@ extension ViewController: UITextFieldDelegate {
 
 extension ViewController: FloatingPanelControllerDelegate {
     func floatingPanelDidMove(_ fpc: FloatingPanelController) {
-        if fpc.state == .full {
-            
-        } else {
-            
+        if floatingPanel.isAttracting == false {
+            let loc = floatingPanel.surfaceLocation
+            let minY = floatingPanel.surfaceLocation(for: .full).y - 6.0
+            let maxY = floatingPanel.surfaceLocation(for: .half).y + 6.0
+            floatingPanel.surfaceLocation = CGPoint(x: loc.x, y: min(max(loc.y, minY), maxY))
         }
     }
 }
@@ -383,15 +384,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     }
 }
 
-class MyFloatingPanelLayout: FloatingPanelLayout {
-    var fullInset: Int?
-    var halfInset: Int?
-    
-    init(full: Int, half: Int) {
-        self.fullInset = full
-        self.halfInset = half
-    }
-    
+class SearchFloatingPanelLayout: FloatingPanelLayout {
     var position: FloatingPanelPosition {
         return .bottom
     }
@@ -402,8 +395,8 @@ class MyFloatingPanelLayout: FloatingPanelLayout {
 
     var anchors: [FloatingPanelState: FloatingPanelLayoutAnchoring] {
         return [
-            .full: FloatingPanelLayoutAnchor(absoluteInset: CGFloat(fullInset ?? 126), edge: .top, referenceGuide: .superview),
-            .half: FloatingPanelLayoutAnchor(absoluteInset: CGFloat(halfInset ?? 312), edge: .bottom, referenceGuide: .superview),
+            .full: FloatingPanelLayoutAnchor(absoluteInset: 126, edge: .top, referenceGuide: .superview),
+            .half: FloatingPanelLayoutAnchor(absoluteInset: 312, edge: .bottom, referenceGuide: .superview),
         ]
     }
 }
