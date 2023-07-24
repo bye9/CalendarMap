@@ -265,12 +265,12 @@ extension ViewController: UITextFieldDelegate {
 
 extension ViewController: FloatingPanelControllerDelegate {
     func floatingPanelDidMove(_ fpc: FloatingPanelController) {
-        if floatingPanel.isAttracting == false {
-            let loc = floatingPanel.surfaceLocation
-            let minY = floatingPanel.surfaceLocation(for: .full).y - 6.0
-            let maxY = floatingPanel.surfaceLocation(for: .half).y + 6.0
-            floatingPanel.surfaceLocation = CGPoint(x: loc.x, y: min(max(loc.y, minY), maxY))
-        }
+//        if floatingPanel.isAttracting == false {
+//            let loc = floatingPanel.surfaceLocation
+//            let minY = floatingPanel.surfaceLocation(for: .full).y - 6.0
+//            let maxY = floatingPanel.surfaceLocation(for: .half).y + 6.0
+//            floatingPanel.surfaceLocation = CGPoint(x: loc.x, y: min(max(loc.y, minY), maxY))
+//        }
     }
 }
 

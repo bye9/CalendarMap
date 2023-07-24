@@ -15,9 +15,7 @@ class ColorCircleCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        colorCircleButton.layer.cornerRadius = colorCircleButton.frame.width / 2
-        colorCircleButton.layer.masksToBounds = true
-        
+
         
     }
 

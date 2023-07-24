@@ -38,8 +38,6 @@ class RegisterScheduleViewController: UIViewController {
         locationNameButton.setTitleColor(UIColor.black, for: .normal)
         locationNameButton.contentHorizontalAlignment = .left
         
-        colorCircleButton.layer.cornerRadius = colorCircleButton.frame.width / 2
-        colorCircleButton.layer.masksToBounds = true
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -116,10 +114,10 @@ class RegisterScheduleViewController: UIViewController {
             vc.completionHandler = { colorIndex in
                 print(colorIndex)
                 self.index = colorIndex
-                self.colorCircleButton.backgroundColor = vc.colorBackground[colorIndex]
+                self.colorCircleButton.setImage(UIImage(named: vc.colorImages[colorIndex]), for: .normal)
                 self.floatingPanel.removePanelFromParent(animated: true)
             }
-            
+             
         }
     }
     
