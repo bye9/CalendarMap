@@ -42,4 +42,14 @@ enum AppStyles {
         
         static let Shadow = UIColor(hex: "B7B7B7")
     }
+    
+    enum ColorCircle {
+        static let colorImages = ["color_blue", "color_purple", "color_pink", "color_red", "color_orange",
+                           "color_yellow", "color_green", "color_lightgreen", "color_gray7", "color_gray3"]
+        static let colorCheckImages = ["color_check_blue", "color_check_purple", "color_check_pink", "color_check_red", "color_check_orange",
+                          "color_check_yellow", "color_check_green", "color_check_lightgreen", "color_check_gray7", "color_check_gray3"]
+        static let backgroundCircle = ["background_circle_color_blue", "background_circle_color_purple", "background_circle_color_pink", "background_circle_color_red", "background_circle_color_orange"]
+                                       
+        static let backgroundSquare = ["background_square_color_blue", "background_square_color_purple", "background_square_color_pink", "background_square_color_red", "background_square_color_orange"]
+    }
 }

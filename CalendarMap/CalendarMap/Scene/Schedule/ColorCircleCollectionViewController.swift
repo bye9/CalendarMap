@@ -9,10 +9,7 @@ import UIKit
 
 class ColorCircleCollectionViewController: UIViewController {
     let cellReuseIdentifier = "ColorCircleCollectionViewCell"
-    let colorImages = ["color_blue", "color_purple", "color_pink", "color_red", "color_orange",
-                       "color_yellow", "color_green", "color_lightgreen", "color_gray7", "color_gray3"]
-    let colorCheckImages = ["color_check_blue", "color_check_purple", "color_check_pink", "color_check_red", "color_check_orange",
-                      "color_check_yellow", "color_check_green", "color_check_lightgreen", "color_check_gray7", "color_check_gray3"]
+
     var colorIndex = 0
     var completionHandler: ((Int) -> Void)?
     
@@ -36,11 +33,11 @@ extension ColorCircleCollectionViewController: UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as? ColorCircleCollectionViewCell else { return UICollectionViewCell() }
-        let color = colorImages[indexPath.row]
+        let color = AppStyles.ColorCircle.colorImages[indexPath.row]
         cell.colorCircleButton.setImage(UIImage(named: color), for: .normal)
         
         if indexPath.row == colorIndex {
-            cell.colorCircleButton.setImage(UIImage(named: colorCheckImages[colorIndex]), for: .normal)
+            cell.colorCircleButton.setImage(UIImage(named: AppStyles.ColorCircle.colorCheckImages[colorIndex]), for: .normal)
         }
             
         return cell

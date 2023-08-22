@@ -9,14 +9,34 @@ import Foundation
 import RealmSwift
 
 class ScheduleDetailInfo: Object {
-    @objc dynamic var color = ""
-    @objc dynamic var title = ""
-    @objc dynamic var address = ""
-    @objc dynamic var roadAddress = ""
-    @objc dynamic var lat = ""
-    @objc dynamic var lng = ""
-    @objc dynamic var isAllDay = false
-    @objc dynamic var startDate = ""
-    @objc dynamic var endDate = ""
-    @objc dynamic var memo = ""
+    @Persisted(primaryKey: true) var objectID: ObjectId
+    @Persisted var colorIndex: Int = 0
+    @Persisted var color: String = ""
+    @Persisted var scheduleTitle: String = ""
+    @Persisted var locationName: String = ""
+    @Persisted var address: String = ""
+    @Persisted var roadAddress: String = ""
+    @Persisted var lat: String = ""
+    @Persisted var lng: String = ""
+    @Persisted var isAllDay: Bool = false
+    @Persisted var startDate: String = ""
+    @Persisted var endDate: String = ""
+    @Persisted var memo: String = ""
+    
+    convenience init(colorIndex: Int, color: String, scheduleTitle: String, locationName: String, address: String, roadAddress: String, lat: String, lng: String, isAllday: Bool, startDate: String, endDate: String, memo: String) {
+        self.init()
+        
+        self.colorIndex = colorIndex
+        self.color = color
+        self.scheduleTitle = scheduleTitle
+        self.locationName = locationName
+        self.address = address
+        self.roadAddress = roadAddress
+        self.lat = lat
+        self.lng = lng
+        self.isAllDay = isAllDay
+        self.startDate = startDate
+        self.endDate = endDate
+        self.memo = memo
+    }
 }

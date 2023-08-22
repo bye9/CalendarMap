@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SendCoordinateDelegate {
-    func sendCoordinate(x: String, y: String)
+    func sendCoordinate(lat: String, lng: String)
     func registerSchedule() // TODO: 여기서 장소 좌표 및 주소 값 등 ViewController로 전달 필요...
 }
 
@@ -16,26 +16,18 @@ class SearchTableViewController: UIViewController {
     
     @IBOutlet var tb: UITableView!
     
-//    let items = ["1","2","3"]
-//    let searchViewModel = SearchViewModel()
     let cellReuseIdentifier = "SearchTableViewCell"
     var locations: KakaoSearchLocation?
-//    var locations = SearchLocation(lastBuildDate: "", total: 0, start: 0, display: 0, items: [Item(title: "", link: "", category: "", description: "", telephone: "", address: "", roadAddress: "", mapx: "", mapy: "")])
-//    var coordinate = SearchCoordinate(status: "", meta: Meta(totalCount: 0, page: 0, count: 0), addresses: [Address(roadAddress: "", jibunAddress: "", englishAddress: "", addressElements: [AddressElement(types: [""], longName: "", shortName: "", code: "")], x: "", y: "", distance: 0)], errorMessage: "")
     var searchViewModel = SearchViewModel()
     var delegate: SendCoordinateDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         let nibName = UINib(nibName: "SearchTableViewCell", bundle: nil)
         tb.register(nibName, forCellReuseIdentifier: cellReuseIdentifier)
-
         tb.dataSource = self
         tb.delegate = self
-        
-        
     }
 }
 
@@ -67,9 +59,10 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         
         let roadAddressName = locations?.documents[indexPath.row].roadAddressName ?? ""
         let addressName = locations?.documents[indexPath.row].addressName ?? ""
-        cell.locationAddress.text = roadAddressName.count == 0 ? addressName : roadAddressName
-        cell.locationLat = locations?.documents[indexPath.row].x
-        cell.locationLng = locations?.documents[indexPath.row].y
+        cell.locationAddress.text = addressName
+        cell.locationRoadAddress = roadAddressName
+        cell.locationLat = locations?.documents[indexPath.row].y
+        cell.locationLng = locations?.documents[indexPath.row].x
         cell.delegate = self
         
         return cell
@@ -80,8 +73,8 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         guard let addressName = locations?.documents[indexPath.row].addressName else { return }
         
         searchViewModel.fetchCoordinate(searchAddress: addressName) { data in
-            print("정환 \(data?.addresses[0].x), \(data?.addresses[0].y)")
-            self.delegate?.sendCoordinate(x: data?.addresses[0].x ?? "0", y: data?.addresses[0].y ?? "0")
+            print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
+            self.delegate?.sendCoordinate(lat: data?.addresses[0].y ?? "0", lng: data?.addresses[0].x ?? "0")
         }
         
         
@@ -93,18 +86,20 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
 extension SearchTableViewController: ButtonTappedDelegate {
     
     // TODO: 셀에서 여기로 장소 좌표 및 주소 값 전달 필요...
-    func cellButtonTapped(name: String, lat: String, lng: String) {
+    func cellButtonTapped(name: String, address: String, roadAddress: String, lat: String, lng: String) {
         print("일정등록하기버튼 클릭")
         print(name, lat, lng)
         
         guard let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
-        vc.name = name
+        vc.locationName = name
+        vc.address = address
+        vc.roadAddress = roadAddress
         vc.lat = lat
         vc.lng = lng
         
         vc.completionHandler = {
             print($0, $1)
-            self.delegate?.sendCoordinate(x: $0, y: $1)
+            self.delegate?.sendCoordinate(lat: $0, lng: $1)
         }
         
         self.navigationController?.pushViewController(vc, animated: true)

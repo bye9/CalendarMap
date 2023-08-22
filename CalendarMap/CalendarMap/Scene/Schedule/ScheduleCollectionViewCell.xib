@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -31,7 +30,6 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TlD-hP-2mT">
                                 <rect key="frame" x="20" y="20" width="16" height="16"/>
-                                <color key="backgroundColor" systemColor="tintColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="16" id="Fva-Kx-JUi"/>
                                     <constraint firstAttribute="height" constant="16" id="eqU-B3-ue6"/>
@@ -47,7 +45,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오전 10:00 - 오전 11:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZJn-aP-tKt">
-                                <rect key="frame" x="78" y="43" width="198" height="16"/>
+                                <rect key="frame" x="78" y="42" width="198" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="xgT-xM-58p"/>
                                 </constraints>
@@ -56,7 +54,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상암중학교" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kI3-kd-Psr">
-                                <rect key="frame" x="78" y="62" width="198" height="16"/>
+                                <rect key="frame" x="78" y="61" width="198" height="16"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="16" id="FIm-Sb-umU"/>
                                 </constraints>
@@ -81,10 +79,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="kI3-kd-Psr" firstAttribute="centerY" secondItem="t93-IJ-x2n" secondAttribute="centerY" id="02U-ed-oDN"/>
+                            <constraint firstItem="kI3-kd-Psr" firstAttribute="centerY" secondItem="t93-IJ-x2n" secondAttribute="centerY" constant="-1" id="02U-ed-oDN"/>
                             <constraint firstAttribute="trailing" secondItem="2aN-yT-VHu" secondAttribute="trailing" constant="50" id="0yj-4C-Lib"/>
                             <constraint firstItem="kI3-kd-Psr" firstAttribute="leading" secondItem="t93-IJ-x2n" secondAttribute="trailing" constant="4" id="5Lg-77-ibW"/>
-                            <constraint firstItem="ZJn-aP-tKt" firstAttribute="centerY" secondItem="QUN-mY-IH3" secondAttribute="centerY" id="Dtl-1k-3mr"/>
+                            <constraint firstItem="ZJn-aP-tKt" firstAttribute="centerY" secondItem="QUN-mY-IH3" secondAttribute="centerY" constant="-1" id="Dtl-1k-3mr"/>
                             <constraint firstAttribute="trailing" secondItem="ZJn-aP-tKt" secondAttribute="trailing" constant="32" id="JZH-Tt-wiz"/>
                             <constraint firstItem="QUN-mY-IH3" firstAttribute="leading" secondItem="n8I-UI-ap1" secondAttribute="leading" constant="60" id="US5-Qu-AT7"/>
                             <constraint firstItem="t93-IJ-x2n" firstAttribute="leading" secondItem="n8I-UI-ap1" secondAttribute="leading" constant="60" id="aVG-7C-ZiT"/>
@@ -120,8 +118,5 @@
     <resources>
         <image name="img_clock" width="16" height="16"/>
         <image name="img_location" width="16" height="16"/>
-        <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
     </resources>
 </document>

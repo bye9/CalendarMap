@@ -8,11 +8,11 @@
 import UIKit
 
 protocol ButtonTappedDelegate: AnyObject {
-    func cellButtonTapped(name: String, lat: String, lng: String)
+    func cellButtonTapped(name: String, address: String, roadAddress: String, lat: String, lng: String)
 }
 
 class SearchTableViewCell: UITableViewCell {
-    
+    var locationRoadAddress: String?
     var locationLat: String?
     var locationLng: String?
     
@@ -20,7 +20,6 @@ class SearchTableViewCell: UITableViewCell {
     @IBOutlet weak var locationCategory: UILabel!
     @IBOutlet weak var locationDistance: UILabel!
     @IBOutlet weak var locationAddress: UILabel!
-    
     @IBOutlet weak var registerScheduleView: UIStackView!
 
     weak var delegate: ButtonTappedDelegate?
@@ -43,7 +42,7 @@ class SearchTableViewCell: UITableViewCell {
     }
     
     @objc func registerScheduleTapped(_ sender: UITapGestureRecognizer) {
-        delegate?.cellButtonTapped(name: locationName.text ?? "장소 이름", lat: locationLat ?? "0", lng: locationLng ?? "0")
+        delegate?.cellButtonTapped(name: locationName.text ?? "장소 이름", address: locationAddress.text ?? "지번 주소", roadAddress: locationRoadAddress ?? "도로명 주소", lat: locationLat ?? "0", lng: locationLng ?? "0")
     }
     
 }

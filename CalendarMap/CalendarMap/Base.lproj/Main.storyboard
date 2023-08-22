@@ -157,6 +157,9 @@
                                         <state key="normal" image="btn_current_location">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="currentLocationTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ka4-Uk-Jtc"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -180,7 +183,7 @@
                                         <rect key="frame" x="24" y="18" width="20" height="20"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일정 없음" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F4C-P6-cIc">
-                                        <rect key="frame" x="64" y="16" width="64" height="24"/>
+                                        <rect key="frame" x="64" y="16.5" width="63.5" height="23.5"/>
                                         <fontDescription key="fontDescription" name="NotoSansKR-Bold" family="Noto Sans KR" pointSize="16"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -192,7 +195,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="F4C-P6-cIc" firstAttribute="centerY" secondItem="IRi-0z-nAG" secondAttribute="centerY" id="F6M-CD-FJ8"/>
                                     <constraint firstAttribute="height" constant="96" id="Kjl-gr-5lF"/>

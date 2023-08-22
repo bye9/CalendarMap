@@ -12,17 +12,27 @@ import FloatingPanel
 class RegisterScheduleViewController: UIViewController {
     let realm = try! Realm()
     var floatingPanel: FloatingPanelController!
-    var name: String?
+    var scheduleTitle: String?
+    var locationName: String?
+    var address: String?
+    var roadAddress: String?
     var lat: String?
     var lng: String?
+    var startDate: String?
+    var endDate: String?
     var completionHandler: ((String, String) -> ())?
     var color: String?
     var index: Int = 0
+    let dateformatter = DateFormatter()
     
     @IBOutlet weak var colorCircleButton: UIButton!
     @IBOutlet weak var scheduleTitleTextField: UITextField!
     @IBOutlet weak var locationNameButton: UIButton!
     @IBOutlet weak var deleteLocationNameButton: UIButton!
+    @IBOutlet weak var allDaySwitch: UISwitch!
+    @IBOutlet weak var startDatePicker: UIDatePicker!
+    @IBOutlet weak var endDatePicker: UIDatePicker!
+    @IBOutlet weak var memoTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,12 +42,23 @@ class RegisterScheduleViewController: UIViewController {
     }
     
     func setupViews() {
+        hideKeyboardWhenTappedAround()
         scheduleTitleTextField.attributedPlaceholder = NSAttributedString(string: "일정 제목 입력", attributes: [NSAttributedString.Key.foregroundColor: AppStyles.Color.Gray6])
 
-        locationNameButton.setTitle(name, for: .normal)
+        locationNameButton.setTitle(locationName, for: .normal)
         locationNameButton.setTitleColor(UIColor.black, for: .normal)
         locationNameButton.contentHorizontalAlignment = .left
         
+        dateformatter.dateFormat = "yyyy.M.d.E요일 a hh:mm"
+        dateformatter.locale = Locale(identifier: "ko_KR")
+        
+        startDate = dateformatter.string(from: Date())
+        endDate = dateformatter.string(from: Date())
+        
+        
+        startDatePicker.addTarget(self, action: #selector(startDatePickerChanged), for: .valueChanged)
+        endDatePicker.addTarget(self, action: #selector(endDatePickerChanged), for: .valueChanged)
+        startDatePicker.minimumDate = Date()
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -46,45 +67,49 @@ class RegisterScheduleViewController: UIViewController {
 
     
     @IBAction func registerButtonTapped(_ sender: UIButton) {
+        self.scheduleTitle = scheduleTitleTextField.text
+        
+        let test = self.registerScheduleDetailInfo(index, color ?? "color_blue", scheduleTitle!, locationName!, address!, roadAddress!, lat!, lng!, allDaySwitch.isOn, startDate!, endDate!, memoTextView.text)
+        do {
+            try realm.write {
+                realm.add(test)
+            }
+        } catch {
+            print(error)
+        }
+        
+        getScheduleDetailInfo()
         completionHandler?(lat ?? "0", lng ?? "0")
     
         self.navigationController?.popViewController(animated: true)
-        
-        
-        
-//        let test = self.registerScheduleDetailInfo("blue", "동아리 모임", "서울 마포구 상암동 1657", "서울 마포구 상암산로1길 26", "37.5790897397893", "126.888144865456", true, "2023-05-16", "2023-05-17", "테스트 메모")
-//
-//        try! realm.write {
-//            realm.add(test)
-//        }
-//
-//        getScheduleDetailInfo()
     }
     
     @IBAction func colorCircleButtonTapped(_ sender: UIButton) {
         reloadFloatingPanel()
     }
     
-    func registerScheduleDetailInfo(_ color: String, _ title: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String,
+    func registerScheduleDetailInfo(_ colorIndex: Int, _ color: String, _ scheduleTitle: String, _ locationName: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String,
                                     _ isAllDay: Bool, _ startDate: String, _ endDate: String, _ memo: String) -> ScheduleDetailInfo {
-        let scheduleDetailInfo = ScheduleDetailInfo()
-        scheduleDetailInfo.color = color
-        scheduleDetailInfo.title = title
-        scheduleDetailInfo.address = address
-        scheduleDetailInfo.roadAddress = roadAddress
-        scheduleDetailInfo.lat = lat
-        scheduleDetailInfo.lng = lng
-        scheduleDetailInfo.isAllDay = isAllDay
-        scheduleDetailInfo.startDate = startDate
-        scheduleDetailInfo.endDate = endDate
-        scheduleDetailInfo.memo = memo
-        
+        let scheduleDetailInfo = ScheduleDetailInfo(colorIndex: colorIndex, color: color, scheduleTitle: scheduleTitle, locationName: locationName, address: address, roadAddress: roadAddress, lat: lat, lng: lng,
+                                                    isAllday: isAllDay, startDate: startDate, endDate: endDate, memo: memo)
         return scheduleDetailInfo
+    }
+    
+    @objc func startDatePickerChanged() {
+        startDate = dateformatter.string(from: startDatePicker.date)
+        endDatePicker.minimumDate = startDatePicker.date
+        print(startDate)
+    }
+    
+    @objc func endDatePickerChanged() {
+        endDate = dateformatter.string(from: endDatePicker.date)
+        print(endDate)
     }
     
     func getScheduleDetailInfo() {
         let scheduleDetailInfo = realm.objects(ScheduleDetailInfo.self)
-//        self.testLabel.text = String(scheduleDetailInfo[0].title)
+        print(scheduleDetailInfo)
+//        self.testLabel.text = String(scheduleDetailInfo[0].locationName)
         
         print(Realm.Configuration.defaultConfiguration.fileURL)
     }
@@ -104,7 +129,6 @@ class RegisterScheduleViewController: UIViewController {
             let contentVC = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "ColorCircleCollectionViewController")
             self.floatingPanel.set(contentViewController: contentVC)
             let vc = contentVC as! ColorCircleCollectionViewController
-//            vc.locations = items
             vc.colorIndex = self.index
             vc.colorSelectCollectionView.backgroundColor = .white
             self.floatingPanel.track(scrollView: vc.colorSelectCollectionView)
@@ -114,7 +138,8 @@ class RegisterScheduleViewController: UIViewController {
             vc.completionHandler = { colorIndex in
                 print(colorIndex)
                 self.index = colorIndex
-                self.colorCircleButton.setImage(UIImage(named: vc.colorImages[colorIndex]), for: .normal)
+                self.colorCircleButton.setImage(UIImage(named: AppStyles.ColorCircle.colorImages[colorIndex]), for: .normal)
+                self.color = AppStyles.ColorCircle.colorImages[colorIndex]
                 self.floatingPanel.removePanelFromParent(animated: true)
             }
              
@@ -133,7 +158,6 @@ extension RegisterScheduleViewController: FloatingPanelControllerDelegate {
         }
     }
 }
-
 
 class ColorFloatingPanelLayout: FloatingPanelLayout {
     var position: FloatingPanelPosition {

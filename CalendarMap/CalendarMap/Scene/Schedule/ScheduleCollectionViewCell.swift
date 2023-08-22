@@ -18,8 +18,15 @@ class ScheduleCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        colorCircle.layer.cornerRadius = colorCircle.frame.width / 2
-        colorCircle.layer.masksToBounds = true
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 5
+        self.layer.shadowColor = AppStyles.Color.Shadow.cgColor
+        self.layer.shadowOpacity = 0.3
+        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowRadius = 14
+        
+//        colorCircle.layer.cornerRadius = colorCircle.frame.width / 2
+//        colorCircle.layer.masksToBounds = true
         
     }
 

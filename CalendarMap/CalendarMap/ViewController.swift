@@ -9,26 +9,11 @@ import UIKit
 import NMapsMap
 import CoreLocation
 import FloatingPanel
+import RealmSwift
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
-    
-    @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var searchImageView: UIImageView!
-    @IBOutlet weak var mainMapView: NMFMapView!
-    @IBOutlet weak var searchLocalTextField: UITextField!
-    @IBOutlet weak var periodShadowView: UIView!
-    @IBOutlet weak var periodButton: UIButton!
-    
-
-    @IBOutlet weak var calendarShadowView: UIView!
-    @IBOutlet weak var calendarButton: UIButton!
-    
-
-    @IBOutlet weak var currentLocationShadowView: UIView!
-    @IBOutlet weak var currentLocationButton: UIButton!
-    
-    @IBOutlet weak var noScheduleView: UIView!
-    @IBOutlet weak var mainCollectionView: UICollectionView!
+    let realm = try! Realm()
+    var realmData: Results<ScheduleDetailInfo>!
     
     var floatingPanel: FloatingPanelController!
     var mapViewModel = MapViewModel()
@@ -37,15 +22,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let locationManager = CLLocationManager()
     var currentIdx: CGFloat = 0.0
     
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var searchImageView: UIImageView!
+    @IBOutlet weak var mainMapView: NMFMapView!
+    @IBOutlet weak var searchLocalTextField: UITextField!
+    @IBOutlet weak var periodShadowView: UIView!
+    @IBOutlet weak var periodButton: UIButton!
+    
+    @IBOutlet weak var calendarShadowView: UIView!
+    @IBOutlet weak var calendarButton: UIButton!
+
+    @IBOutlet weak var currentLocationShadowView: UIView!
+    @IBOutlet weak var currentLocationButton: UIButton!
+    
+    @IBOutlet weak var noScheduleView: UIView!
+    @IBOutlet weak var mainCollectionView: UICollectionView!
+    
     // TODO: 대화역, 상암중학교, 부산역 좌표 이동 테스트
     var coordinates: [(Double, Double)] = [(126.747500970967, 37.676157377075), (126.888144865456, 37.5790897397893), (129.04141918283216, 35.11510918247538)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let data = realm.objects(ScheduleDetailInfo.self)
+        if data.count > 0 {
+            realmData = data.sorted(byKeyPath: "startDate", ascending: true)
+            print(realmData!)
+        } else {
+            realmData = data
+        }
+        
         setupViews()
     }
-    
+
     func setupViews() {
         initView()
         initMapSetting()
@@ -102,13 +111,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         currentLocationShadowView.layer.shadowRadius = 14
         currentLocationShadowView.layer.masksToBounds = false
         currentLocationShadowView.addSubview(currentLocationButton)
-        
     }
     
     /// 네이버 지도를 사용하기 위한 초기 설정
     func initMapSetting() {
-        moveToCurrentLocation()
-        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -118,10 +124,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             if CLLocationManager.locationServicesEnabled() {
                 print("위치 서비스 On 상태")
                 self.locationManager.startUpdatingLocation()
-                
-                let marker = NMFMarker()
-                marker.position = NMGLatLng(lat: self.locationManager.location?.coordinate.latitude ?? 0, lng: self.locationManager.location?.coordinate.longitude ?? 0)
-//                marker.mapView = self.mainMapView
+                self.moveToCurrentLocation()
             } else {
                 print("위치 서비스 Off 상태")
             }
@@ -149,12 +152,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         mainCollectionView.register(UINib(nibName: "ScheduleCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ScheduleCollectionViewCell")
 
         let layout = mainCollectionView!.collectionViewLayout as! UICollectionViewFlowLayout
-//        layout.itemSize = CGSize(width: 308, height: 96)
         layout.minimumLineSpacing = 16
         mainCollectionView.collectionViewLayout = layout
     }
     
-    /// 장소 검색 시, 올라오는 하단 Carousel view에 검색 결과 테이블 뷰 표시
+    /// 장소 검색 시, 올라오는 하단 Floating Panel에 검색 결과 테이블 뷰 표시
     /// - Parameter items: 카카오 장소
     func reloadFloatingPanel(_ items: KakaoSearchLocation) {
         DispatchQueue.main.async {
@@ -172,7 +174,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     /// 지도 카메라 현재 위치로 이동
     func moveToCurrentLocation() {
         moveMapViewCamera(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
-        mainMapView.positionMode = .normal
+        DispatchQueue.main.async {
+            self.mainMapView.positionMode = .compass
+        }
     }
     
     /// 지도 카메라 좌표로 이동
@@ -182,26 +186,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func moveMapViewCamera(_ lat: Double, _ lng: Double) {
         let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: lat, lng: lng))
         cameraUpdate.animation = .easeIn
-        mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
-            if isCancelled {
-                print("카메라 이동 취소")
-            } else {
-                print("카메라 이동 완료")
+        DispatchQueue.main.async {
+            self.mainMapView.moveCamera(cameraUpdate) { (isCancelled) in
+                if isCancelled {
+                    print("카메라 이동 취소")
+                } else {
+                    print("카메라 이동 완료")
+                }
             }
         }
     }
     
-    // TODO: delegate로 좌표받아서 카메라 이동 함수 구현
-    
-    
-    
+    /// 빈 화면 터치 시, 키보드 내리기
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 
+    /// 현재 위치 버튼 클릭
     @IBAction func currentLocationTapped(_ sender: UIButton) {
         moveToCurrentLocation()
-        
     }
 }
     
@@ -222,7 +225,7 @@ extension ViewController: NMFMapViewTouchDelegate {
         print(coords)
 
         mapViewModel.fetchAddress(coords: coords) { data in
-//            dump(data)
+            dump(data)
         }
     }
     
@@ -247,11 +250,11 @@ extension ViewController: NMFMapViewTouchDelegate {
 }
 
 extension ViewController: UITextFieldDelegate {
+    /// 장소 검색 엔터 이후
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.searchLocalTextField.resignFirstResponder()
         
         guard let word = textField.text else { return false }
-
         searchViewModel.fetchKakaoSearchLocation(searchWord: word, lng: String(locationManager.location?.coordinate.longitude ?? 0), lat: String(locationManager.location?.coordinate.latitude ?? 0) ) { data in
             dump(data)
 
@@ -275,16 +278,14 @@ extension ViewController: FloatingPanelControllerDelegate {
 }
 
 extension ViewController: SendCoordinateDelegate {
-    
-    func sendCoordinate(x: String, y: String) {
+    func sendCoordinate(lat: String, lng: String) {
         DispatchQueue.main.async {
-            // bottom panel 닫기
+            self.mainCollectionView.reloadData()
             self.floatingPanel.removePanelFromParent(animated: true)
-            
-            self.moveMapViewCamera(Double(y) ?? 0, Double(x) ?? 0)
+            self.moveMapViewCamera(Double(lat) ?? 0, Double(lng) ?? 0)
             
             let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: Double(y) ?? 0, lng: Double(x) ?? 0)
+            marker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
             marker.mapView = self.mainMapView
         }
     }
@@ -325,27 +326,32 @@ extension FloatingPanelController {
 
 extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        noScheduleView.isHidden = true
-        mainCollectionView.isHidden = false
-        
-        return 3
+        if realmData.count > 0 {
+            noScheduleView.isHidden = true
+            mainCollectionView.isHidden = false
+        } else {
+            noScheduleView.isHidden = false
+            mainCollectionView.isHidden = true
+        }
+
+        return realmData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ScheduleCollectionViewCell", for: indexPath) as? ScheduleCollectionViewCell else { return UICollectionViewCell() }
-                
+        let data = realmData[indexPath.row]
+        cell.colorCircle.image = UIImage(named: data.color)
+        cell.scheduleName.text = data.scheduleTitle
         
-        cell.backgroundColor = .white
-        cell.layer.cornerRadius = 5
-        cell.layer.shadowColor = AppStyles.Color.Shadow.cgColor
-        cell.layer.shadowOpacity = 0.3
-        cell.layer.shadowOffset = CGSize.zero
-        cell.layer.shadowRadius = 14
+        let startArray = data.startDate.components(separatedBy: " ")
+        let startTime = "\(startArray[1]) \(startArray[2])"
         
-//        cell.colorCircle.backgroundColor = AppStyles.Color.Green
-//        cell.scheduleName.text = "test"
+        let endArray = data.endDate.components(separatedBy: " ")
+        let endTime = "\(endArray[1]) \(endArray[2])"
         
+//        2023.7.26.수요일 오후 11:55
+        cell.scheduleTime.text = "\(startTime) - \(endTime)"
+        cell.schedulePlace.text = data.locationName
         
         return cell
     }
@@ -367,20 +373,21 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
         targetContentOffset.pointee = offset
         
+        let currentData = realmData[Int(currentIdx)]
+        
         let marker = NMFMarker()
-//        marker.position = NMGLatLng(lat: locationManager.location?.coordinate.latitude ?? 0, lng: locationManager.location?.coordinate.longitude ?? 0)
-        marker.position = NMGLatLng(lat: coordinates[Int(currentIdx)].1, lng: coordinates[Int(currentIdx)].0)
+        marker.position = NMGLatLng(lat: Double(currentData.lat)!, lng: Double(currentData.lng)!)
         marker.mapView = self.mainMapView
-        marker.iconImage = NMFOverlayImage(name: "scheduleCircleIconRed")
+        marker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
         marker.captionAligns = [NMFAlignType.center]
         
         let infoWindow = NMFInfoWindow()
-        let dataSource = CustomInfoWindowDataSource()
+        let dataSource = CustomInfoWindowDataSource(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.colorIndex)
         infoWindow.dataSource = dataSource
         infoWindow.open(with: marker, alignType: .center)
         infoWindow.offsetY = 6
         
-        moveMapViewCamera(coordinates[Int(currentIdx)].1, coordinates[Int(currentIdx)].0)
+        moveMapViewCamera(Double(realmData[Int(currentIdx)].lat)!, Double(realmData[Int(currentIdx)].lng)!)
     }
 }
 
