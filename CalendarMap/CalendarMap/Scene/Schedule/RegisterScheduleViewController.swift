@@ -52,9 +52,8 @@ class RegisterScheduleViewController: UIViewController {
         dateformatter.dateFormat = "yyyy.M.d.E요일 a hh:mm"
         dateformatter.locale = Locale(identifier: "ko_KR")
         
-        startDate = dateformatter.string(from: Date())
-        endDate = dateformatter.string(from: Date())
-        
+        startDatePickerChanged()
+        endDatePickerChanged()
         
         startDatePicker.addTarget(self, action: #selector(startDatePickerChanged), for: .valueChanged)
         endDatePicker.addTarget(self, action: #selector(endDatePickerChanged), for: .valueChanged)

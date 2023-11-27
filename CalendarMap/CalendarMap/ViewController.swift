@@ -14,7 +14,7 @@ import RealmSwift
 class ViewController: UIViewController, CLLocationManagerDelegate {
     let realm = try! Realm()
     var realmData: Results<ScheduleDetailInfo>!
-    
+    var marker = NMFMarker()
     var floatingPanel: FloatingPanelController!
     var mapViewModel = MapViewModel()
     var searchViewModel = SearchViewModel()
@@ -44,6 +44,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        getRealmData()
+        setupViews()
+    }
+
+    func getRealmData() {
         let data = realm.objects(ScheduleDetailInfo.self)
         if data.count > 0 {
             realmData = data.sorted(byKeyPath: "startDate", ascending: true)
@@ -51,10 +56,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         } else {
             realmData = data
         }
-        
-        setupViews()
     }
-
+    
     func setupViews() {
         initView()
         initMapSetting()
@@ -255,7 +258,9 @@ extension ViewController: UITextFieldDelegate {
         self.searchLocalTextField.resignFirstResponder()
         
         guard let word = textField.text else { return false }
-        searchViewModel.fetchKakaoSearchLocation(searchWord: word, lng: String(locationManager.location?.coordinate.longitude ?? 0), lat: String(locationManager.location?.coordinate.latitude ?? 0) ) { data in
+        
+        let currentCoordinate = (locationManager.location?.coordinate.longitude, locationManager.location?.coordinate.latitude)
+        searchViewModel.fetchKakaoSearchLocation(searchWord: word, lng: String(currentCoordinate.0 ?? 0), lat: String(currentCoordinate.1 ?? 0) ) { data in
             dump(data)
 
             guard let items = data else { return }
@@ -281,12 +286,37 @@ extension ViewController: SendCoordinateDelegate {
     func sendCoordinate(lat: String, lng: String) {
         DispatchQueue.main.async {
             self.mainCollectionView.reloadData()
-            self.floatingPanel.removePanelFromParent(animated: true)
+//            self.floatingPanel.removePanelFromParent(animated: true)
             self.moveMapViewCamera(Double(lat) ?? 0, Double(lng) ?? 0)
+           
+            self.marker.iconImage = NMFOverlayImage(name: "img_current_place")
+            self.marker.width = 24
+            self.marker.height = 36
+            self.marker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
+            self.marker.mapView = self.mainMapView
+            
+            let data = self.realm.objects(ScheduleDetailInfo.self)
+            self.currentIdx = CGFloat(integerLiteral: data.count) - 1
+            guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+            let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+            let offset = CGPoint(x: self.currentIdx * cellWidth - self.mainCollectionView.contentInset.left, y: 0)
+            self.mainCollectionView.setContentOffset(offset, animated: false)
+            self.realmData = data.sorted(byKeyPath: "startDate", ascending: true)
+            let currentData = self.realmData[Int(self.currentIdx)]
             
             let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
+            marker.position = NMGLatLng(lat: Double(currentData.lat)!, lng: Double(currentData.lng)!)
             marker.mapView = self.mainMapView
+            marker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
+            marker.captionAligns = [NMFAlignType.center]
+            
+            let infoWindow = NMFInfoWindow()
+            let dataSource = CustomInfoWindowDataSource(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.colorIndex)
+            infoWindow.dataSource = dataSource
+            infoWindow.open(with: marker, alignType: .center)
+            infoWindow.offsetY = 6
+            
+            self.moveMapViewCamera(Double(self.realmData[Int(self.currentIdx)].lat)!, Double(self.realmData[Int(self.currentIdx)].lng)!)
         }
     }
     
@@ -370,6 +400,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
                 currentIdx -= 1
             }
         }
+        
         offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
         targetContentOffset.pointee = offset
         
@@ -388,6 +419,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         infoWindow.offsetY = 6
         
         moveMapViewCamera(Double(realmData[Int(currentIdx)].lat)!, Double(realmData[Int(currentIdx)].lng)!)
+    }
+    
+    func moveMainCollectionView(_ index: CGFloat) {
+        
     }
 }
 

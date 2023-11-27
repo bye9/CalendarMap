@@ -16,6 +16,11 @@ class SearchViewModel: NSObject {
         }
     }
     
+    
+    /// 검색된 장소 테이블 뷰 셀 클릭 시, 지도 카메라 이동하기 위해 카카오 주소로 네이버 지도의 좌표 구하기
+    /// - Parameters:
+    ///   - searchAddress: 카카오맵 주소
+    ///   - completion: 네이버 지도 좌표
     func fetchCoordinate(searchAddress: String, completion: @escaping (SearchCoordinate?) -> Void) {
         apiService.fetchCoordinate(searchAddress: searchAddress) { data in
             completion(data)

@@ -9,7 +9,6 @@ import UIKit
 
 protocol SendCoordinateDelegate {
     func sendCoordinate(lat: String, lng: String)
-    func registerSchedule() // TODO: 여기서 장소 좌표 및 주소 값 등 ViewController로 전달 필요...
 }
 
 class SearchTableViewController: UIViewController {
@@ -28,6 +27,7 @@ class SearchTableViewController: UIViewController {
         tb.register(nibName, forCellReuseIdentifier: cellReuseIdentifier)
         tb.dataSource = self
         tb.delegate = self
+        tb.isHidden = locations?.documents.count == 0 ? true : false
     }
 }
 
@@ -42,8 +42,8 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
-        cell.locationName.text = locations?.documents[indexPath.row].placeName
         let categoryName = locations?.documents[indexPath.row].categoryName.components(separatedBy: "> ").last ?? ""
+        cell.locationName.text = locations?.documents[indexPath.row].placeName
         cell.locationCategory.text = categoryName
         
         let distanceMeter = Double(locations?.documents[indexPath.row].distance ?? "")
@@ -69,46 +69,36 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let roadAddressName = locations?.documents[indexPath.row].roadAddressName else { return }
         guard let addressName = locations?.documents[indexPath.row].addressName else { return }
         
         searchViewModel.fetchCoordinate(searchAddress: addressName) { data in
-            print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
+//            print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
             self.delegate?.sendCoordinate(lat: data?.addresses[0].y ?? "0", lng: data?.addresses[0].x ?? "0")
         }
-        
-        
-        
+
     }
-    
 }
 
 extension SearchTableViewController: ButtonTappedDelegate {
-    
     // TODO: 셀에서 여기로 장소 좌표 및 주소 값 전달 필요...
     func cellButtonTapped(name: String, address: String, roadAddress: String, lat: String, lng: String) {
         print("일정등록하기버튼 클릭")
         print(name, lat, lng)
         
-        guard let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
-        vc.locationName = name
-        vc.address = address
-        vc.roadAddress = roadAddress
-        vc.lat = lat
-        vc.lng = lng
+        guard let registerScheduleViewController = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
+        registerScheduleViewController.locationName = name
+        registerScheduleViewController.address = address
+        registerScheduleViewController.roadAddress = roadAddress
+        registerScheduleViewController.lat = lat
+        registerScheduleViewController.lng = lng
         
-        vc.completionHandler = {
+        registerScheduleViewController.completionHandler = {
             print($0, $1)
             self.delegate?.sendCoordinate(lat: $0, lng: $1)
+            
         }
         
-        self.navigationController?.pushViewController(vc, animated: true)
-        
-        
-        
-        // TODO: 테이블뷰 검색결과 남겨두고 일정등록화면 갔다올 것인가, 아닌가
-//        self.delegate?.registerSchedule()
-
+        self.navigationController?.pushViewController(registerScheduleViewController, animated: true)
     }
 }
 
