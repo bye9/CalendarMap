@@ -201,10 +201,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     /// 빈 화면 터치 시, 키보드 내리기
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override  func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 
+    /// 달력 버튼 클릭
+    @IBAction func calendarButtonTapped(_ sender: UIButton) {
+        guard let calendarViewController = UIStoryboard(name: "Calendar", bundle: nil).instantiateViewController(withIdentifier: "CalendarViewController") as? CalendarViewController else { return }
+        
+        self.navigationController?.pushViewController(calendarViewController, animated: true)
+    }
+    
     /// 현재 위치 버튼 클릭
     @IBAction func currentLocationTapped(_ sender: UIButton) {
         moveToCurrentLocation()
@@ -289,34 +296,35 @@ extension ViewController: SendCoordinateDelegate {
 //            self.floatingPanel.removePanelFromParent(animated: true)
             self.moveMapViewCamera(Double(lat) ?? 0, Double(lng) ?? 0)
            
+            // 현재 위치 마커 추가
             self.marker.iconImage = NMFOverlayImage(name: "img_current_place")
             self.marker.width = 24
             self.marker.height = 36
             self.marker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
             self.marker.mapView = self.mainMapView
             
-            let data = self.realm.objects(ScheduleDetailInfo.self)
-            self.currentIdx = CGFloat(integerLiteral: data.count) - 1
-            guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-            let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
-            let offset = CGPoint(x: self.currentIdx * cellWidth - self.mainCollectionView.contentInset.left, y: 0)
-            self.mainCollectionView.setContentOffset(offset, animated: false)
-            self.realmData = data.sorted(byKeyPath: "startDate", ascending: true)
-            let currentData = self.realmData[Int(self.currentIdx)]
+//            let data = self.realm.objects(ScheduleDetailInfo.self)
+//            self.currentIdx = CGFloat(integerLiteral: data.count) - 1
+//            guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+//            let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+//            let offset = CGPoint(x: self.currentIdx * cellWidth - self.mainCollectionView.contentInset.left, y: 0)
+//            self.mainCollectionView.setContentOffset(offset, animated: false)
+//            self.realmData = data.sorted(byKeyPath: "startDate", ascending: true)
+//            let currentData = self.realmData[Int(self.currentIdx)]
             
-            let marker = NMFMarker()
-            marker.position = NMGLatLng(lat: Double(currentData.lat)!, lng: Double(currentData.lng)!)
-            marker.mapView = self.mainMapView
-            marker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
-            marker.captionAligns = [NMFAlignType.center]
-            
-            let infoWindow = NMFInfoWindow()
-            let dataSource = CustomInfoWindowDataSource(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.colorIndex)
-            infoWindow.dataSource = dataSource
-            infoWindow.open(with: marker, alignType: .center)
-            infoWindow.offsetY = 6
-            
-            self.moveMapViewCamera(Double(self.realmData[Int(self.currentIdx)].lat)!, Double(self.realmData[Int(self.currentIdx)].lng)!)
+//            let marker = NMFMarker()
+//            marker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
+//            marker.mapView = self.mainMapView
+//            marker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
+//            marker.captionAligns = [NMFAlignType.center]
+//            
+//            let infoWindow = NMFInfoWindow()
+//            let dataSource = CustomInfoWindowDataSource(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.colorIndex)
+//            infoWindow.dataSource = dataSource
+//            infoWindow.open(with: marker, alignType: .center)
+//            infoWindow.offsetY = 6
+//            
+//            self.moveMapViewCamera(Double(self.realmData[Int(self.currentIdx)].lat)!, Double(self.realmData[Int(self.currentIdx)].lng)!)
         }
     }
     

@@ -9,5 +9,6 @@ target 'CalendarMap' do
   pod 'NMapsMap'
   pod 'FloatingPanel'
   pod 'RealmSwift'
+  pod 'FSCalendar'
 
 end

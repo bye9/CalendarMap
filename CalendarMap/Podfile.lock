@@ -1,5 +1,6 @@
 PODS:
   - FloatingPanel (2.6.1)
+  - FSCalendar (2.8.4)
   - NMapsGeometry (1.0.1)
   - NMapsMap (3.16.2):
     - NMapsGeometry
@@ -11,12 +12,14 @@ PODS:
 
 DEPENDENCIES:
   - FloatingPanel
+  - FSCalendar
   - NMapsMap
   - RealmSwift
 
 SPEC REPOS:
   trunk:
     - FloatingPanel
+    - FSCalendar
     - NMapsGeometry
     - NMapsMap
     - Realm
@@ -24,11 +27,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   FloatingPanel: de6bb891912ede28da7b1140f7b583c474fec28a
+  FSCalendar: 2d1d0d9398f12d439f55c1fe0f01525b151b8260
   NMapsGeometry: 53c573ead66466681cf123f99f698dc8071a4b83
   NMapsMap: aaa64717249b06ae82c3a3addb3a01f0e33100ab
   Realm: 5902885dd1d5e71b0b020830caab937ecdf5bf07
   RealmSwift: 0fc037d6c32c7c4fc9362892380f380114ecdcf0
 
-PODFILE CHECKSUM: eda3972557eddbb77475c370e2cee2ec978df0e9
+PODFILE CHECKSUM: a6a649618bbf44ac3478aa074fecf3f3ef5ba8c8
 
 COCOAPODS: 1.12.0

@@ -49,7 +49,7 @@ class RegisterScheduleViewController: UIViewController {
         locationNameButton.setTitleColor(UIColor.black, for: .normal)
         locationNameButton.contentHorizontalAlignment = .left
         
-        dateformatter.dateFormat = "yyyy.M.d.E요일 a hh:mm"
+        dateformatter.dateFormat = "yyyy.M.d.E a hh:mm"
         dateformatter.locale = Locale(identifier: "ko_KR")
         
         startDatePickerChanged()
