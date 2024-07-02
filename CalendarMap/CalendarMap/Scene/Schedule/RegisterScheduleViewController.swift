@@ -58,6 +58,14 @@ class RegisterScheduleViewController: UIViewController {
         startDatePicker.addTarget(self, action: #selector(startDatePickerChanged), for: .valueChanged)
         endDatePicker.addTarget(self, action: #selector(endDatePickerChanged), for: .valueChanged)
         startDatePicker.minimumDate = Date()
+        
+        memoTextView.delegate = self
+        memoTextView.text = "메모를 입력해주세요."
+        memoTextView.textColor = UIColor.lightGray
+        memoTextView.font = AppStyles.Fonts.Body1
+        memoTextView.textContainer.lineFragmentPadding = 0
+        memoTextView.textContainerInset = .zero
+        
     }
     
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -145,6 +153,26 @@ class RegisterScheduleViewController: UIViewController {
         }
     }
     
+}
+
+extension RegisterScheduleViewController: UITextViewDelegate {
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if memoTextView.text.isEmpty {
+            memoTextView.text = "메모를 입력해주세요."
+            memoTextView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if memoTextView.textColor == UIColor.lightGray {
+            memoTextView.text = nil
+            memoTextView.textColor = UIColor.black
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.memoTextView.resignFirstResponder()
+    }
 }
 
 extension RegisterScheduleViewController: FloatingPanelControllerDelegate {
