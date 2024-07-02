@@ -18,13 +18,15 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.backgroundColor = .white
-        self.layer.cornerRadius = 5
+//        contentView.layer.cornerRadius = 10
+//        contentView.layer.masksToBounds = true
+        
+        self.layer.masksToBounds = false
         self.layer.shadowColor = AppStyles.Color.Shadow.cgColor
         self.layer.shadowOpacity = 0.3
-        self.layer.shadowOffset = CGSize.zero
+        self.layer.shadowOffset = CGSize(width: -2, height: 2)
         self.layer.shadowRadius = 14
- 
+        
     }
     
     @IBAction func btnOpenOtherApp(_ sender: UIButton) {

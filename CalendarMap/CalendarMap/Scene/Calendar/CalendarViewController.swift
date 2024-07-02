@@ -11,6 +11,7 @@ import FSCalendar
 
 class CalendarViewController: UIViewController {
     let realm = try! Realm()
+    var realmData: Results<ScheduleDetailInfo>!
     let selectDateFormatter = DateFormatter()
     let headerDateFormatter = DateFormatter()
     var events = [Date]()
@@ -22,6 +23,8 @@ class CalendarViewController: UIViewController {
     
     @IBOutlet weak var calendarView: FSCalendar!
     @IBOutlet weak var headerLabel: UILabel!
+    @IBOutlet weak var noScheduleView: UIView!
+    @IBOutlet weak var mainCollectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,9 +42,6 @@ class CalendarViewController: UIViewController {
         self.calendarView.appearance.caseOptions = FSCalendarCaseOptions.weekdayUsesSingleUpperCase
         
         headerDateFormatter.dateFormat = "YYYY년 MM월"
-//        self.calendarView.appearance.headerDateFormat = "YYYY년 MM월"
-//        self.calendarView.appearance.headerTitleFont = AppStyles.Fonts.Heading1
-//        self.calendarView.appearance.headerTitleColor = AppStyles.Color.Black
         self.headerLabel.text = headerDateFormatter.string(from: self.today)
         
         self.calendarView.appearance.weekdayFont = AppStyles.Fonts.Body1
@@ -53,11 +53,15 @@ class CalendarViewController: UIViewController {
         self.calendarView.appearance.todayColor = UIColor.gray
         self.calendarView.appearance.selectionColor = AppStyles.Color.Blue
         
+        mainCollectionView.backgroundColor = .clear
+        mainCollectionView.delegate = self
+        mainCollectionView.dataSource = self
+        mainCollectionView.decelerationRate = .fast
+        mainCollectionView.register(UINib(nibName: "CalendarCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CalendarCollectionViewCell")
     }
     
     func setEvents() {
         selectDateFormatter.locale = Locale(identifier: "ko_KR")
-        selectDateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         selectDateFormatter.dateFormat = "yyyy.M.d"
         
         let scheduleDetailInfo = realm.objects(ScheduleDetailInfo.self)
@@ -69,6 +73,23 @@ class CalendarViewController: UIViewController {
             events.append(event)
         }
     }
+    
+    func getRealmDataFrom(_ date: Date) {
+        let data = realm.objects(ScheduleDetailInfo.self)
+        if data.count > 0 {
+            let sortedData = data.sorted(byKeyPath: "startDate", ascending: true)
+            let newString = selectDateFormatter.string(from: date)
+            realmData = sortedData.filter("startDate CONTAINS '\(newString)'")
+            print(realmData!)
+        } else {
+            realmData = data
+        }
+    }
+    
+    @IBAction func btnCloseTapped(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 
     @IBAction func moveToPrev(_ sender: UIButton) {
         self.moveCurrentPage(moveUp: false)
@@ -98,13 +119,16 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     
     // 날짜를 선택했을 때
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-
+        getRealmDataFrom(date)
+        
+        mainCollectionView.reloadData()
     }
     
     // 날짜 밑에 이벤트 dot 개수
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
         let newString = selectDateFormatter.string(from: date)
-        guard let newDate = selectDateFormatter.date(from: newString) else { return 0 }
+        guard let newDate = selectDateFormatter.date(from: newString) else { return 0
+        }
         
         if self.events.contains(newDate) {
             return 1
@@ -147,4 +171,37 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         return CGPoint(x: 0, y: 3)
     }
     
+}
+
+extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if realmData != nil {
+            noScheduleView.isHidden = true
+            mainCollectionView.isHidden = false
+            return realmData.count
+        } else {
+            noScheduleView.isHidden = false
+            mainCollectionView.isHidden = true
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else { return UICollectionViewCell() }
+        let data = realmData[indexPath.row]
+        cell.colorCircle.image = UIImage(named: data.color)
+        cell.scheduleName.text = data.scheduleTitle
+        
+        let startArray = data.startDate.components(separatedBy: " ")
+        let startTime = "\(startArray[1]) \(startArray[2])"
+        
+        let endArray = data.endDate.components(separatedBy: " ")
+        let endTime = "\(endArray[1]) \(endArray[2])"
+        
+        //        2023.7.26.수요일 오후 11:55
+        cell.scheduleTime.text = "\(startTime) - \(endTime)"
+        cell.schedulePlace.text = data.locationName
+        
+        return cell
+    }
 }

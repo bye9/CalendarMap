@@ -14,8 +14,9 @@ import RealmSwift
 class ViewController: UIViewController, CLLocationManagerDelegate {
     let realm = try! Realm()
     var realmData: Results<ScheduleDetailInfo>!
-    var marker = NMFMarker()
-    var floatingPanel: FloatingPanelController!
+    var searchMarker = NMFMarker()
+    let locationMarker = NMFMarker()
+    var searchFloatingPanel: FloatingPanelController!
     var mapViewModel = MapViewModel()
     var searchViewModel = SearchViewModel()
     let infoWindow = NMFInfoWindow()
@@ -51,7 +52,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func getRealmData() {
         let data = realm.objects(ScheduleDetailInfo.self)
         if data.count > 0 {
-            realmData = data.sorted(byKeyPath: "startDate", ascending: true)
+            // 오늘에 해당하는 일정만 가져오기
+            let dateFormatter = DateFormatter()
+            dateFormatter.locale = Locale(identifier: "ko_KR")
+            dateFormatter.dateFormat = "yyyy.M.d"
+            let newString = dateFormatter.string(from: Date())
+
+            realmData = data.filter("startDate CONTAINS '\(newString)'")
+            realmData = realmData.sorted(byKeyPath: "startDate", ascending: true)
             print(realmData!)
         } else {
             realmData = data
@@ -138,11 +146,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     /// FloatingPanelController(bottom sheet) 화면 설정
     func initFloatingPanel() {
-        floatingPanel = FloatingPanelController()
-        floatingPanel.changePanelStyle()
-        floatingPanel.delegate = self
-        floatingPanel.isRemovalInteractionEnabled = true
-        floatingPanel.layout = SearchFloatingPanelLayout()
+        searchFloatingPanel = FloatingPanelController()
+        searchFloatingPanel.changePanelStyle()
+        searchFloatingPanel.delegate = self
+        searchFloatingPanel.isRemovalInteractionEnabled = true
+        searchFloatingPanel.layout = SearchFloatingPanelLayout()
         
     }
     
@@ -164,13 +172,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func reloadFloatingPanel(_ items: KakaoSearchLocation) {
         DispatchQueue.main.async {
             let contentVC = UIStoryboard(name: "Search", bundle: nil).instantiateViewController(withIdentifier: "SearchTableViewController")
-            self.floatingPanel.set(contentViewController: contentVC)
+            self.searchFloatingPanel.set(contentViewController: contentVC)
             let vc = contentVC as! SearchTableViewController
             vc.delegate = self
             vc.locations = items
             vc.tb.backgroundColor = .white
-            self.floatingPanel.track(scrollView: vc.tb)
-            self.floatingPanel.addPanel(toParent: self, animated: true)
+            self.searchFloatingPanel.track(scrollView: vc.tb)
+            self.searchFloatingPanel.addPanel(toParent: self, animated: true)
         }
     }
     
@@ -229,7 +237,7 @@ extension ViewController: NMFMapViewTouchDelegate {
         infoWindow.close()
         
         // FloatingPanelController(bottom sheet) 화면 닫기
-        floatingPanel.removePanelFromParent(animated: true)
+        searchFloatingPanel.removePanelFromParent(animated: true)
         
         let coords = "\(latlng.lng),\(latlng.lat)"
         print(coords)
@@ -297,11 +305,11 @@ extension ViewController: SendCoordinateDelegate {
             self.moveMapViewCamera(Double(lat) ?? 0, Double(lng) ?? 0)
            
             // 현재 위치 마커 추가
-            self.marker.iconImage = NMFOverlayImage(name: "img_current_place")
-            self.marker.width = 24
-            self.marker.height = 36
-            self.marker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
-            self.marker.mapView = self.mainMapView
+            self.searchMarker.iconImage = NMFOverlayImage(name: "img_current_place")
+            self.searchMarker.width = 24
+            self.searchMarker.height = 36
+            self.searchMarker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
+            self.searchMarker.mapView = self.mainMapView
             
 //            let data = self.realm.objects(ScheduleDetailInfo.self)
 //            self.currentIdx = CGFloat(integerLiteral: data.count) - 1
@@ -414,16 +422,21 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         let currentData = realmData[Int(currentIdx)]
         
-        let marker = NMFMarker()
-        marker.position = NMGLatLng(lat: Double(currentData.lat)!, lng: Double(currentData.lng)!)
-        marker.mapView = self.mainMapView
-        marker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
-        marker.captionAligns = [NMFAlignType.center]
+        // 검색해서 선택한 장소의 위치 마커 지우기
+        self.searchMarker.mapView = nil
+        
+        // 이전 장소 위치 마커 지우기
+        self.locationMarker.mapView = nil
+        
+        locationMarker.position = NMGLatLng(lat: Double(currentData.lat)!, lng: Double(currentData.lng)!)
+        locationMarker.mapView = self.mainMapView
+        locationMarker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
+        locationMarker.captionAligns = [NMFAlignType.center]
         
         let infoWindow = NMFInfoWindow()
         let dataSource = CustomInfoWindowDataSource(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.colorIndex)
         infoWindow.dataSource = dataSource
-        infoWindow.open(with: marker, alignType: .center)
+        infoWindow.open(with: locationMarker, alignType: .center)
         infoWindow.offsetY = 6
         
         moveMapViewCamera(Double(realmData[Int(currentIdx)].lat)!, Double(realmData[Int(currentIdx)].lng)!)
