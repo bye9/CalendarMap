@@ -48,8 +48,7 @@ enum AppStyles {
                            "color_yellow", "color_green", "color_lightgreen", "color_gray7", "color_gray3"]
         static let colorCheckImages = ["color_check_blue", "color_check_purple", "color_check_pink", "color_check_red", "color_check_orange",
                           "color_check_yellow", "color_check_green", "color_check_lightgreen", "color_check_gray7", "color_check_gray3"]
-        static let backgroundCircle = ["background_circle_color_blue", "background_circle_color_purple", "background_circle_color_pink", "background_circle_color_red", "background_circle_color_orange"]
-                                       
-        static let backgroundSquare = ["background_square_color_blue", "background_square_color_purple", "background_square_color_pink", "background_square_color_red", "background_square_color_orange"]
+        static let backgroundCircle = ["background_circle_color_blue", "background_circle_color_purple", "background_circle_color_pink", "background_circle_color_red", "background_circle_color_orange", "background_circle_color_yellow", "background_circle_color_green", "background_circle_color_lightgreen", "background_circle_color_gray7", "background_circle_color_gray3"]
+        static let backgroundSquare = ["background_square_color_blue", "background_square_color_purple", "background_square_color_pink", "background_square_color_red", "background_square_color_orange", "background_square_color_yellow", "background_square_color_green", "background_square_color_lightgreen", "background_square_color_gray7", "background_square_color_gray3"]
     }
 }
