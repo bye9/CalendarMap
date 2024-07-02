@@ -186,7 +186,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func moveToCurrentLocation() {
         moveMapViewCamera(locationManager.location?.coordinate.latitude ?? 0, locationManager.location?.coordinate.longitude ?? 0)
         DispatchQueue.main.async {
-            self.mainMapView.positionMode = .compass
+            self.mainMapView.positionMode = .normal
         }
     }
     
@@ -399,6 +399,10 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         cell.scheduleTime.text = "\(startTime) - \(endTime)"
         cell.schedulePlace.text = data.locationName
         
+        if realmData.count == 1 {
+            setLocationMarker(0)
+        }
+        
         return cell
     }
     
@@ -416,11 +420,8 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
                 currentIdx -= 1
             }
         }
-        
         offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
         targetContentOffset.pointee = offset
-        
-        let currentData = realmData[Int(currentIdx)]
         
         // 검색해서 선택한 장소의 위치 마커 지우기
         self.searchMarker.mapView = nil
@@ -428,6 +429,11 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         // 이전 장소 위치 마커 지우기
         self.locationMarker.mapView = nil
         
+        setLocationMarker(Int(currentIdx))
+    }
+    
+    func setLocationMarker(_ index: Int) {
+        let currentData = realmData[Int(index)]
         locationMarker.position = NMGLatLng(lat: Double(currentData.lat)!, lng: Double(currentData.lng)!)
         locationMarker.mapView = self.mainMapView
         locationMarker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
@@ -439,7 +445,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         infoWindow.open(with: locationMarker, alignType: .center)
         infoWindow.offsetY = 6
         
-        moveMapViewCamera(Double(realmData[Int(currentIdx)].lat)!, Double(realmData[Int(currentIdx)].lng)!)
+        moveMapViewCamera(Double(currentData.lat)!, Double(currentData.lng)!)
     }
     
     func moveMainCollectionView(_ index: CGFloat) {
