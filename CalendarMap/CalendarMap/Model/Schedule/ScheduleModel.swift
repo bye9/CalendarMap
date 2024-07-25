@@ -9,12 +9,14 @@ import Foundation
 
 struct ScheduleInfo {
     let title: String
-    let time: String
+    let startDate: String
+    let endDate: String
     let location: String
     
-    init(title: String, time: String, location: String) {
+    init(title: String, startDate: String, endDate: String, location: String) {
         self.title = title
-        self.time = time
+        self.startDate = startDate
+        self.endDate = endDate
         self.location = location
     }
 }

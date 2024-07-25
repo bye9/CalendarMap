@@ -48,6 +48,8 @@
 		A1C535692A1265EF00BF7344 /* CustomInfoWindowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A1C535592A12542800BF7344 /* CustomInfoWindowView.xib */; };
 		A1CA63BA29F17D8B00C6CDD2 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1CA63B929F17D8B00C6CDD2 /* RealmManager.swift */; };
 		A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E704D229F8031600D4FFDD /* ScheduleRealmModel.swift */; };
+		D19490842C3D6B48006CB650 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19490832C3D6B48006CB650 /* ScheduleViewModel.swift */; };
+		D19D32D02C3C1CA00092A7A6 /* ScheduleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19D32CF2C3C1CA00092A7A6 /* ScheduleDetailViewController.swift */; };
 		F4B334AC1AE2E53E0316A566 /* Pods_CalendarMap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +100,8 @@
 		A1CA63B929F17D8B00C6CDD2 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		A1E704D229F8031600D4FFDD /* ScheduleRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRealmModel.swift; sourceTree = "<group>"; };
 		C8A3715DFA297EE5923C20EE /* Pods_CalendarMap.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CalendarMap.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D19490832C3D6B48006CB650 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
+		D19D32CF2C3C1CA00092A7A6 /* ScheduleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +160,7 @@
 			children = (
 				24B57F7E29A49789006121CE /* MapViewModel.swift */,
 				A118239129B62BDE00CE0CF5 /* SearchViewModel.swift */,
+				D19490832C3D6B48006CB650 /* ScheduleViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 			children = (
 				A118239A29CB3DB100CE0CF5 /* Schedule.storyboard */,
 				A159D38629D466FB003D3252 /* RegisterScheduleViewController.swift */,
+				D19D32CF2C3C1CA00092A7A6 /* ScheduleDetailViewController.swift */,
 				A13864282A593AF100CD9B99 /* ScheduleCollectionViewCell.xib */,
 				A13864272A593AF100CD9B99 /* ScheduleCollectionViewCell.swift */,
 				A138642F2A59978000CD9B99 /* ColorCircleCollectionViewController.swift */,
@@ -472,6 +478,7 @@
 				A1ABC8642A8273DE000D5320 /* UIViewController+Extensions.swift in Sources */,
 				A1CA63BA29F17D8B00C6CDD2 /* RealmManager.swift in Sources */,
 				A118239529BA35F900CE0CF5 /* SearchTableViewCell.swift in Sources */,
+				D19490842C3D6B48006CB650 /* ScheduleViewModel.swift in Sources */,
 				A19DC0172A4C4E64005A2848 /* UIColor+Extensions.swift in Sources */,
 				A1E704D329F8031600D4FFDD /* ScheduleRealmModel.swift in Sources */,
 				A138642D2A59966300CD9B99 /* ColorCircleCollectionViewCell.swift in Sources */,
@@ -480,6 +487,7 @@
 				A1C5354C2A12528000BF7344 /* CustomInfoWindowDataSource.swift in Sources */,
 				24B57F5F29A488E8006121CE /* AppDelegate.swift in Sources */,
 				24B57F7F29A49789006121CE /* MapViewModel.swift in Sources */,
+				D19D32D02C3C1CA00092A7A6 /* ScheduleDetailViewController.swift in Sources */,
 				A1C5355A2A12542800BF7344 /* CustomInfoWindowView.swift in Sources */,
 				A118239229B62BDE00CE0CF5 /* SearchViewModel.swift in Sources */,
 				24B57F7729A49049006121CE /* APIService.swift in Sources */,
@@ -630,6 +638,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XZM3XQ6ZMC;
@@ -650,6 +659,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bye9.CalendarMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -662,6 +672,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XZM3XQ6ZMC;
@@ -682,6 +693,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bye9.CalendarMap;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

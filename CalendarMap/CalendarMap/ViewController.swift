@@ -19,6 +19,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var searchFloatingPanel: FloatingPanelController!
     var mapViewModel = MapViewModel()
     var searchViewModel = SearchViewModel()
+    var scheduleViewModel = ScheduleViewModel()
     let infoWindow = NMFInfoWindow()
     let locationManager = CLLocationManager()
     var currentIdx: CGFloat = 0.0
@@ -401,9 +402,17 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         if realmData.count == 1 {
             setLocationMarker(0)
+            // 일정 상세보기 데이터 세팅
+            scheduleViewModel.scheduleSelected(data.scheduleTitle, data.startDate, data.endDate, data.locationName)
         }
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let scheduleDetailViewController = UIStoryboard(name: "Schedule", bundle: .main).instantiateViewController(withIdentifier: "ScheduleDetailViewController") as? ScheduleDetailViewController else { return }
+        scheduleDetailViewController.viewModel = scheduleViewModel
+        self.present(scheduleDetailViewController, animated: true)
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -430,6 +439,9 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         self.locationMarker.mapView = nil
         
         setLocationMarker(Int(currentIdx))
+        let currentData = realmData[Int(currentIdx)]
+        // 일정 상세보기 데이터 세팅
+        scheduleViewModel.scheduleSelected(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.locationName)
     }
     
     func setLocationMarker(_ index: Int) {

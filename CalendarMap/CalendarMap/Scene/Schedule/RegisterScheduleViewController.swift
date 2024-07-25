@@ -95,8 +95,7 @@ class RegisterScheduleViewController: UIViewController {
         reloadFloatingPanel()
     }
     
-    func registerScheduleDetailInfo(_ colorIndex: Int, _ color: String, _ scheduleTitle: String, _ locationName: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String,
-                                    _ isAllDay: Bool, _ startDate: String, _ endDate: String, _ memo: String) -> ScheduleDetailInfo {
+    func registerScheduleDetailInfo(_ colorIndex: Int, _ color: String, _ scheduleTitle: String, _ locationName: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String, _ isAllDay: Bool, _ startDate: String, _ endDate: String, _ memo: String) -> ScheduleDetailInfo {
         let scheduleDetailInfo = ScheduleDetailInfo(colorIndex: colorIndex, color: color, scheduleTitle: scheduleTitle, locationName: locationName, address: address, roadAddress: roadAddress, lat: lat, lng: lng,
                                                     isAllday: isAllDay, startDate: startDate, endDate: endDate, memo: memo)
         return scheduleDetailInfo
