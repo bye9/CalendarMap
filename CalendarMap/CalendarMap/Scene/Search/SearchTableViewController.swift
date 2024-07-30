@@ -29,6 +29,41 @@ class SearchTableViewController: UIViewController {
         tb.delegate = self
         tb.isHidden = locations?.documents.count == 0 ? true : false
     }
+    
+    func showActionSheet(controller: UIViewController, id: String, locationName: String, lat: String, lng: String) {
+        let alert = UIAlertController(title: "", message: "지도", preferredStyle: .actionSheet)
+          alert.addAction(UIAlertAction(title: "카카오맵에서 열기", style: .default, handler: { (_) in
+              let url = URL(string: "kakaomap://place?id=\(id)")!
+              let appStoreURL = URL(string: "https://apps.apple.com/us/app/kakaomap-korea-no-1-map/id304608425")!
+              
+              if UIApplication.shared.canOpenURL(url) {
+                  UIApplication.shared.open(url)
+              } else {
+                  UIApplication.shared.open(appStoreURL)
+              }
+          }))
+
+          alert.addAction(UIAlertAction(title: "네이버맵에서 열기", style: .default, handler: { (_) in
+              guard let name = locationName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+              
+              let url = URL(string: "nmap://place?lat=\(lat)&lng=\(lng)&name=\(name)&appname=com.bye9.CalendarMap")!
+              let appStoreURL = URL(string: "https://apps.apple.com/us/app/naver-map-navigation/id311867728")!
+              
+              if UIApplication.shared.canOpenURL(url) {
+                  UIApplication.shared.open(url)
+              } else {
+                  UIApplication.shared.open(appStoreURL)
+              }
+          }))
+
+          alert.addAction(UIAlertAction(title: "닫기", style: .cancel, handler: { (_) in
+              
+          }))
+
+          controller.present(alert, animated: true, completion: {
+              
+          })
+    }
 }
 
 extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate {
@@ -63,6 +98,7 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         cell.locationRoadAddress = roadAddressName
         cell.locationLat = locations?.documents[indexPath.row].y
         cell.locationLng = locations?.documents[indexPath.row].x
+        cell.id = locations?.documents[indexPath.row].id
         cell.delegate = self
         
         return cell
@@ -75,7 +111,6 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
 //            print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
             self.delegate?.sendCoordinate(lat: data?.addresses[0].y ?? "0", lng: data?.addresses[0].x ?? "0")
         }
-
     }
 }
 
@@ -99,6 +134,10 @@ extension SearchTableViewController: ButtonTappedDelegate {
         }
         
         self.navigationController?.pushViewController(registerScheduleViewController, animated: true)
+    }
+    
+    func openMapButtonTapped(cell: SearchTableViewCell, id: String, locationName: String, lat: String, lng: String) {
+        self.showActionSheet(controller: self, id: id, locationName: locationName, lat: lat, lng: lng)
     }
 }
 

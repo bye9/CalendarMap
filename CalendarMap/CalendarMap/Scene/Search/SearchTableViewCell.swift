@@ -9,12 +9,14 @@ import UIKit
 
 protocol ButtonTappedDelegate: AnyObject {
     func cellButtonTapped(name: String, address: String, roadAddress: String, lat: String, lng: String)
+    func openMapButtonTapped(cell: SearchTableViewCell, id: String, locationName: String, lat: String, lng: String)
 }
 
 class SearchTableViewCell: UITableViewCell {
     var locationRoadAddress: String?
     var locationLat: String?
     var locationLng: String?
+    var id: String?
     
     @IBOutlet weak var locationName: UILabel!
     @IBOutlet weak var locationCategory: UILabel!
@@ -45,4 +47,11 @@ class SearchTableViewCell: UITableViewCell {
         delegate?.cellButtonTapped(name: locationName.text ?? "장소 이름", address: locationAddress.text ?? "지번 주소", roadAddress: locationRoadAddress ?? "도로명 주소", lat: locationLat ?? "0", lng: locationLng ?? "0")
     }
     
+    @IBAction func openOtherAppTapped(_ sender: UIButton) {
+        guard let id = id else { return }
+        guard let locationName = locationName.text else { return }
+        guard let lat = locationLat else { return }
+        guard let lng = locationLng else { return }
+        delegate?.openMapButtonTapped(cell: self, id: id, locationName: locationName, lat: lat, lng: lng)
+    }
 }
