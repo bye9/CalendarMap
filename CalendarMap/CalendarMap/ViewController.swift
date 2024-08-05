@@ -278,8 +278,20 @@ extension ViewController: UITextFieldDelegate {
         let currentCoordinate = (locationManager.location?.coordinate.longitude, locationManager.location?.coordinate.latitude)
         searchViewModel.fetchKakaoSearchLocation(searchWord: word, lng: String(currentCoordinate.0 ?? 0), lat: String(currentCoordinate.1 ?? 0) ) { data in
             dump(data)
-
+            
             guard let items = data else { return }
+            if items.documents.isEmpty {
+                let dialog = UIAlertController(title: "알림", message: "검색된 결과가 없습니다.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "확인", style: .default, handler: {(alert:UIAlertAction!)-> Void in})
+                dialog.addAction(okAction)
+                
+                DispatchQueue.main.async {
+                    self.present(dialog, animated:true, completion:nil)
+                }
+                
+                return
+            }
+            
             self.reloadFloatingPanel(items)
         }
         
