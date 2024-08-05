@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -132,7 +132,7 @@
                         </constraints>
                     </view>
                 </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="M0A-lh-iQY" secondAttribute="bottom" id="63o-dQ-0Wg"/>
                     <constraint firstItem="M0A-lh-iQY" firstAttribute="leading" secondItem="fRh-0R-7WP" secondAttribute="leading" id="VAz-sG-b7l"/>
@@ -140,9 +140,10 @@
                     <constraint firstItem="M0A-lh-iQY" firstAttribute="top" secondItem="fRh-0R-7WP" secondAttribute="top" id="p49-nZ-AHj"/>
                 </constraints>
             </collectionViewCellContentView>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="colorCircle" destination="qOq-GW-eQE" id="7NV-92-xL4"/>
+                <outlet property="parentView" destination="M0A-lh-iQY" id="5gF-Pj-heM"/>
                 <outlet property="scheduleDistance" destination="cf4-YV-vUy" id="Ri6-cy-ST5"/>
                 <outlet property="scheduleName" destination="bOq-4a-Y46" id="YeE-bH-9AI"/>
                 <outlet property="schedulePlace" destination="T3Y-u6-meT" id="rOe-3g-RJ4"/>

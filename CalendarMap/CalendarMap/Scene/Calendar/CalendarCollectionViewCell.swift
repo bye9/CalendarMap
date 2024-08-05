@@ -9,6 +9,7 @@ import UIKit
 
 class CalendarCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var parentView: UIView!
     @IBOutlet weak var colorCircle: UIImageView!
     @IBOutlet weak var scheduleName: UILabel!
     @IBOutlet weak var scheduleTime: UILabel!
@@ -18,14 +19,15 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-//        contentView.layer.cornerRadius = 10
-//        contentView.layer.masksToBounds = true
+        parentView.layer.cornerRadius = 10
+        parentView.layer.masksToBounds = true
         
-        self.layer.masksToBounds = false
-        self.layer.shadowColor = AppStyles.Color.Shadow.cgColor
-        self.layer.shadowOpacity = 0.3
-        self.layer.shadowOffset = CGSize(width: -2, height: 2)
-        self.layer.shadowRadius = 14
+        layer.shadowColor = AppStyles.Color.Shadow.cgColor
+        layer.shadowOpacity = 0.3
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.shadowRadius = 14
+        layer.masksToBounds = false
+
         
     }
     
