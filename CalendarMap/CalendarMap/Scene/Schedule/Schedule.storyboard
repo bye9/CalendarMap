@@ -239,13 +239,13 @@
                                                 <rect key="frame" x="0.0" y="174" width="393" height="58"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시작" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Way-ps-tMR">
-                                                        <rect key="frame" x="48" y="18" width="28" height="22"/>
+                                                        <rect key="frame" x="48" y="18" width="27.666666666666671" height="22"/>
                                                         <fontDescription key="fontDescription" name="NotoSansKR-Medium" family="Noto Sans KR Medium" pointSize="15"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="vYB-2c-cu7">
-                                                        <rect key="frame" x="116" y="11" width="261" height="36.333333333333336"/>
+                                                        <rect key="frame" x="115.66666666666666" y="11" width="261.33333333333337" height="36.333333333333336"/>
                                                         <locale key="locale" localeIdentifier="ko_KR"/>
                                                     </datePicker>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ujl-Hx-VKd">
@@ -273,13 +273,13 @@
                                                 <rect key="frame" x="0.0" y="232" width="393" height="58"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="종료" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHn-sd-Z4d">
-                                                        <rect key="frame" x="48" y="18" width="28" height="22"/>
+                                                        <rect key="frame" x="48" y="18" width="27.666666666666671" height="22"/>
                                                         <fontDescription key="fontDescription" name="NotoSansKR-Medium" family="Noto Sans KR Medium" pointSize="15"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="5" translatesAutoresizingMaskIntoConstraints="NO" id="Mlb-op-Rwx">
-                                                        <rect key="frame" x="116" y="11" width="261" height="36.333333333333336"/>
+                                                        <rect key="frame" x="115.66666666666666" y="11" width="261.33333333333337" height="36.333333333333336"/>
                                                         <locale key="locale" localeIdentifier="ko_KR"/>
                                                     </datePicker>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yGK-5k-OyG">
@@ -577,7 +577,7 @@
                                 </constraints>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_memo" translatesAutoresizingMaskIntoConstraints="NO" id="rqz-wP-2rg">
-                                <rect key="frame" x="29" y="503" width="20" height="20"/>
+                                <rect key="frame" x="29" y="563" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="BBT-Wk-r8X"/>
                                     <constraint firstAttribute="width" constant="20" id="EY9-qS-eUM"/>
@@ -620,15 +620,15 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dax-13-8G4" customClass="NMFMapView">
-                                <rect key="frame" x="74" y="296.66666666666669" width="300" height="180"/>
+                                <rect key="frame" x="74" y="296.66666666666669" width="300" height="250.00000000000006"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="180" id="EKZ-8h-vb3"/>
+                                    <constraint firstAttribute="height" constant="250" id="EKZ-8h-vb3"/>
                                     <constraint firstAttribute="width" constant="300" id="EWv-VS-czh"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="동해물과 백두산이" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIr-CY-VI9">
-                                <rect key="frame" x="74" y="502" width="114.66666666666669" height="22"/>
+                                <rect key="frame" x="74" y="562" width="114.66666666666669" height="22"/>
                                 <fontDescription key="fontDescription" name="NotoSansKR-Medium" family="Noto Sans KR Medium" pointSize="15"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -638,7 +638,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="0Ic-52-B6y" firstAttribute="leading" secondItem="pOa-53-wa5" secondAttribute="leading" id="029-Sd-b8Y"/>
-                            <constraint firstItem="rqz-wP-2rg" firstAttribute="top" secondItem="g5j-3y-hfC" secondAttribute="bottom" constant="250" id="4An-f9-24n"/>
+                            <constraint firstItem="rqz-wP-2rg" firstAttribute="top" secondItem="g5j-3y-hfC" secondAttribute="bottom" constant="310" id="4An-f9-24n"/>
                             <constraint firstItem="DfN-i5-UT1" firstAttribute="leading" secondItem="DRs-Mk-gLF" secondAttribute="leading" id="9Uz-fn-ofw"/>
                             <constraint firstItem="DRs-rb-Sgg" firstAttribute="leading" secondItem="2o5-lM-RL8" secondAttribute="leading" constant="17" id="D0J-Ci-Klt"/>
                             <constraint firstItem="EIr-CY-VI9" firstAttribute="leading" secondItem="dax-13-8G4" secondAttribute="leading" id="FKy-tv-FJx"/>
