@@ -116,12 +116,13 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
 
 extension SearchTableViewController: ButtonTappedDelegate {
     // TODO: 셀에서 여기로 장소 좌표 및 주소 값 전달 필요...
-    func cellButtonTapped(name: String, address: String, roadAddress: String, lat: String, lng: String) {
+    func cellButtonTapped(name: String, id: String, address: String, roadAddress: String, lat: String, lng: String) {
         print("일정등록하기버튼 클릭")
         print(name, lat, lng)
         
         guard let registerScheduleViewController = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
         registerScheduleViewController.locationName = name
+        registerScheduleViewController.locationId = id
         registerScheduleViewController.address = address
         registerScheduleViewController.roadAddress = roadAddress
         registerScheduleViewController.lat = lat

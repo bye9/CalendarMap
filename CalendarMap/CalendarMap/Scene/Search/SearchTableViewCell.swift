@@ -8,7 +8,7 @@
 import UIKit
 
 protocol ButtonTappedDelegate: AnyObject {
-    func cellButtonTapped(name: String, address: String, roadAddress: String, lat: String, lng: String)
+    func cellButtonTapped(name: String, id: String, address: String, roadAddress: String, lat: String, lng: String)
     func openMapButtonTapped(cell: SearchTableViewCell, id: String, locationName: String, lat: String, lng: String)
 }
 
@@ -44,7 +44,7 @@ class SearchTableViewCell: UITableViewCell {
     }
     
     @objc func registerScheduleTapped(_ sender: UITapGestureRecognizer) {
-        delegate?.cellButtonTapped(name: locationName.text ?? "장소 이름", address: locationAddress.text ?? "지번 주소", roadAddress: locationRoadAddress ?? "도로명 주소", lat: locationLat ?? "0", lng: locationLng ?? "0")
+        delegate?.cellButtonTapped(name: locationName.text ?? "장소 이름", id: id ?? "", address: locationAddress.text ?? "지번 주소", roadAddress: locationRoadAddress ?? "도로명 주소", lat: locationLat ?? "0", lng: locationLng ?? "0")
     }
     
     @IBAction func openOtherAppTapped(_ sender: UIButton) {

@@ -14,6 +14,7 @@ class RegisterScheduleViewController: UIViewController {
     var floatingPanel: FloatingPanelController!
     var scheduleTitle: String?
     var locationName: String?
+    var locationId: String?
     var address: String?
     var roadAddress: String?
     var lat: String?
@@ -76,7 +77,7 @@ class RegisterScheduleViewController: UIViewController {
     @IBAction func registerButtonTapped(_ sender: UIButton) {
         self.scheduleTitle = scheduleTitleTextField.text
         
-        let test = self.registerScheduleDetailInfo(index, color ?? "color_blue", scheduleTitle!, locationName!, address!, roadAddress!, lat!, lng!, allDaySwitch.isOn, startDate!, endDate!, memoTextView.text)
+        let test = self.registerScheduleDetailInfo(index, color ?? "color_blue", scheduleTitle!, locationName!, locationId! ,address!, roadAddress!, lat!, lng!, allDaySwitch.isOn, startDate!, endDate!, memoTextView.text)
         do {
             try realm.write {
                 realm.add(test)
@@ -95,8 +96,8 @@ class RegisterScheduleViewController: UIViewController {
         reloadFloatingPanel()
     }
     
-    func registerScheduleDetailInfo(_ colorIndex: Int, _ color: String, _ scheduleTitle: String, _ locationName: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String, _ isAllDay: Bool, _ startDate: String, _ endDate: String, _ memo: String) -> ScheduleDetailInfo {
-        let scheduleDetailInfo = ScheduleDetailInfo(colorIndex: colorIndex, color: color, scheduleTitle: scheduleTitle, locationName: locationName, address: address, roadAddress: roadAddress, lat: lat, lng: lng,
+    func registerScheduleDetailInfo(_ colorIndex: Int, _ color: String, _ scheduleTitle: String, _ locationName: String, _ locationId: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String, _ isAllDay: Bool, _ startDate: String, _ endDate: String, _ memo: String) -> ScheduleDetailInfo {
+        let scheduleDetailInfo = ScheduleDetailInfo(colorIndex: colorIndex, color: color, scheduleTitle: scheduleTitle, locationName: locationName, locationId: locationId, address: address, roadAddress: roadAddress, lat: lat, lng: lng,
                                                     isAllday: isAllDay, startDate: startDate, endDate: endDate, memo: memo)
         return scheduleDetailInfo
     }

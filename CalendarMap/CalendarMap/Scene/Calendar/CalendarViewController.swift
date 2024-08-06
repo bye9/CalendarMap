@@ -15,6 +15,7 @@ class CalendarViewController: UIViewController {
     let selectDateFormatter = DateFormatter()
     let headerDateFormatter = DateFormatter()
     var events = [Date]()
+    var scheduleViewModel = ScheduleViewModel()
     
     private var page: Date?
     private lazy var today: Date = {
@@ -108,6 +109,41 @@ class CalendarViewController: UIViewController {
         self.calendarView.setCurrentPage(self.page!, animated: false)
     }
     
+    func showActionSheet(controller: UIViewController, id: String, locationName: String, lat: String, lng: String) {
+        let alert = UIAlertController(title: "", message: "지도", preferredStyle: .actionSheet)
+          alert.addAction(UIAlertAction(title: "카카오맵에서 열기", style: .default, handler: { (_) in
+              let url = URL(string: "kakaomap://place?id=\(id)")!
+              let appStoreURL = URL(string: "https://apps.apple.com/us/app/kakaomap-korea-no-1-map/id304608425")!
+              
+              if UIApplication.shared.canOpenURL(url) {
+                  UIApplication.shared.open(url)
+              } else {
+                  UIApplication.shared.open(appStoreURL)
+              }
+          }))
+
+          alert.addAction(UIAlertAction(title: "네이버맵에서 열기", style: .default, handler: { (_) in
+              guard let name = locationName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return }
+              
+              let url = URL(string: "nmap://place?lat=\(lat)&lng=\(lng)&name=\(name)&appname=com.bye9.CalendarMap")!
+              let appStoreURL = URL(string: "https://apps.apple.com/us/app/naver-map-navigation/id311867728")!
+              
+              if UIApplication.shared.canOpenURL(url) {
+                  UIApplication.shared.open(url)
+              } else {
+                  UIApplication.shared.open(appStoreURL)
+              }
+          }))
+
+          alert.addAction(UIAlertAction(title: "닫기", style: .cancel, handler: { (_) in
+              
+          }))
+
+          controller.present(alert, animated: true, completion: {
+              
+          })
+    }
+    
 }
 
 extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance {
@@ -186,8 +222,20 @@ extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDe
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let scheduleDetailViewController = UIStoryboard(name: "Schedule", bundle: .main).instantiateViewController(withIdentifier: "ScheduleDetailViewController") as? ScheduleDetailViewController else { return }
+        
+        let data = realmData[indexPath.row]
+        // 일정 상세보기 데이터 세팅
+        scheduleViewModel.scheduleSelected(data.scheduleTitle, data.startDate, data.endDate, data.locationName)
+        
+        scheduleDetailViewController.viewModel = scheduleViewModel
+        self.present(scheduleDetailViewController, animated: true)
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else { return UICollectionViewCell() }
+    
         let data = realmData[indexPath.row]
         cell.colorCircle.image = UIImage(named: data.color)
         cell.scheduleName.text = data.scheduleTitle
@@ -198,10 +246,21 @@ extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDe
         let endArray = data.endDate.components(separatedBy: " ")
         let endTime = "\(endArray[1]) \(endArray[2])"
         
-        //        2023.7.26.수요일 오후 11:55
+        // 2023.7.26.수요일 오후 11:55
         cell.scheduleTime.text = "\(startTime) - \(endTime)"
         cell.schedulePlace.text = data.locationName
+        cell.id = data.locationId
+        cell.locationLat = data.lat
+        cell.locationLng = data.lng
         
+        cell.delegate = self
+    
         return cell
+    }
+}
+
+extension CalendarViewController: CalendarButtonTappedDelegate {
+    func openMapButtonTapped(cell: CalendarCollectionViewCell, id: String, locationName: String, lat: String, lng: String) {
+        self.showActionSheet(controller: self, id: id, locationName: locationName, lat: lat, lng: lng)
     }
 }

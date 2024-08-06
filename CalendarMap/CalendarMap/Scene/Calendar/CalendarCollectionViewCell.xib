@@ -76,22 +76,6 @@
                                     <constraint firstAttribute="height" constant="14" id="erE-po-vIw"/>
                                 </constraints>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btn_open_other_app" translatesAutoresizingMaskIntoConstraints="NO" id="Bie-Br-3u5">
-                                <rect key="frame" x="271" y="20" width="36" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="36" id="cDF-t3-GLT"/>
-                                    <constraint firstAttribute="height" constant="36" id="z68-DG-JS5"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cf4-YV-vUy" userLabel="Distance">
-                                <rect key="frame" x="259" y="58" width="60" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="16" id="Tt4-uk-eRN"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="NotoSansKR-Medium" family="Noto Sans KR Medium" pointSize="13"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R3J-lp-OcL" userLabel="OpenOtherApp">
                                 <rect key="frame" x="259" y="20" width="60" height="54"/>
                                 <constraints>
@@ -100,31 +84,34 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <connections>
-                                    <action selector="btnOpenOtherApp:" destination="RN9-pH-7pV" eventType="touchUpInside" id="XRI-TC-yep"/>
+                                    <action selector="btnOpenOtherApp:" destination="RN9-pH-7pV" eventType="touchUpInside" id="SzX-Da-efl"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="btn_open_other_app" translatesAutoresizingMaskIntoConstraints="NO" id="Bie-Br-3u5">
+                                <rect key="frame" x="267" y="25" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Sta-AS-cQ1"/>
+                                    <constraint firstAttribute="width" constant="44" id="ntB-Pl-UC1"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="A2b-9z-GxX" firstAttribute="top" secondItem="1eW-c5-yYm" secondAttribute="bottom" constant="5" id="015-Qm-Xdq"/>
                             <constraint firstItem="R3J-lp-OcL" firstAttribute="leading" secondItem="fa6-PA-Q2E" secondAttribute="trailing" constant="13" id="0hq-kH-9uk"/>
                             <constraint firstAttribute="trailing" secondItem="R3J-lp-OcL" secondAttribute="trailing" constant="24" id="2LI-f9-xnl"/>
-                            <constraint firstItem="R3J-lp-OcL" firstAttribute="bottom" secondItem="cf4-YV-vUy" secondAttribute="bottom" id="5By-iI-XTC"/>
-                            <constraint firstItem="R3J-lp-OcL" firstAttribute="trailing" secondItem="cf4-YV-vUy" secondAttribute="trailing" id="9E1-3g-EpW"/>
                             <constraint firstItem="qOq-GW-eQE" firstAttribute="top" secondItem="M0A-lh-iQY" secondAttribute="top" constant="20" id="BuJ-XF-Is1"/>
                             <constraint firstAttribute="bottom" secondItem="A2b-9z-GxX" secondAttribute="bottom" constant="19" id="IG3-TC-hTe"/>
-                            <constraint firstItem="cf4-YV-vUy" firstAttribute="leading" secondItem="R3J-lp-OcL" secondAttribute="leading" id="LCU-kf-rZz"/>
                             <constraint firstItem="T3Y-u6-meT" firstAttribute="centerY" secondItem="A2b-9z-GxX" secondAttribute="centerY" constant="-1" id="PF8-nv-0jm"/>
-                            <constraint firstItem="cf4-YV-vUy" firstAttribute="centerX" secondItem="R3J-lp-OcL" secondAttribute="centerX" id="PP1-jG-9y8"/>
                             <constraint firstItem="bOq-4a-Y46" firstAttribute="leading" secondItem="qOq-GW-eQE" secondAttribute="trailing" constant="24" id="WQX-rN-Xfw"/>
+                            <constraint firstItem="Bie-Br-3u5" firstAttribute="centerX" secondItem="R3J-lp-OcL" secondAttribute="centerX" id="Wnu-kO-dI9"/>
                             <constraint firstItem="R3J-lp-OcL" firstAttribute="leading" secondItem="T3Y-u6-meT" secondAttribute="trailing" constant="13" id="YE1-BI-83k"/>
                             <constraint firstItem="qOq-GW-eQE" firstAttribute="leading" secondItem="M0A-lh-iQY" secondAttribute="leading" constant="24" id="gOz-Rg-qVl"/>
                             <constraint firstItem="fa6-PA-Q2E" firstAttribute="leading" secondItem="1eW-c5-yYm" secondAttribute="trailing" constant="4" id="gQa-wN-P2f"/>
                             <constraint firstItem="R3J-lp-OcL" firstAttribute="leading" secondItem="bOq-4a-Y46" secondAttribute="trailing" constant="13" id="nSb-CJ-NXb"/>
                             <constraint firstItem="R3J-lp-OcL" firstAttribute="top" secondItem="M0A-lh-iQY" secondAttribute="top" constant="20" id="ozZ-r9-YNK"/>
-                            <constraint firstItem="Bie-Br-3u5" firstAttribute="top" secondItem="R3J-lp-OcL" secondAttribute="top" id="pdG-BI-44d"/>
                             <constraint firstItem="1eW-c5-yYm" firstAttribute="leading" secondItem="bOq-4a-Y46" secondAttribute="leading" id="qTp-o2-ZKb"/>
-                            <constraint firstItem="Bie-Br-3u5" firstAttribute="centerX" secondItem="R3J-lp-OcL" secondAttribute="centerX" id="s8T-Vl-gzy"/>
+                            <constraint firstItem="Bie-Br-3u5" firstAttribute="centerY" secondItem="R3J-lp-OcL" secondAttribute="centerY" id="vMB-oa-AKD"/>
                             <constraint firstItem="bOq-4a-Y46" firstAttribute="centerY" secondItem="qOq-GW-eQE" secondAttribute="centerY" id="vQj-yi-90U"/>
                             <constraint firstItem="T3Y-u6-meT" firstAttribute="leading" secondItem="A2b-9z-GxX" secondAttribute="trailing" constant="4" id="wD7-wx-Nlf"/>
                             <constraint firstItem="fa6-PA-Q2E" firstAttribute="centerY" secondItem="1eW-c5-yYm" secondAttribute="centerY" constant="-1" id="wFg-fu-Qvn"/>
@@ -144,7 +131,6 @@
             <connections>
                 <outlet property="colorCircle" destination="qOq-GW-eQE" id="7NV-92-xL4"/>
                 <outlet property="parentView" destination="M0A-lh-iQY" id="5gF-Pj-heM"/>
-                <outlet property="scheduleDistance" destination="cf4-YV-vUy" id="Ri6-cy-ST5"/>
                 <outlet property="scheduleName" destination="bOq-4a-Y46" id="YeE-bH-9AI"/>
                 <outlet property="schedulePlace" destination="T3Y-u6-meT" id="rOe-3g-RJ4"/>
                 <outlet property="scheduleTime" destination="fa6-PA-Q2E" id="fC7-0e-Gel"/>

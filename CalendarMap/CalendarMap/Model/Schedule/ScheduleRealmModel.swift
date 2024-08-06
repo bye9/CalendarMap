@@ -14,6 +14,7 @@ class ScheduleDetailInfo: Object {
     @Persisted var color: String = ""
     @Persisted var scheduleTitle: String = ""
     @Persisted var locationName: String = ""
+    @Persisted var locationId: String = ""
     @Persisted var address: String = ""
     @Persisted var roadAddress: String = ""
     @Persisted var lat: String = ""
@@ -23,13 +24,14 @@ class ScheduleDetailInfo: Object {
     @Persisted var endDate: String = ""
     @Persisted var memo: String = ""
     
-    convenience init(colorIndex: Int, color: String, scheduleTitle: String, locationName: String, address: String, roadAddress: String, lat: String, lng: String, isAllday: Bool, startDate: String, endDate: String, memo: String) {
+    convenience init(colorIndex: Int, color: String, scheduleTitle: String, locationName: String, locationId: String, address: String, roadAddress: String, lat: String, lng: String, isAllday: Bool, startDate: String, endDate: String, memo: String) {
         self.init()
         
         self.colorIndex = colorIndex
         self.color = color
         self.scheduleTitle = scheduleTitle
         self.locationName = locationName
+        self.locationId = locationId
         self.address = address
         self.roadAddress = roadAddress
         self.lat = lat

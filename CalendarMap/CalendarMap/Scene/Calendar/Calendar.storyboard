@@ -104,10 +104,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Tqz-54-PHK">
-                                <rect key="frame" x="0.0" y="452" width="393" height="500"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="500" id="sUH-ER-bop"/>
-                                </constraints>
+                                <rect key="frame" x="0.0" y="452" width="393" height="400"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="16" minimumInteritemSpacing="10" id="pkX-pn-hQv">
                                     <size key="itemSize" width="343" height="96"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -138,6 +135,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Tqz-54-PHK" secondAttribute="trailing" id="8rN-aw-LCT"/>
                             <constraint firstAttribute="bottom" secondItem="onY-nP-5Sg" secondAttribute="bottom" id="D9k-b5-bwl"/>
                             <constraint firstItem="Tqz-54-PHK" firstAttribute="top" secondItem="yVJ-Qk-Re1" secondAttribute="bottom" id="DIF-3n-Eth"/>
+                            <constraint firstAttribute="bottom" secondItem="Tqz-54-PHK" secondAttribute="bottom" id="E3y-jK-yxU"/>
                             <constraint firstItem="epy-OY-CKJ" firstAttribute="centerY" secondItem="EDj-rz-lzq" secondAttribute="centerY" id="EEu-5S-SEN"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="onY-nP-5Sg" secondAttribute="trailing" id="F7a-mY-Vty"/>
                             <constraint firstItem="onY-nP-5Sg" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="J6M-AQ-l6V"/>
