@@ -423,6 +423,11 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let scheduleDetailViewController = UIStoryboard(name: "Schedule", bundle: .main).instantiateViewController(withIdentifier: "ScheduleDetailViewController") as? ScheduleDetailViewController else { return }
+        
+        // 일정 상세보기 데이터 세팅
+        let currentData = realmData[Int(currentIdx)]
+        scheduleViewModel.scheduleSelected(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.locationName)
+        
         scheduleDetailViewController.viewModel = scheduleViewModel
         self.present(scheduleDetailViewController, animated: true)
     }
@@ -451,9 +456,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         self.locationMarker.mapView = nil
         
         setLocationMarker(Int(currentIdx))
-        let currentData = realmData[Int(currentIdx)]
-        // 일정 상세보기 데이터 세팅
-        scheduleViewModel.scheduleSelected(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.locationName)
     }
     
     func setLocationMarker(_ index: Int) {
