@@ -11,11 +11,12 @@ import FSCalendar
 
 class CalendarViewController: UIViewController {
     let realm = try! Realm()
-    var realmData: Results<ScheduleDetailInfo>!
-    let selectDateFormatter = DateFormatter()
+    var selectDayData: Results<ScheduleDetailInfo>!
+    let dateFormatter = DateFormatter()
     let headerDateFormatter = DateFormatter()
     var events = [Date]()
     var scheduleViewModel = ScheduleViewModel()
+    var monthData: Results<ScheduleDetailInfo>?
     
     private var page: Date?
     private lazy var today: Date = {
@@ -31,12 +32,13 @@ class CalendarViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        setEvents()
+        setMonthEvents()
     }
     
     func setupViews() {
         self.calendarView.delegate = self
         self.calendarView.dataSource = self
+        self.calendarView.placeholderType = .none
         self.calendarView.headerHeight = 0
         self.calendarView.scope = .month
         self.calendarView.locale = Locale(identifier: "ko_KR")
@@ -44,6 +46,9 @@ class CalendarViewController: UIViewController {
         
         headerDateFormatter.dateFormat = "YYYY년 MM월"
         self.headerLabel.text = headerDateFormatter.string(from: self.today)
+        
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy.M.d"
         
         self.calendarView.appearance.weekdayFont = AppStyles.Fonts.Body1
         self.calendarView.appearance.weekdayTextColor = AppStyles.Color.Gray5
@@ -61,29 +66,23 @@ class CalendarViewController: UIViewController {
         mainCollectionView.register(UINib(nibName: "CalendarCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CalendarCollectionViewCell")
     }
     
-    func setEvents() {
-        selectDateFormatter.locale = Locale(identifier: "ko_KR")
-        selectDateFormatter.dateFormat = "yyyy.M.d"
-        
-        let scheduleDetailInfo = realm.objects(ScheduleDetailInfo.self)
-        
-        for i in 0..<scheduleDetailInfo.count {
-            let yearMonthDay = scheduleDetailInfo[i].startDate.components(separatedBy: " ")[0].components(separatedBy: ".")
-
-            guard let event = selectDateFormatter.date(from: yearMonthDay[0]+"."+yearMonthDay[1]+"."+yearMonthDay[2]) else { return }
-            events.append(event)
-        }
+    func setMonthEvents() {
+        let monthDateFormatter = DateFormatter()
+        monthDateFormatter.locale = Locale(identifier: "ko_KR")
+        monthDateFormatter.dateFormat = "M"
+        let monthString = monthDateFormatter.string(from: self.today)
+        monthData = realm.objects(ScheduleDetailInfo.self).filter("startDate CONTAINS '.\(monthString).'")
     }
     
     func getRealmDataFrom(_ date: Date) {
         let data = realm.objects(ScheduleDetailInfo.self)
         if data.count > 0 {
             let sortedData = data.sorted(byKeyPath: "startDate", ascending: true)
-            let newString = selectDateFormatter.string(from: date)
-            realmData = sortedData.filter("startDate CONTAINS '\(newString)'")
-            print(realmData!)
+            let newString = dateFormatter.string(from: date)
+            selectDayData = sortedData.filter("startDate CONTAINS '\(newString)'")
+            print(selectDayData!)
         } else {
-            realmData = data
+            selectDayData = data
         }
     }
     
@@ -156,27 +155,64 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     // 날짜를 선택했을 때
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         getRealmDataFrom(date)
-        
         mainCollectionView.reloadData()
     }
     
-    // 날짜 밑에 이벤트 dot 개수
+    // 특정 날짜에 해당하는 이벤트 개수를 반환하는 메서드
     func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
-        let newString = selectDateFormatter.string(from: date)
-        guard let newDate = selectDateFormatter.date(from: newString) else { return 0
-        }
-        
-        if self.events.contains(newDate) {
-            return 1
-        }
-        
-        return 0
+        return eventsForDate(date).count
     }
     
-    // 이벤트 dot 기본색상
+    // 특정 날짜에 해당하는 이벤트 색상을 반환하는 메서드
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventDefaultColorsFor date: Date) -> [UIColor]? {
-        let newString = selectDateFormatter.string(from: date)
-        guard let newDate = selectDateFormatter.date(from: newString) else { return nil }
+        let events = eventsForDate(date)
+        
+        return events.map { event in
+            return colorForEvent(event)
+        }
+    }
+    
+    /// 특정 날짜에 해당하는 일정을 반환하는 함수
+    func eventsForDate(_ date: Date) -> [ScheduleDetailInfo] {
+        guard let monthData = monthData else { return [] }
+        let dateString = dateFormatter.string(from: date)
+        let filteredSchedules = monthData.filter("startDate CONTAINS '\(dateString)'")
+        
+        return filteredSchedules.map { $0 }
+    }
+    
+    /// 특정 일정에 해당하는 색상을 반환하는 함수
+    func colorForEvent(_ event: ScheduleDetailInfo) -> UIColor {
+        switch event.colorIndex {
+        case 0:
+            return AppStyles.Color.Blue
+        case 1:
+            return AppStyles.Color.Purple
+        case 2:
+            return AppStyles.Color.Pink
+        case 3:
+            return AppStyles.Color.Red
+        case 4:
+            return AppStyles.Color.Orange
+        case 5:
+            return AppStyles.Color.Yellow
+        case 6:
+            return AppStyles.Color.Green
+        case 7:
+            return AppStyles.Color.LightGreen
+        case 8:
+            return AppStyles.Color.Gray7
+        case 9:
+            return AppStyles.Color.Gray3
+        default:
+            return .gray
+        }
+    }
+    
+    // 선택한 이벤트 색상
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
+        let newString = dateFormatter.string(from: date)
+        guard let newDate = dateFormatter.date(from: newString) else { return nil }
         
         if self.events.contains(newDate) {
             return [UIColor.green]
@@ -185,16 +221,18 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
         return nil
     }
     
-    // Selected Event Dot 색상 분기처리 - FSCalendarDelegateAppearance
-    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
-        let newString = selectDateFormatter.string(from: date)
-        guard let newDate = selectDateFormatter.date(from: newString) else { return nil }
+    // 특정 날짜의 텍스트 색상을 변경하는 메서드
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        let calendar = Calendar.current
+        let components = calendar.component(.weekday, from: date)
         
-        if self.events.contains(newDate) {
-            return [UIColor.green]
+        if components == 7 { // 토요일
+            return  UIColor.blue
+        } else if components == 1 { // 일요일
+            return UIColor.red
         }
         
-        return nil
+        return nil // 기본 색상
     }
     
     // 이벤트 dot 사이즈 조정
@@ -211,10 +249,10 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
 
 extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if realmData != nil {
+        if selectDayData != nil {
             noScheduleView.isHidden = true
             mainCollectionView.isHidden = false
-            return realmData.count
+            return selectDayData.count
         } else {
             noScheduleView.isHidden = false
             mainCollectionView.isHidden = true
@@ -225,7 +263,7 @@ extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let scheduleDetailViewController = UIStoryboard(name: "Schedule", bundle: .main).instantiateViewController(withIdentifier: "ScheduleDetailViewController") as? ScheduleDetailViewController else { return }
         
-        let data = realmData[indexPath.row]
+        let data = selectDayData[indexPath.row]
         // 일정 상세보기 데이터 세팅
         scheduleViewModel.scheduleSelected(data.scheduleTitle, data.startDate, data.endDate, data.locationName)
         
@@ -236,7 +274,7 @@ extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalendarCollectionViewCell", for: indexPath) as? CalendarCollectionViewCell else { return UICollectionViewCell() }
     
-        let data = realmData[indexPath.row]
+        let data = selectDayData[indexPath.row]
         cell.colorCircle.image = UIImage(named: data.color)
         cell.scheduleName.text = data.scheduleTitle
         
