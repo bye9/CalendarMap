@@ -11,7 +11,7 @@ import FSCalendar
 
 class CalendarViewController: UIViewController {
     let realm = try! Realm()
-    var selectDayData: Results<ScheduleDetailInfo>!
+    var selectDayData = [ScheduleDetailInfo]()
     let dateFormatter = DateFormatter()
     let headerDateFormatter = DateFormatter()
     var events = [Date]()
@@ -33,6 +33,7 @@ class CalendarViewController: UIViewController {
         
         setupViews()
         setMonthEvents()
+        selectDayData = eventsForDate(today)
     }
     
     func setupViews() {
@@ -72,18 +73,6 @@ class CalendarViewController: UIViewController {
         monthDateFormatter.dateFormat = "M"
         let monthString = monthDateFormatter.string(from: self.today)
         monthData = realm.objects(ScheduleDetailInfo.self).filter("startDate CONTAINS '.\(monthString).'")
-    }
-    
-    func getRealmDataFrom(_ date: Date) {
-        let data = realm.objects(ScheduleDetailInfo.self)
-        if data.count > 0 {
-            let sortedData = data.sorted(byKeyPath: "startDate", ascending: true)
-            let newString = dateFormatter.string(from: date)
-            selectDayData = sortedData.filter("startDate CONTAINS '\(newString)'")
-            print(selectDayData!)
-        } else {
-            selectDayData = data
-        }
     }
     
     @IBAction func btnCloseTapped(_ sender: UIButton) {
@@ -154,7 +143,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     
     // 날짜를 선택했을 때
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        getRealmDataFrom(date)
+        selectDayData = eventsForDate(date)
         mainCollectionView.reloadData()
     }
     
@@ -211,14 +200,11 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     
     // 선택한 이벤트 색상
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, eventSelectionColorsFor date: Date) -> [UIColor]? {
-        let newString = dateFormatter.string(from: date)
-        guard let newDate = dateFormatter.date(from: newString) else { return nil }
+        let events = eventsForDate(date)
         
-        if self.events.contains(newDate) {
-            return [UIColor.green]
+        return events.map { event in
+            return colorForEvent(event)
         }
-        
-        return nil
     }
     
     // 특정 날짜의 텍스트 색상을 변경하는 메서드
@@ -249,7 +235,7 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
 
 extension CalendarViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if selectDayData != nil {
+        if selectDayData.count != 0 {
             noScheduleView.isHidden = true
             mainCollectionView.isHidden = false
             return selectDayData.count
