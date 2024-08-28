@@ -32,7 +32,7 @@ class CalendarViewController: UIViewController {
         super.viewDidLoad()
         
         setupViews()
-        setMonthEvents()
+        setMonthEvents(self.today)
         selectDayData = eventsForDate(today)
     }
     
@@ -67,11 +67,11 @@ class CalendarViewController: UIViewController {
         mainCollectionView.register(UINib(nibName: "CalendarCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "CalendarCollectionViewCell")
     }
     
-    func setMonthEvents() {
+    func setMonthEvents(_ date: Date) {
         let monthDateFormatter = DateFormatter()
         monthDateFormatter.locale = Locale(identifier: "ko_KR")
         monthDateFormatter.dateFormat = "M"
-        let monthString = monthDateFormatter.string(from: self.today)
+        let monthString = monthDateFormatter.string(from: date)
         monthData = realm.objects(ScheduleDetailInfo.self).filter("startDate CONTAINS '.\(monthString).'")
     }
     
@@ -139,6 +139,10 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     // 현재 페이지가 변경되었을 때
     func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
         self.headerLabel.text = headerDateFormatter.string(from: calendar.currentPage)
+        
+        setMonthEvents(calendar.currentPage)
+        calendarView.reloadData()
+        mainCollectionView.reloadData()
     }
     
     // 날짜를 선택했을 때
@@ -164,8 +168,8 @@ extension CalendarViewController: FSCalendarDelegate, FSCalendarDataSource, FSCa
     /// 특정 날짜에 해당하는 일정을 반환하는 함수
     func eventsForDate(_ date: Date) -> [ScheduleDetailInfo] {
         guard let monthData = monthData else { return [] }
-        let dateString = dateFormatter.string(from: date)
-        let filteredSchedules = monthData.filter("startDate CONTAINS '\(dateString)'")
+        let dateString = dateFormatter.string(from: date) + "."
+        let filteredSchedules = monthData.filter("startDate BEGINSWITH '\(dateString)'")
         
         return filteredSchedules.map { $0 }
     }
