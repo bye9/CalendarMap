@@ -57,9 +57,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "ko_KR")
             dateFormatter.dateFormat = "yyyy.M.d"
-            let newString = dateFormatter.string(from: Date())
+            let newString = dateFormatter.string(from: Date()) + "."
 
-            realmData = data.filter("startDate CONTAINS '\(newString)'")
+            realmData = data.filter("startDate BEGINSWITH '\(newString)'")
             realmData = realmData.sorted(byKeyPath: "startDate", ascending: true)
             print(realmData!)
         } else {
