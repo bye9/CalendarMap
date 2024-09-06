@@ -9,6 +9,7 @@ import UIKit
 
 protocol SendCoordinateDelegate {
     func sendCoordinate(lat: String, lng: String)
+    func registerScheduleCompleted(lat: String, lng: String)
 }
 
 class SearchTableViewController: UIViewController {
@@ -108,18 +109,14 @@ extension SearchTableViewController: UITableViewDataSource, UITableViewDelegate 
         guard let addressName = locations?.documents[indexPath.row].addressName else { return }
         
         searchViewModel.fetchCoordinate(searchAddress: addressName) { data in
-//            print("정환 \(data?.addresses[0].y), \(data?.addresses[0].x)")
             self.delegate?.sendCoordinate(lat: data?.addresses[0].y ?? "0", lng: data?.addresses[0].x ?? "0")
         }
     }
 }
 
 extension SearchTableViewController: ButtonTappedDelegate {
-    // TODO: 셀에서 여기로 장소 좌표 및 주소 값 전달 필요...
+    // 일정 추가
     func cellButtonTapped(name: String, id: String, address: String, roadAddress: String, lat: String, lng: String) {
-        print("일정등록하기버튼 클릭")
-        print(name, lat, lng)
-        
         guard let registerScheduleViewController = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
         registerScheduleViewController.locationName = name
         registerScheduleViewController.locationId = id
@@ -129,9 +126,7 @@ extension SearchTableViewController: ButtonTappedDelegate {
         registerScheduleViewController.lng = lng
         
         registerScheduleViewController.completionHandler = {
-            print($0, $1)
-            self.delegate?.sendCoordinate(lat: $0, lng: $1)
-            
+            self.delegate?.registerScheduleCompleted(lat: $0, lng: $1)
         }
         
         self.navigationController?.pushViewController(registerScheduleViewController, animated: true)

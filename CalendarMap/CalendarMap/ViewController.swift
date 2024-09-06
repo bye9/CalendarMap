@@ -314,7 +314,6 @@ extension ViewController: SendCoordinateDelegate {
     func sendCoordinate(lat: String, lng: String) {
         DispatchQueue.main.async {
             self.mainCollectionView.reloadData()
-//            self.floatingPanel.removePanelFromParent(animated: true)
             self.moveMapViewCamera(Double(lat) ?? 0, Double(lng) ?? 0)
            
             // 현재 위치 마커 추가
@@ -323,45 +322,19 @@ extension ViewController: SendCoordinateDelegate {
             self.searchMarker.height = 36
             self.searchMarker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
             self.searchMarker.mapView = self.mainMapView
-            
-//            let data = self.realm.objects(ScheduleDetailInfo.self)
-//            self.currentIdx = CGFloat(integerLiteral: data.count) - 1
-//            guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-//            let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
-//            let offset = CGPoint(x: self.currentIdx * cellWidth - self.mainCollectionView.contentInset.left, y: 0)
-//            self.mainCollectionView.setContentOffset(offset, animated: false)
-//            self.realmData = data.sorted(byKeyPath: "startDate", ascending: true)
-//            let currentData = self.realmData[Int(self.currentIdx)]
-            
-//            let marker = NMFMarker()
-//            marker.position = NMGLatLng(lat: Double(lat) ?? 0, lng: Double(lng) ?? 0)
-//            marker.mapView = self.mainMapView
-//            marker.iconImage = NMFOverlayImage(name: AppStyles.ColorCircle.backgroundCircle[currentData.colorIndex])
-//            marker.captionAligns = [NMFAlignType.center]
-//            
-//            let infoWindow = NMFInfoWindow()
-//            let dataSource = CustomInfoWindowDataSource(currentData.scheduleTitle, currentData.startDate, currentData.endDate, currentData.colorIndex)
-//            infoWindow.dataSource = dataSource
-//            infoWindow.open(with: marker, alignType: .center)
-//            infoWindow.offsetY = 6
-//            
-//            self.moveMapViewCamera(Double(self.realmData[Int(self.currentIdx)].lat)!, Double(self.realmData[Int(self.currentIdx)].lng)!)
         }
     }
     
-    // TODO: 일정 등록하기 화면으로 이동
-    func registerSchedule() {
-//        self.floatingPanel.removePanelFromParent(animated: true)
-//
-//
-//        guard let vc = UIStoryboard(name: "Schedule", bundle: nil).instantiateViewController(withIdentifier: "RegisterScheduleViewController") as? RegisterScheduleViewController else { return }
-//
-//        self.navigationController?.pushViewController(vc, animated: true)
-        
-
+    // 일정 추가 완료 이후
+    func registerScheduleCompleted(lat: String, lng: String) {
+        DispatchQueue.main.async {
+            self.mainCollectionView.reloadData()
+            self.searchFloatingPanel.removePanelFromParent(animated: true)
+            self.moveMapViewCamera(Double(lat) ?? 0, Double(lng) ?? 0)
+            
+            self.scrollToLastCell()
+        }
     }
-    
-    
 }
 
 extension FloatingPanelController {
@@ -408,7 +381,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let endArray = data.endDate.components(separatedBy: " ")
         let endTime = "\(endArray[1]) \(endArray[2])"
         
-//        2023.7.26.수요일 오후 11:55
         cell.scheduleTime.text = "\(startTime) - \(endTime)"
         cell.schedulePlace.text = data.locationName
         
@@ -458,6 +430,33 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         setLocationMarker(Int(currentIdx))
     }
     
+    // 마지막 셀로 이동
+    func scrollToLastCell() {
+        guard let layout = self.mainCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+        
+        let cellWidth = layout.itemSize.width + layout.minimumLineSpacing
+        
+        // 총 셀 개수 구하기
+        let totalItems = mainCollectionView.numberOfItems(inSection: 0)
+        
+        // 마지막 셀의 인덱스
+        currentIdx = CGFloat(totalItems - 1)
+        
+        // 마지막 셀로 이동하기 위한 offset 설정
+        let offset = CGPoint(x: currentIdx * cellWidth - mainCollectionView.contentInset.left, y: 0)
+        
+        // 스크롤 애니메이션
+        mainCollectionView.setContentOffset(offset, animated: true)
+        
+        // 검색해서 선택한 장소의 위치 마커 지우기
+        self.searchMarker.mapView = nil
+        
+        // 이전 장소 위치 마커 지우기
+        self.locationMarker.mapView = nil
+        
+        setLocationMarker(Int(currentIdx))
+    }
+    
     func setLocationMarker(_ index: Int) {
         let currentData = realmData[Int(index)]
         locationMarker.position = NMGLatLng(lat: Double(currentData.lat)!, lng: Double(currentData.lng)!)
@@ -472,10 +471,6 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         infoWindow.offsetY = 6
         
         moveMapViewCamera(Double(currentData.lat)!, Double(currentData.lng)!)
-    }
-    
-    func moveMainCollectionView(_ index: CGFloat) {
-        
     }
 }
 
