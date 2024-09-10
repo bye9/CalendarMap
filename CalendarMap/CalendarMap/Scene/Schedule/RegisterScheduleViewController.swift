@@ -50,6 +50,8 @@ class RegisterScheduleViewController: UIViewController {
         locationNameButton.setTitleColor(UIColor.black, for: .normal)
         locationNameButton.contentHorizontalAlignment = .left
         
+        allDaySwitch.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
+        
         dateformatter.dateFormat = "yyyy.M.d.E a hh:mm"
         dateformatter.locale = Locale(identifier: "ko_KR")
         
@@ -69,6 +71,22 @@ class RegisterScheduleViewController: UIViewController {
         
     }
     
+    @objc func switchValueChanged(_ sender: UISwitch) {
+        allDaySwitch.isOn = sender.isOn ? true : false
+        
+        if allDaySwitch.isOn {
+            startDatePicker.isUserInteractionEnabled = false
+            startDatePicker.alpha = 0.5
+            endDatePicker.isUserInteractionEnabled = false
+            endDatePicker.alpha = 0.5
+        } else {
+            startDatePicker.isUserInteractionEnabled = true
+            startDatePicker.alpha = 1
+            endDatePicker.isUserInteractionEnabled = true
+            endDatePicker.alpha = 1
+        }
+    }
+    
     @IBAction func backButtonTapped(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -77,10 +95,10 @@ class RegisterScheduleViewController: UIViewController {
     @IBAction func registerButtonTapped(_ sender: UIButton) {
         self.scheduleTitle = scheduleTitleTextField.text
         
-        let test = self.registerScheduleDetailInfo(index, color ?? "color_blue", scheduleTitle!, locationName!, locationId! ,address!, roadAddress!, lat!, lng!, allDaySwitch.isOn, startDate!, endDate!, memoTextView.text)
+        let scheduleInfo = self.registerScheduleDetailInfo(index, color ?? "color_blue", scheduleTitle!, locationName!, locationId! ,address!, roadAddress!, lat!, lng!, allDaySwitch.isOn, startDate!, endDate!, memoTextView.text)
         do {
             try realm.write {
-                realm.add(test)
+                realm.add(scheduleInfo)
             }
         } catch {
             print(error)
@@ -98,7 +116,7 @@ class RegisterScheduleViewController: UIViewController {
     
     func registerScheduleDetailInfo(_ colorIndex: Int, _ color: String, _ scheduleTitle: String, _ locationName: String, _ locationId: String, _ address: String, _ roadAddress: String, _ lat: String, _ lng: String, _ isAllDay: Bool, _ startDate: String, _ endDate: String, _ memo: String) -> ScheduleDetailInfo {
         let scheduleDetailInfo = ScheduleDetailInfo(colorIndex: colorIndex, color: color, scheduleTitle: scheduleTitle, locationName: locationName, locationId: locationId, address: address, roadAddress: roadAddress, lat: lat, lng: lng,
-                                                    isAllday: isAllDay, startDate: startDate, endDate: endDate, memo: memo)
+                                                    isAllDay: isAllDay, startDate: startDate, endDate: endDate, memo: memo)
         return scheduleDetailInfo
     }
     

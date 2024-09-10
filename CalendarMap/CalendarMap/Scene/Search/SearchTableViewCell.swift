@@ -48,10 +48,7 @@ class SearchTableViewCell: UITableViewCell {
     }
     
     @IBAction func openOtherAppTapped(_ sender: UIButton) {
-        guard let id = id else { return }
-        guard let locationName = locationName.text else { return }
-        guard let lat = locationLat else { return }
-        guard let lng = locationLng else { return }
+        guard let id = id, let locationName = locationName.text, let lat = locationLat, let lng = locationLng else { return }
         delegate?.openMapButtonTapped(cell: self, id: id, locationName: locationName, lat: lat, lng: lng)
     }
 }

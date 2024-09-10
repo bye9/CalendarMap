@@ -24,7 +24,7 @@ class ScheduleDetailInfo: Object {
     @Persisted var endDate: String = ""
     @Persisted var memo: String = ""
     
-    convenience init(colorIndex: Int, color: String, scheduleTitle: String, locationName: String, locationId: String, address: String, roadAddress: String, lat: String, lng: String, isAllday: Bool, startDate: String, endDate: String, memo: String) {
+    convenience init(colorIndex: Int, color: String, scheduleTitle: String, locationName: String, locationId: String, address: String, roadAddress: String, lat: String, lng: String, isAllDay: Bool, startDate: String, endDate: String, memo: String) {
         self.init()
         
         self.colorIndex = colorIndex

@@ -381,7 +381,7 @@ extension ViewController: UICollectionViewDataSource, UICollectionViewDelegate, 
         let endArray = data.endDate.components(separatedBy: " ")
         let endTime = "\(endArray[1]) \(endArray[2])"
         
-        cell.scheduleTime.text = "\(startTime) - \(endTime)"
+        cell.scheduleTime.text = data.isAllDay ? "하루종일" : "\(startTime) - \(endTime)"
         cell.schedulePlace.text = data.locationName
         
         if realmData.count == 1 {
