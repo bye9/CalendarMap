@@ -1,7 +1,7 @@
 ## CalendarMap
 - 주제 : 일정을 관리하는 캘린더와 지도를 함께 볼 수 있는 서비스
 - 프로젝트 기간 : 202?
-- 팀원 : iOS 1명, 기획 및 디자인 1명
+- 팀원 : iOS(1), 기획 및 디자인(1)
 
 ## 📚기술 스택
 - UIKit, Swift, NAVER Map iOS SDK, Kakao Map iOS SDK, URLSession, MVVM
