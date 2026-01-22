@@ -4,7 +4,7 @@
 - 팀원 : iOS(1), 기획 및 디자인(1)
 
 ## 📚기술 스택
-- UIKit, Swift, NAVER Map iOS SDK, Kakao Map iOS SDK, URLSession, MVVM
+- UIKit, Swift, NAVER Map iOS SDK, Kakao Map iOS SDK, URLSession, MVVM, Realm
 
 ## 📝프로젝트 내용
 - 
